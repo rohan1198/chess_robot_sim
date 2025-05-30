@@ -1,46 +1,17 @@
 <!-- SO-101 Robot Arm URDF - 6-DOF Configuration -->
-<!-- Adapted from SO101 simulation files for ROS2/Gazebo -->
+<!-- Fixed version for proper Ignition Gazebo compatibility -->
 <robot name="so_101_arm">
   
-  <!-- Gazebo plugins for simulation -->
-  <gazebo>
-    <plugin filename="libgz-sim-physics-system.so"
-            name="gz::sim::systems::Physics">
-        <engine>
-            <filename>libgz-physics-ode-plugin.so</filename>
-        </engine>
-        <update_rate>1000</update_rate>
-        <gravity>0 0 -9.8</gravity>
-        <max_step_size>0.001</max_step_size>
-        <real_time_factor>1.0</real_time_factor>
-        <real_time_update_rate>1000</real_time_update_rate>
-    </plugin>
-    
-    <plugin filename="libgz-sim-joint-state-publisher-system.so"
-            name="gz::sim::systems::JointStatePublisher">
-    </plugin>
-
-    <plugin filename="libgz-sim-pose-publisher-system.so"
-            name="gz::sim::systems::PosePublisher">
-    </plugin>
-    
-    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-        <parameters>$(find so_101_arm)/config/controllers_6dof.yaml</parameters>
-        <robot_param>robot_description</robot_param>
-        <robot_param_node>robot_state_publisher</robot_param_node>
-    </plugin>
-  </gazebo>
-
   <!-- ROS2 Control configuration -->
-  <ros2_control name="gz_ros2_control/GazeboSimSystem" type="system">
+  <ros2_control name="IgnitionSystem" type="system">
       <hardware>
-          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+          <plugin>ign_ros2_control/IgnitionSystem</plugin>
       </hardware>
       
       <joint name="base_joint">
           <command_interface name="position">
-              <param name="min">-3.14</param>
-              <param name="max">3.14</param>
+              <param name="min">-1.92</param>
+              <param name="max">1.92</param>
           </command_interface>
           <state_interface name="position"/>
           <state_interface name="velocity"/>
@@ -49,8 +20,8 @@
       
       <joint name="shoulder_joint">
           <command_interface name="position">
-              <param name="min">-3.14</param>
-              <param name="max">3.14</param>
+              <param name="min">-1.75</param>
+              <param name="max">1.75</param>
           </command_interface>
           <state_interface name="position"/>
           <state_interface name="velocity"/>
@@ -59,8 +30,8 @@
       
       <joint name="elbow_joint">
           <command_interface name="position">
-              <param name="min">-3.14</param>
-              <param name="max">3.14</param>
+              <param name="min">-1.75</param>
+              <param name="max">1.57</param>
           </command_interface>
           <state_interface name="position"/>
           <state_interface name="velocity"/>
@@ -69,8 +40,8 @@
       
       <joint name="wrist_pitch_joint">
           <command_interface name="position">
-              <param name="min">-3.14</param>
-              <param name="max">3.14</param>
+              <param name="min">-1.66</param>
+              <param name="max">1.66</param>
           </command_interface>
           <state_interface name="position"/>
           <state_interface name="velocity"/>
@@ -79,8 +50,8 @@
       
       <joint name="wrist_roll_joint">
           <command_interface name="position">
-              <param name="min">-3.14</param>
-              <param name="max">3.14</param>
+              <param name="min">-2.79</param>
+              <param name="max">2.79</param>
           </command_interface>
           <state_interface name="position"/>
           <state_interface name="velocity"/>
@@ -89,7 +60,7 @@
       
       <joint name="gripper_joint">
           <command_interface name="position">
-              <param name="min">-0.2</param>
+              <param name="min">-0.175</param>
               <param name="max">1.75</param>
           </command_interface>
           <state_interface name="position"/>
@@ -97,6 +68,15 @@
           <state_interface name="effort"/>
       </joint>
   </ros2_control>
+
+  <!-- Gazebo plugins -->
+  <gazebo>
+    <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+        <parameters>$(find so_101_arm)/config/controllers_6dof.yaml</parameters>
+        <robot_param>robot_description</robot_param>
+        <robot_param_node>robot_state_publisher</robot_param_node>
+    </plugin>
+  </gazebo>
 
   <!-- Base link -->
   <link name="base_link">
@@ -190,6 +170,11 @@
     </collision>
   </link>
 
+  <!-- Gazebo material for base -->
+  <gazebo reference="base">
+    <material>Gazebo/White</material>
+  </gazebo>
+
   <!-- Shoulder link -->
   <link name="shoulder">
     <inertial>
@@ -251,6 +236,11 @@
     </collision>
   </link>
 
+  <!-- Gazebo material for shoulder -->
+  <gazebo reference="shoulder">
+    <material>Gazebo/White</material>
+  </gazebo>
+
   <!-- Base joint (Joint 1) -->
   <joint name="base_joint" type="revolute">
     <origin xyz="0.0207909 -0.0230745 0.0948817" rpy="-3.14159 0 1.5708"/>
@@ -258,6 +248,7 @@
     <child link="shoulder"/>
     <axis xyz="0 0 1"/>
     <limit effort="10" velocity="3.14" lower="-1.92" upper="1.92"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
 
   <!-- Upper arm link -->
@@ -304,6 +295,11 @@
     </collision>
   </link>
 
+  <!-- Gazebo material for upper_arm -->
+  <gazebo reference="upper_arm">
+    <material>Gazebo/Orange</material>
+  </gazebo>
+
   <!-- Shoulder joint (Joint 2) -->
   <joint name="shoulder_joint" type="revolute">
     <origin xyz="-0.0303992 -0.0182778 -0.0542" rpy="-1.5708 -1.5708 0"/>
@@ -311,6 +307,7 @@
     <child link="upper_arm"/>
     <axis xyz="0 0 1"/>
     <limit effort="10" velocity="3.14" lower="-1.75" upper="1.75"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
 
   <!-- Lower arm link -->
@@ -374,6 +371,11 @@
     </collision>
   </link>
 
+  <!-- Gazebo material for lower_arm -->
+  <gazebo reference="lower_arm">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+
   <!-- Elbow joint (Joint 3) -->
   <joint name="elbow_joint" type="revolute">
     <origin xyz="-0.11257 -0.028 0" rpy="0 0 1.5708"/>
@@ -381,6 +383,7 @@
     <child link="lower_arm"/>
     <axis xyz="0 0 1"/>
     <limit effort="10" velocity="3.14" lower="-1.75" upper="1.57"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
 
   <!-- Wrist link -->
@@ -427,6 +430,11 @@
     </collision>
   </link>
 
+  <!-- Gazebo material for wrist -->
+  <gazebo reference="wrist">
+    <material>Gazebo/Green</material>
+  </gazebo>
+
   <!-- Wrist pitch joint (Joint 4) -->
   <joint name="wrist_pitch_joint" type="revolute">
     <origin xyz="-0.1349 0.0052 0" rpy="0 0 -1.5708"/>
@@ -434,6 +442,7 @@
     <child link="wrist"/>
     <axis xyz="0 0 1"/>
     <limit effort="10" velocity="3.14" lower="-1.66" upper="1.66"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
 
   <!-- Gripper link -->
@@ -480,6 +489,11 @@
     </collision>
   </link>
 
+  <!-- Gazebo material for gripper -->
+  <gazebo reference="gripper">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
   <!-- Wrist roll joint (Joint 5) -->
   <joint name="wrist_roll_joint" type="revolute">
     <origin xyz="0 -0.0611 0.0181" rpy="1.5708 0 3.14159"/>
@@ -487,6 +501,7 @@
     <child link="gripper"/>
     <axis xyz="0 0 1"/>
     <limit effort="10" velocity="3.14" lower="-2.79" upper="2.79"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
 
   <!-- Moving jaw link -->
@@ -516,6 +531,11 @@
     </collision>
   </link>
 
+  <!-- Gazebo material for moving_jaw -->
+  <gazebo reference="moving_jaw">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+
   <!-- Gripper joint (Joint 6) -->
   <joint name="gripper_joint" type="revolute">
     <origin xyz="0.0202 0.0188 -0.0234" rpy="1.5708 0 0"/>
@@ -523,6 +543,7 @@
     <child link="moving_jaw"/>
     <axis xyz="0 0 1"/>
     <limit effort="10" velocity="3.14" lower="-0.175" upper="1.75"/>
+    <dynamics damping="0.1" friction="0.0"/>
   </joint>
 
 </robot>
