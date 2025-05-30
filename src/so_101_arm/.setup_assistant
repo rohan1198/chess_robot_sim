@@ -1,0 +1,19 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: so_101_arm
+    relative_path: urdf/so_101_arm_6dof.urdf
+  srdf:
+    relative_path: config/so_101_arm.srdf
+  package_settings:
+    author_name: Your Name
+    author_email: your@email.com
+    generated_timestamp: 1741952847
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
