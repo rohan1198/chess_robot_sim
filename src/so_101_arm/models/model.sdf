@@ -1,0 +1,70 @@
+<?xml version='1.0'?>
+<sdf version='1.7'>
+  <model name='so_101_arm'>
+    <pose>0 0 0 0 0 0</pose>
+    
+    <!-- Base link -->
+    <link name='base_link'>
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>0.147</mass>
+        <pose>0.020739 0.00204287 0.065966 0 0 0</pose>
+        <inertia>
+          <ixx>0.000136117</ixx>
+          <ixy>4.59787e-07</ixy>
+          <ixz>9.75275e-08</ixz>
+          <iyy>0.000114686</iyy>
+          <iyz>-4.97151e-06</iyz>
+          <izz>0.000130364</izz>
+        </inertia>
+      </inertial>
+      
+      <!-- Base motor holder visual -->
+      <visual name='base_motor_holder_visual'>
+        <pose>0.0206915 0.0221255 0.0300817 1.5708 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://so_101_arm/meshes/base_motor_holder_so101_v1.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.9 1</ambient>
+          <diffuse>0.9 0.9 0.9 1</diffuse>
+        </material>
+      </visual>
+      <collision name='base_motor_holder_collision'>
+        <pose>0.0206915 0.0221255 0.0300817 1.5708 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://so_101_arm/meshes/base_motor_holder_so101_v1.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      
+      <!-- Base main body visual -->
+      <visual name='base_main_visual'>
+        <pose>0.0207909 0.0221255 0.0300817 1.5708 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://so_101_arm/meshes/base_so101_v2.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.9 1</ambient>
+          <diffuse>0.9 0.9 0.9 1</diffuse>
+        </material>
+      </visual>
+      <collision name='base_main_collision'>
+        <pose>0.0207909 0.0221255 0.0300817 1.5708 0 0</pose>
+        <geometry>
+          <mesh>
+            <uri>model://so_101_arm/meshes/base_so101_v2.stl</uri>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Add other links and joints here as needed -->
+    
+  </model>
+</sdf>
