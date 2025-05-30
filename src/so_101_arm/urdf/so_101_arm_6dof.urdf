@@ -125,7 +125,7 @@
     <visual>
       <origin xyz="0.0206915 0.0221255 0.0300817" rpy="1.5708 0 0"/>
       <geometry>
-        <mesh filename="meshes/base_motor_holder_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/base_motor_holder_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.9 0.9 0.9 1.0"/>
@@ -134,7 +134,7 @@
     <collision>
       <origin xyz="0.0206915 0.0221255 0.0300817" rpy="1.5708 0 0"/>
       <geometry>
-        <mesh filename="meshes/base_motor_holder_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/base_motor_holder_so101_v1.stl"/>
       </geometry>
     </collision>
     
@@ -142,7 +142,7 @@
     <visual>
       <origin xyz="0.0207909 0.0221255 0.0300817" rpy="1.5708 0 0"/>
       <geometry>
-        <mesh filename="meshes/base_so101_v2.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/base_so101_v2.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.9 0.9 0.9 1.0"/>
@@ -151,7 +151,7 @@
     <collision>
       <origin xyz="0.0207909 0.0221255 0.0300817" rpy="1.5708 0 0"/>
       <geometry>
-        <mesh filename="meshes/base_so101_v2.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/base_so101_v2.stl"/>
       </geometry>
     </collision>
 
@@ -159,7 +159,7 @@
     <visual>
       <origin xyz="0.0207909 -0.0105745 0.0761817" rpy="0 0 -1.5708"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -168,7 +168,7 @@
     <collision>
       <origin xyz="0.0207909 -0.0105745 0.0761817" rpy="0 0 -1.5708"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
       </geometry>
     </collision>
 
@@ -176,7 +176,7 @@
     <visual>
       <origin xyz="0.0205915 0.0467435 0.0798817" rpy="1.5708 0 0"/>
       <geometry>
-        <mesh filename="meshes/waveshare_mounting_plate_so101_v2.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/waveshare_mounting_plate_so101_v2.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.9 0.9 0.9 1.0"/>
@@ -185,7 +185,7 @@
     <collision>
       <origin xyz="0.0205915 0.0467435 0.0798817" rpy="1.5708 0 0"/>
       <geometry>
-        <mesh filename="meshes/waveshare_mounting_plate_so101_v2.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/waveshare_mounting_plate_so101_v2.stl"/>
       </geometry>
     </collision>
   </link>
@@ -203,7 +203,7 @@
     <visual>
       <origin xyz="-0.0303992 0.000422241 -0.0417" rpy="1.5708 1.5708 0"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -212,7 +212,7 @@
     <collision>
       <origin xyz="-0.0303992 0.000422241 -0.0417" rpy="1.5708 1.5708 0"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
       </geometry>
     </collision>
 
@@ -220,7 +220,7 @@
     <visual>
       <origin xyz="-0.0675992 -0.000177759 0.0158499" rpy="1.5708 -1.5708 0"/>
       <geometry>
-        <mesh filename="meshes/motor_holder_so101_base_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/motor_holder_so101_base_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.9 0.9 0.9 1.0"/>
@@ -229,7 +229,7 @@
     <collision>
       <origin xyz="-0.0675992 -0.000177759 0.0158499" rpy="1.5708 -1.5708 0"/>
       <geometry>
-        <mesh filename="meshes/motor_holder_so101_base_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/motor_holder_so101_base_v1.stl"/>
       </geometry>
     </collision>
 
@@ -237,7 +237,7 @@
     <visual>
       <origin xyz="0.0122008 2.22413e-05 0.0464" rpy="-1.5708 0 0"/>
       <geometry>
-        <mesh filename="meshes/rotation_pitch_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/rotation_pitch_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.9 0.9 0.9 1.0"/>
@@ -246,7 +246,7 @@
     <collision>
       <origin xyz="0.0122008 2.22413e-05 0.0464" rpy="-1.5708 0 0"/>
       <geometry>
-        <mesh filename="meshes/rotation_pitch_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/rotation_pitch_so101_v1.stl"/>
       </geometry>
     </collision>
   </link>
@@ -273,7 +273,7 @@
     <visual>
       <origin xyz="-0.11257 -0.0155 0.0187" rpy="-3.14159 0 -1.5708"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -282,7 +282,7 @@
     <collision>
       <origin xyz="-0.11257 -0.0155 0.0187" rpy="-3.14159 0 -1.5708"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
       </geometry>
     </collision>
 
@@ -290,7 +290,7 @@
     <visual>
       <origin xyz="-0.065085 0.012 0.0182" rpy="3.14159 0 0"/>
       <geometry>
-        <mesh filename="meshes/upper_arm_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/upper_arm_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.9 0.9 0.9 1.0"/>
@@ -299,7 +299,7 @@
     <collision>
       <origin xyz="-0.065085 0.012 0.0182" rpy="3.14159 0 0"/>
       <geometry>
-        <mesh filename="meshes/upper_arm_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/upper_arm_so101_v1.stl"/>
       </geometry>
     </collision>
   </link>
@@ -326,7 +326,7 @@
     <visual>
       <origin xyz="-0.0648499 -0.032 0.0182" rpy="-3.14159 0 0"/>
       <geometry>
-        <mesh filename="meshes/under_arm_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/under_arm_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.9 0.9 0.9 1.0"/>
@@ -335,7 +335,7 @@
     <collision>
       <origin xyz="-0.0648499 -0.032 0.0182" rpy="-3.14159 0 0"/>
       <geometry>
-        <mesh filename="meshes/under_arm_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/under_arm_so101_v1.stl"/>
       </geometry>
     </collision>
 
@@ -343,7 +343,7 @@
     <visual>
       <origin xyz="-0.0648499 -0.032 0.018" rpy="-3.14159 0 0"/>
       <geometry>
-        <mesh filename="meshes/motor_holder_so101_wrist_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/motor_holder_so101_wrist_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.9 0.9 0.9 1.0"/>
@@ -352,7 +352,7 @@
     <collision>
       <origin xyz="-0.0648499 -0.032 0.018" rpy="-3.14159 0 0"/>
       <geometry>
-        <mesh filename="meshes/motor_holder_so101_wrist_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/motor_holder_so101_wrist_v1.stl"/>
       </geometry>
     </collision>
 
@@ -360,7 +360,7 @@
     <visual>
       <origin xyz="-0.1224 0.0052 0.0187" rpy="-3.14159 0 -3.14159"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -369,7 +369,7 @@
     <collision>
       <origin xyz="-0.1224 0.0052 0.0187" rpy="-3.14159 0 -3.14159"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
       </geometry>
     </collision>
   </link>
@@ -396,7 +396,7 @@
     <visual>
       <origin xyz="0 -0.0424 0.0306" rpy="1.5708 1.5708 0"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_no_horn_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_no_horn_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -405,7 +405,7 @@
     <collision>
       <origin xyz="0 -0.0424 0.0306" rpy="1.5708 1.5708 0"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_no_horn_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_no_horn_v1.stl"/>
       </geometry>
     </collision>
 
@@ -413,7 +413,7 @@
     <visual>
       <origin xyz="0 -0.028 0.0181" rpy="-1.5708 -1.5708 0"/>
       <geometry>
-        <mesh filename="meshes/wrist_roll_pitch_so101_v2.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/wrist_roll_pitch_so101_v2.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.9 0.9 0.9 1.0"/>
@@ -422,7 +422,7 @@
     <collision>
       <origin xyz="0 -0.028 0.0181" rpy="-1.5708 -1.5708 0"/>
       <geometry>
-        <mesh filename="meshes/wrist_roll_pitch_so101_v2.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/wrist_roll_pitch_so101_v2.stl"/>
       </geometry>
     </collision>
   </link>
@@ -449,7 +449,7 @@
     <visual>
       <origin xyz="0.0077 0.0001 -0.0234" rpy="-1.5708 0 0"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -458,7 +458,7 @@
     <collision>
       <origin xyz="0.0077 0.0001 -0.0234" rpy="-1.5708 0 0"/>
       <geometry>
-        <mesh filename="meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
       </geometry>
     </collision>
 
@@ -466,7 +466,7 @@
     <visual>
       <origin xyz="0 -0.000218214 0.000949706" rpy="-3.14159 0 0"/>
       <geometry>
-        <mesh filename="meshes/wrist_roll_follower_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/wrist_roll_follower_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.9 0.9 0.9 1.0"/>
@@ -475,7 +475,7 @@
     <collision>
       <origin xyz="0 -0.000218214 0.000949706" rpy="-3.14159 0 0"/>
       <geometry>
-        <mesh filename="meshes/wrist_roll_follower_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/wrist_roll_follower_so101_v1.stl"/>
       </geometry>
     </collision>
   </link>
@@ -502,7 +502,7 @@
     <visual>
       <origin xyz="0 0 0.0189" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="meshes/moving_jaw_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/moving_jaw_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.9 0.9 0.9 1.0"/>
@@ -511,7 +511,7 @@
     <collision>
       <origin xyz="0 0 0.0189" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="meshes/moving_jaw_so101_v1.stl"/>
+        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/moving_jaw_so101_v1.stl"/>
       </geometry>
     </collision>
   </link>
