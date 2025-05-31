@@ -24,16 +24,32 @@ class GazeboRobotSpawner(Node):
             self.get_logger().error(f'Failed to spawn robot: {str(e)}')
         
     def get_processed_urdf(self):
-        """Read URDF and convert package:// URIs to file:// URIs for Gazebo"""
+        """Process XACRO file and convert package:// URIs to file:// URIs for Gazebo"""
         
         try:
             package_share_dir = get_package_share_directory('so_101_arm')
-            urdf_path = os.path.join(package_share_dir, 'urdf', 'so_101_arm_6dof.urdf')
+            xacro_path = os.path.join(package_share_dir, 'urdf', 'so_101_arm_6dof.urdf.xacro')
+            controller_config_path = os.path.join(package_share_dir, 'config', 'controllers_6dof.yaml')
             
-            self.get_logger().info(f'Reading URDF from: {urdf_path}')
+            self.get_logger().info(f'Processing XACRO from: {xacro_path}')
             
-            with open(urdf_path, 'r') as f:
-                urdf_content = f.read()
+            # Process the xacro file to generate URDF content
+            xacro_cmd = [
+                'xacro', 
+                xacro_path,
+                f'controller_config_file:={controller_config_path}'
+            ]
+            
+            self.get_logger().info(f'Running xacro command: {" ".join(xacro_cmd)}')
+            
+            result = subprocess.run(xacro_cmd, capture_output=True, text=True)
+            
+            if result.returncode != 0:
+                self.get_logger().error(f'XACRO processing failed: {result.stderr}')
+                raise Exception(f'XACRO processing failed: {result.stderr}')
+            
+            urdf_content = result.stdout
+            self.get_logger().info('XACRO processing completed successfully')
             
             # Replace package:// with file:// using the actual package path
             def replace_package_uri(match):

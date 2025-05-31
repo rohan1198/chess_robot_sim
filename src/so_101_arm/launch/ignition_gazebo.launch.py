@@ -14,11 +14,11 @@ def generate_launch_description():
     # Get the actual install path for models
     models_path = PathJoinSubstitution([pkg_share, 'models'])
     
-    # FIXED: Generate robot description with substituted controller config path
+    # FIXED: Generate robot description with correct .xacro file
     robot_description_content = ParameterValue(
         Command([
             'xacro ',
-            PathJoinSubstitution([pkg_share, 'urdf', 'so_101_arm_6dof.urdf']),
+            PathJoinSubstitution([pkg_share, 'urdf', 'so_101_arm_6dof.urdf.xacro']),
             ' controller_config_file:=',
             PathJoinSubstitution([pkg_share, 'config', 'controllers_6dof.yaml'])
         ]),
@@ -49,7 +49,6 @@ def generate_launch_description():
             value=[models_path, ':', os.environ.get('GAZEBO_MODEL_PATH', '')]
         ),
 
-        # FIXED: Add the system plugin path to the environment
         SetEnvironmentVariable(
             name='GZ_SIM_SYSTEM_PLUGIN_PATH',
             value=['/opt/ros/humble/lib:', os.environ.get('GZ_SIM_SYSTEM_PLUGIN_PATH', '')]
@@ -100,9 +99,9 @@ def generate_launch_description():
             output='screen'
         ),
 
-        # Spawn robot in Gazebo
+        # Spawn robot in Gazebo - wait longer for Gazebo to be ready
         TimerAction(
-            period=10.0,
+            period=8.0,  # Increased wait time
             actions=[
                 ExecuteProcess(
                     cmd=[
@@ -114,38 +113,40 @@ def generate_launch_description():
             ]
         ),
 
-        # FIXED: Simplified controller startup using spawner
+        # Start joint state broadcaster first - wait for robot to be spawned
+        TimerAction(
+            period=12.0,  # Wait for robot to be fully spawned
+            actions=[
+                Node(
+                    package='controller_manager',
+                    executable='spawner',
+                    arguments=['joint_state_broadcaster', '--controller-manager', '/controller_manager'],
+                    output='screen'
+                ),
+            ]
+        ),
+
+        # Start arm controller - wait for joint state broadcaster
         TimerAction(
             period=15.0,
             actions=[
                 Node(
                     package='controller_manager',
                     executable='spawner',
-                    arguments=['joint_state_broadcaster'],
+                    arguments=['arm_controller', '--controller-manager', '/controller_manager'],
                     output='screen'
                 ),
             ]
         ),
 
+        # Start gripper controller last
         TimerAction(
-            period=17.0,
+            period=18.0,
             actions=[
                 Node(
                     package='controller_manager',
                     executable='spawner',
-                    arguments=['joint_trajectory_controller'],
-                    output='screen'
-                ),
-            ]
-        ),
-
-        TimerAction(
-            period=19.0,
-            actions=[
-                Node(
-                    package='controller_manager',
-                    executable='spawner',
-                    arguments=['gripper_controller'],
+                    arguments=['gripper_controller', '--controller-manager', '/controller_manager'],
                     output='screen'
                 ),
             ]
