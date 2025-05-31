@@ -1,11 +1,11 @@
-<!-- SO-101 Robot Arm URDF - 6-DOF Configuration -->
-<!-- Universal version compatible with both RViz2 and Ignition Gazebo -->
+<!-- SO-101 Robot Arm URDF - Alternative Configuration -->
+<!-- Trying different plugin naming approaches -->
 <robot name="so_101_arm">
   
   <!-- ROS2 Control configuration -->
-  <ros2_control name="GazeboSystem" type="system">
+  <ros2_control name="GazeboSimSystem" type="system">
       <hardware>
-          <plugin>gz_ros2_control/GazeboSystem</plugin>
+          <plugin>gz_ros2_control/GazeboSimSystem</plugin>
       </hardware>
       
       <joint name="base_joint">
@@ -69,15 +69,19 @@
       </joint>
   </ros2_control>
 
-  <!-- Gazebo plugins -->
+  <!-- Alternative Gazebo plugin configurations to try -->
+  
+  <!-- Configuration 1: Standard naming -->
   <gazebo>
     <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-        <parameters>$(find so_101_arm)/config/controllers_6dof.yaml</parameters>
         <robot_param>robot_description</robot_param>
         <robot_param_node>robot_state_publisher</robot_param_node>
+        <parameters>$(find so_101_arm)/config/controllers_6dof.yaml</parameters>
     </plugin>
   </gazebo>
 
+  <!-- Rest of URDF remains the same as before -->
+  
   <!-- Base link -->
   <link name="base_link">
     <gazebo>

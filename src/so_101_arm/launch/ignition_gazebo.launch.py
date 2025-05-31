@@ -3,6 +3,7 @@ from launch.actions import ExecuteProcess, TimerAction, SetEnvironmentVariable, 
 from launch.substitutions import Command, PathJoinSubstitution, FindExecutable
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch_ros.parameter_descriptions import ParameterValue
 from ament_index_python.packages import get_package_share_directory
 import os
 import re
@@ -48,6 +49,19 @@ def generate_launch_description():
     # Get the actual install path for models
     models_path = PathJoinSubstitution([pkg_share, 'models'])
     
+    # FIXED: Properly handle robot_description parameter
+    robot_description_content = ParameterValue(
+        Command([
+            'cat ',
+            PathJoinSubstitution([
+                pkg_share,
+                'urdf',
+                'so_101_arm_6dof.urdf'
+            ])
+        ]),
+        value_type=str
+    )
+    
     return LaunchDescription([
         # Set environment variables for Gazebo resource resolution
         SetEnvironmentVariable(
@@ -65,21 +79,14 @@ def generate_launch_description():
             value=[models_path, ':', os.environ.get('GAZEBO_MODEL_PATH', '')]
         ),
 
-        # Robot State Publisher with original URDF (uses package:// URIs)
+        # Robot State Publisher with FIXED parameter handling
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
             name='robot_state_publisher',
             output='screen',
             parameters=[{
-                'robot_description': Command([
-                    'cat ',
-                    PathJoinSubstitution([
-                        pkg_share,
-                        'urdf',
-                        'so_101_arm_6dof.urdf'
-                    ])
-                ]),
+                'robot_description': robot_description_content,
                 'use_sim_time': True
             }]
         ),
@@ -108,9 +115,9 @@ def generate_launch_description():
             output='screen'
         ),
 
-        # Spawn robot in Gazebo using processed URDF
+        # Spawn robot in Gazebo using processed URDF - with longer delay
         TimerAction(
-            period=5.0,
+            period=8.0,  # Increased delay to ensure Gazebo is fully loaded
             actions=[
                 ExecuteProcess(
                     cmd=[
@@ -122,9 +129,9 @@ def generate_launch_description():
             ]
         ),
 
-        # Load joint state broadcaster
+        # Load joint state broadcaster - with longer delay
         TimerAction(
-            period=8.0,
+            period=15.0,  # Wait longer for robot to be spawned
             actions=[
                 ExecuteProcess(
                     cmd=['ros2', 'control', 'load_controller', '--set-state', 'active', 'joint_state_broadcaster'],
@@ -135,7 +142,7 @@ def generate_launch_description():
 
         # Load joint trajectory controller
         TimerAction(
-            period=10.0,
+            period=17.0,
             actions=[
                 ExecuteProcess(
                     cmd=['ros2', 'control', 'load_controller', '--set-state', 'active', 'joint_trajectory_controller'],
@@ -146,7 +153,7 @@ def generate_launch_description():
 
         # Load gripper controller
         TimerAction(
-            period=12.0,
+            period=19.0,
             actions=[
                 ExecuteProcess(
                     cmd=['ros2', 'control', 'load_controller', '--set-state', 'active', 'gripper_controller'],

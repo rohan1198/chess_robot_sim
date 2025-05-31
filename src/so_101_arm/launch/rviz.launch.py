@@ -2,21 +2,25 @@ from launch import LaunchDescription
 from launch.substitutions import Command, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
     
-    # Get URDF content using cat command
-    robot_description_content = Command([
-        'cat ',
-        PathJoinSubstitution([
-            FindPackageShare('so_101_arm'),
-            'urdf',
-            'so_101_arm_6dof.urdf'
-        ])
-    ])
+    # FIXED: Get URDF content using ParameterValue with proper type
+    robot_description_content = ParameterValue(
+        Command([
+            'cat ',
+            PathJoinSubstitution([
+                FindPackageShare('so_101_arm'),
+                'urdf',
+                'so_101_arm_6dof.urdf'
+            ])
+        ]),
+        value_type=str
+    )
 
     return LaunchDescription([
-        # Robot State Publisher
+        # Robot State Publisher with FIXED parameter handling
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
