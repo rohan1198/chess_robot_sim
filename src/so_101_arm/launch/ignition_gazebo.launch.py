@@ -6,40 +6,6 @@ from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterValue
 from ament_index_python.packages import get_package_share_directory
 import os
-import re
-
-def process_urdf_for_gazebo(context, *args, **kwargs):
-    """Convert package:// URIs to file:// URIs for Gazebo compatibility"""
-    
-    # Get the URDF content first
-    pkg_share = FindPackageShare('so_101_arm')
-    urdf_file = PathJoinSubstitution([pkg_share, 'urdf', 'so_101_arm_6dof.urdf'])
-    
-    # Read the URDF file
-    try:
-        package_share_dir = get_package_share_directory('so_101_arm')
-        urdf_path = os.path.join(package_share_dir, 'urdf', 'so_101_arm_6dof.urdf')
-        
-        with open(urdf_path, 'r') as f:
-            urdf_content = f.read()
-        
-        # Replace package:// with file:// using the actual package path
-        def replace_package_uri(match):
-            relative_path = match.group(1)
-            full_path = os.path.join(package_share_dir, relative_path)
-            return f'file://{full_path}'
-        
-        # Pattern to match package://so_101_arm/...
-        pattern = r'package://so_101_arm/([^"]+)'
-        processed_content = re.sub(pattern, replace_package_uri, urdf_content)
-        
-        return processed_content
-        
-    except Exception as e:
-        print(f"Error processing URDF for Gazebo: {e}")
-        # Fallback to original URDF if processing fails
-        urdf_cmd = Command(['cat ', urdf_file])
-        return urdf_cmd.perform(context)
 
 def generate_launch_description():
     
@@ -49,7 +15,7 @@ def generate_launch_description():
     # Get the actual install path for models
     models_path = PathJoinSubstitution([pkg_share, 'models'])
     
-    # FIXED: Properly handle robot_description parameter
+    # Robot description parameter
     robot_description_content = ParameterValue(
         Command([
             'cat ',
@@ -79,7 +45,7 @@ def generate_launch_description():
             value=[models_path, ':', os.environ.get('GAZEBO_MODEL_PATH', '')]
         ),
 
-        # Robot State Publisher with FIXED parameter handling
+        # Robot State Publisher
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
@@ -115,9 +81,9 @@ def generate_launch_description():
             output='screen'
         ),
 
-        # Spawn robot in Gazebo using processed URDF - with longer delay
+        # Spawn robot in Gazebo - wait longer for Gazebo to be ready
         TimerAction(
-            period=8.0,  # Increased delay to ensure Gazebo is fully loaded
+            period=10.0,  # Increased delay to ensure Gazebo is fully loaded
             actions=[
                 ExecuteProcess(
                     cmd=[
@@ -129,34 +95,62 @@ def generate_launch_description():
             ]
         ),
 
-        # Load joint state broadcaster - with longer delay
+        # Load and start controllers with proper sequencing
         TimerAction(
-            period=15.0,  # Wait longer for robot to be spawned
+            period=15.0,  # Wait for robot to be spawned
             actions=[
                 ExecuteProcess(
-                    cmd=['ros2', 'control', 'load_controller', '--set-state', 'active', 'joint_state_broadcaster'],
+                    cmd=['ros2', 'control', 'load_controller', 'joint_state_broadcaster'],
                     output='screen'
                 )
             ]
         ),
 
-        # Load joint trajectory controller
         TimerAction(
-            period=17.0,
+            period=17.0,  # Start joint_state_broadcaster first
             actions=[
                 ExecuteProcess(
-                    cmd=['ros2', 'control', 'load_controller', '--set-state', 'active', 'joint_trajectory_controller'],
+                    cmd=['ros2', 'control', 'set_controller_state', 'joint_state_broadcaster', 'active'],
                     output='screen'
                 )
             ]
         ),
 
-        # Load gripper controller
         TimerAction(
-            period=19.0,
+            period=19.0,  # Load trajectory controller
             actions=[
                 ExecuteProcess(
-                    cmd=['ros2', 'control', 'load_controller', '--set-state', 'active', 'gripper_controller'],
+                    cmd=['ros2', 'control', 'load_controller', 'joint_trajectory_controller'],
+                    output='screen'
+                )
+            ]
+        ),
+
+        TimerAction(
+            period=21.0,  # Start trajectory controller
+            actions=[
+                ExecuteProcess(
+                    cmd=['ros2', 'control', 'set_controller_state', 'joint_trajectory_controller', 'active'],
+                    output='screen'
+                )
+            ]
+        ),
+
+        TimerAction(
+            period=23.0,  # Load gripper controller
+            actions=[
+                ExecuteProcess(
+                    cmd=['ros2', 'control', 'load_controller', 'gripper_controller'],
+                    output='screen'
+                )
+            ]
+        ),
+
+        TimerAction(
+            period=25.0,  # Start gripper controller
+            actions=[
+                ExecuteProcess(
+                    cmd=['ros2', 'control', 'set_controller_state', 'gripper_controller', 'active'],
                     output='screen'
                 )
             ]

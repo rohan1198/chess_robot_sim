@@ -1,6 +1,7 @@
 controller_manager:
   ros__parameters:
     update_rate: 1000
+    use_sim_time: true
     
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -20,23 +21,44 @@ joint_trajectory_controller:
       - wrist_pitch_joint
       - wrist_roll_joint
     
-    interface_name: position
     command_interfaces:
       - position
     state_interfaces:
       - position
       - velocity
+    
     state_publish_rate: 50.0
     action_monitor_rate: 20.0
+    
+    allow_partial_joints_goal: false
+    open_loop_control: false
+    allow_integration_in_goal_trajectories: true
+    
     constraints:
       stopped_velocity_tolerance: 0.01
       goal_time: 0.0
-      joint_trajectory_controller:
-        joint1:
-          trajectory: 0.05
-          goal: 0.03
+      base_joint:
+        trajectory: 0.05
+        goal: 0.03
+      shoulder_joint:
+        trajectory: 0.05
+        goal: 0.03
+      elbow_joint:
+        trajectory: 0.05
+        goal: 0.03
+      wrist_pitch_joint:
+        trajectory: 0.05
+        goal: 0.03
+      wrist_roll_joint:
+        trajectory: 0.05
+        goal: 0.03
 
 gripper_controller:
   ros__parameters:
     joint: gripper_joint
-    interface_name: position
+    action_monitor_rate: 20.0
+    goal_tolerance: 0.01
+    max_effort: 5.0
+    allow_stalling: false
+    stall_velocity_threshold: 0.01
+    stall_timeout: 1.0
