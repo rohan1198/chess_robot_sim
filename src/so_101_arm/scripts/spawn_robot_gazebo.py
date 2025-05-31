@@ -2,29 +2,28 @@
 
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import String
 import subprocess
 import os
 import re
 from ament_index_python.packages import get_package_share_directory
 
-class GazeboRobotSpawner(Node):
+class IgnitionGazeboRobotSpawner(Node):
     def __init__(self):
-        super().__init__('gazebo_robot_spawner')
-        self.get_logger().info('Starting Gazebo robot spawner...')
+        super().__init__('ignition_gazebo_robot_spawner')
+        self.get_logger().info('Starting Ignition Gazebo robot spawner...')
         
         try:
-            # Get the URDF content and process it for Gazebo
+            # Get the URDF content and process it for Ignition Gazebo
             urdf_content = self.get_processed_urdf()
             
-            # Spawn the robot in Gazebo
+            # Spawn the robot in Ignition Gazebo
             self.spawn_robot(urdf_content)
             
         except Exception as e:
             self.get_logger().error(f'Failed to spawn robot: {str(e)}')
         
     def get_processed_urdf(self):
-        """Process XACRO file and convert package:// URIs to file:// URIs for Gazebo"""
+        """Process XACRO file and convert package:// URIs to file:// URIs for Ignition Gazebo"""
         
         try:
             package_share_dir = get_package_share_directory('so_101_arm')
@@ -64,8 +63,6 @@ class GazeboRobotSpawner(Node):
             
             # Count the replacements
             package_uris = len(re.findall(r'package://so_101_arm/', urdf_content))
-            file_uris = len(re.findall(r'file://', processed_content))
-            
             self.get_logger().info(f'URDF processing complete: {package_uris} package:// URIs converted to file:// URIs')
             
             return processed_content
@@ -75,17 +72,17 @@ class GazeboRobotSpawner(Node):
             raise
     
     def spawn_robot(self, urdf_content):
-        """Spawn robot in Gazebo using the processed URDF content"""
+        """Spawn robot in Ignition Gazebo using the processed URDF content"""
         
         try:
             # Write processed URDF to temporary file
-            temp_urdf_path = '/tmp/so_101_arm_gazebo.urdf'
+            temp_urdf_path = '/tmp/so_101_arm_ignition_gazebo.urdf'
             with open(temp_urdf_path, 'w') as f:
                 f.write(urdf_content)
             
             self.get_logger().info(f'Temporary URDF written to: {temp_urdf_path}')
             
-            # Spawn robot using ros_gz_sim
+            # Spawn robot using ros_gz_sim (for Ignition Gazebo)
             spawn_cmd = [
                 'ros2', 'run', 'ros_gz_sim', 'create',
                 '-file', temp_urdf_path,
@@ -100,11 +97,13 @@ class GazeboRobotSpawner(Node):
             result = subprocess.run(spawn_cmd, capture_output=True, text=True)
             
             if result.returncode == 0:
-                self.get_logger().info('Robot spawned successfully in Gazebo')
-                self.get_logger().info(f'Spawn output: {result.stdout}')
+                self.get_logger().info('Robot spawned successfully in Ignition Gazebo')
+                if result.stdout:
+                    self.get_logger().info(f'Spawn output: {result.stdout}')
             else:
                 self.get_logger().error(f'Failed to spawn robot: {result.stderr}')
-                self.get_logger().error(f'Spawn stdout: {result.stdout}')
+                if result.stdout:
+                    self.get_logger().error(f'Spawn stdout: {result.stdout}')
             
             # Clean up temporary file
             if os.path.exists(temp_urdf_path):
@@ -118,7 +117,7 @@ class GazeboRobotSpawner(Node):
 def main(args=None):
     rclpy.init(args=args)
     
-    spawner = GazeboRobotSpawner()
+    spawner = IgnitionGazeboRobotSpawner()
     
     # Keep the node alive briefly to see any final logs
     import time

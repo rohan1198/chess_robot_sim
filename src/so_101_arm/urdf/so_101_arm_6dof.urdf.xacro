@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
-<!-- SO-101 Robot Arm URDF.XACRO -->
+<!-- SO-101 Robot Arm URDF.XACRO for Ignition Gazebo -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="so_101_arm">
   
   <!-- XACRO Parameters -->
   <xacro:arg name="controller_config_file" default="$(find so_101_arm)/config/controllers_6dof.yaml"/>
   <xacro:property name="controller_config" value="$(arg controller_config_file)"/>
   
-  <!-- ROS2 Control configuration -->
-  <ros2_control name="gz_ros2_control/GazeboSimSystem" type="system">
+  <!-- ROS2 Control configuration for IGNITION GAZEBO -->
+  <ros2_control name="GazeboSimSystem" type="system">
       <hardware>
           <plugin>gz_ros2_control/GazeboSimSystem</plugin>
       </hardware>
@@ -73,12 +73,13 @@
       </joint>
   </ros2_control>
 
+  <!-- Ignition Gazebo Plugin (NOT Gazebo Classic) -->
   <gazebo>
-    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-        <!-- XACRO: Use parameterized controller config file -->
+    <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
         <parameters>${controller_config}</parameters>
         <robot_param>robot_description</robot_param>
         <robot_param_node>robot_state_publisher</robot_param_node>
+        <control_period>0.01</control_period>
     </plugin>
   </gazebo>
   
