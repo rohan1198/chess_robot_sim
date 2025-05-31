@@ -10,6 +10,7 @@ install(
     launch
     config
     scripts
+    worlds
   DESTINATION share/${PROJECT_NAME}
   USE_SOURCE_PERMISSIONS
   PATTERN "setup_assistant.launch" EXCLUDE
