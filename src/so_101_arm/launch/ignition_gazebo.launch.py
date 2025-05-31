@@ -1,10 +1,9 @@
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess, TimerAction, SetEnvironmentVariable, OpaqueFunction
-from launch.substitutions import Command, PathJoinSubstitution, FindExecutable
+from launch.actions import ExecuteProcess, TimerAction, SetEnvironmentVariable
+from launch.substitutions import Command, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterValue
-from ament_index_python.packages import get_package_share_directory
 import os
 
 def generate_launch_description():
@@ -15,18 +14,23 @@ def generate_launch_description():
     # Get the actual install path for models
     models_path = PathJoinSubstitution([pkg_share, 'models'])
     
-    # Robot description parameter
+    # FIXED: Generate robot description with substituted controller config path
     robot_description_content = ParameterValue(
         Command([
-            'cat ',
-            PathJoinSubstitution([
-                pkg_share,
-                'urdf',
-                'so_101_arm_6dof.urdf'
-            ])
+            'xacro ',
+            PathJoinSubstitution([pkg_share, 'urdf', 'so_101_arm_6dof.urdf']),
+            ' controller_config_file:=',
+            PathJoinSubstitution([pkg_share, 'config', 'controllers_6dof.yaml'])
         ]),
         value_type=str
     )
+    
+    # Controller configuration
+    controller_config = PathJoinSubstitution([
+        pkg_share,
+        'config',
+        'controllers_6dof.yaml'
+    ])
     
     return LaunchDescription([
         # Set environment variables for Gazebo resource resolution
@@ -45,6 +49,12 @@ def generate_launch_description():
             value=[models_path, ':', os.environ.get('GAZEBO_MODEL_PATH', '')]
         ),
 
+        # FIXED: Add the system plugin path to the environment
+        SetEnvironmentVariable(
+            name='GZ_SIM_SYSTEM_PLUGIN_PATH',
+            value=['/opt/ros/humble/lib:', os.environ.get('GZ_SIM_SYSTEM_PLUGIN_PATH', '')]
+        ),
+
         # Robot State Publisher
         Node(
             package='robot_state_publisher',
@@ -57,6 +67,14 @@ def generate_launch_description():
             }]
         ),
         
+        # Controller Manager with configuration
+        Node(
+            package='controller_manager',
+            executable='ros2_control_node',
+            parameters=[controller_config, {'use_sim_time': True}],
+            output='screen'
+        ),
+        
         # Launch Ignition Gazebo
         ExecuteProcess(
             cmd=['ign', 'gazebo', '-v', '4', '--verbose'],
@@ -64,7 +82,8 @@ def generate_launch_description():
             additional_env={
                 'IGN_GAZEBO_RESOURCE_PATH': models_path,
                 'GZ_SIM_RESOURCE_PATH': models_path,
-                'GAZEBO_MODEL_PATH': models_path
+                'GAZEBO_MODEL_PATH': models_path,
+                'GZ_SIM_SYSTEM_PLUGIN_PATH': '/opt/ros/humble/lib'
             }
         ),
         
@@ -81,9 +100,9 @@ def generate_launch_description():
             output='screen'
         ),
 
-        # Spawn robot in Gazebo - wait longer for Gazebo to be ready
+        # Spawn robot in Gazebo
         TimerAction(
-            period=10.0,  # Increased delay to ensure Gazebo is fully loaded
+            period=10.0,
             actions=[
                 ExecuteProcess(
                     cmd=[
@@ -95,64 +114,40 @@ def generate_launch_description():
             ]
         ),
 
-        # Load and start controllers with proper sequencing
+        # FIXED: Simplified controller startup using spawner
         TimerAction(
-            period=15.0,  # Wait for robot to be spawned
+            period=15.0,
             actions=[
-                ExecuteProcess(
-                    cmd=['ros2', 'control', 'load_controller', 'joint_state_broadcaster'],
+                Node(
+                    package='controller_manager',
+                    executable='spawner',
+                    arguments=['joint_state_broadcaster'],
                     output='screen'
-                )
+                ),
             ]
         ),
 
         TimerAction(
-            period=17.0,  # Start joint_state_broadcaster first
+            period=17.0,
             actions=[
-                ExecuteProcess(
-                    cmd=['ros2', 'control', 'set_controller_state', 'joint_state_broadcaster', 'active'],
+                Node(
+                    package='controller_manager',
+                    executable='spawner',
+                    arguments=['joint_trajectory_controller'],
                     output='screen'
-                )
+                ),
             ]
         ),
 
         TimerAction(
-            period=19.0,  # Load trajectory controller
+            period=19.0,
             actions=[
-                ExecuteProcess(
-                    cmd=['ros2', 'control', 'load_controller', 'joint_trajectory_controller'],
+                Node(
+                    package='controller_manager',
+                    executable='spawner',
+                    arguments=['gripper_controller'],
                     output='screen'
-                )
-            ]
-        ),
-
-        TimerAction(
-            period=21.0,  # Start trajectory controller
-            actions=[
-                ExecuteProcess(
-                    cmd=['ros2', 'control', 'set_controller_state', 'joint_trajectory_controller', 'active'],
-                    output='screen'
-                )
-            ]
-        ),
-
-        TimerAction(
-            period=23.0,  # Load gripper controller
-            actions=[
-                ExecuteProcess(
-                    cmd=['ros2', 'control', 'load_controller', 'gripper_controller'],
-                    output='screen'
-                )
-            ]
-        ),
-
-        TimerAction(
-            period=25.0,  # Start gripper controller
-            actions=[
-                ExecuteProcess(
-                    cmd=['ros2', 'control', 'set_controller_state', 'gripper_controller', 'active'],
-                    output='screen'
-                )
+                ),
             ]
         ),
     ])

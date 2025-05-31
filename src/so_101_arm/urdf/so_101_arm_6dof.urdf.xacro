@@ -1,5 +1,10 @@
-<!-- SO-101 Robot Arm URDF -->
-<robot name="so_101_arm">
+<?xml version="1.0"?>
+<!-- SO-101 Robot Arm URDF.XACRO -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="so_101_arm">
+  
+  <!-- XACRO Parameters -->
+  <xacro:arg name="controller_config_file" default="$(find so_101_arm)/config/controllers_6dof.yaml"/>
+  <xacro:property name="controller_config" value="$(arg controller_config_file)"/>
   
   <!-- ROS2 Control configuration -->
   <ros2_control name="gz_ros2_control/GazeboSimSystem" type="system">
@@ -70,7 +75,8 @@
 
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-        <parameters>/home/rohan/projects/so-arm101_ws/install/so_101_arm/share/so_101_arm/config/controllers_6dof.yaml</parameters>
+        <!-- XACRO: Use parameterized controller config file -->
+        <parameters>${controller_config}</parameters>
         <robot_param>robot_description</robot_param>
         <robot_param_node>robot_state_publisher</robot_param_node>
     </plugin>

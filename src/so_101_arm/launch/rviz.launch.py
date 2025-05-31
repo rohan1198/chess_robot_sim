@@ -6,21 +6,33 @@ from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
     
-    # FIXED: Get URDF content using ParameterValue with proper type
+    # Get package path
+    pkg_share = FindPackageShare('so_101_arm')
+    
+    # Controller configuration path (for xacro parameter)
+    controller_config = PathJoinSubstitution([
+        pkg_share,
+        'config',
+        'controllers_6dof.yaml'
+    ])
+    
+    # XACRO: Get URDF content using ParameterValue with xacro processing
     robot_description_content = ParameterValue(
         Command([
-            'cat ',
+            'xacro ',
             PathJoinSubstitution([
-                FindPackageShare('so_101_arm'),
+                pkg_share,
                 'urdf',
-                'so_101_arm_6dof.urdf'
-            ])
+                'so_101_arm_6dof.urdf.xacro'
+            ]),
+            ' controller_config_file:=',
+            controller_config
         ]),
         value_type=str
     )
 
     return LaunchDescription([
-        # Robot State Publisher with FIXED parameter handling
+        # Robot State Publisher with XACRO processing
         Node(
             package='robot_state_publisher',
             executable='robot_state_publisher',
