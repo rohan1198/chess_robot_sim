@@ -40,8 +40,8 @@ class ChessPieceController(Node):
         self.get_logger().info(f'Robot position: ({self.robot_x}, {self.robot_y}, {self.robot_z})')
     
     def setup_coordinate_mapping(self):
-        """Setup mapping between chess notation and Gazebo coordinates"""
-        # Chess board center at (0.05, 0, 0.8315) in Gazebo - CORRECTED
+        """Setup mapping between chess notation and Gazebo coordinates - CORRECTED"""
+        # Chess board center at (0.05, 0, 0.8315) in Gazebo
         # Board size: 32cm x 32cm, square size: 4cm
         
         self.board_center_x = 0.05
@@ -49,11 +49,13 @@ class ChessPieceController(Node):
         self.board_height = 0.8315  # Height for pieces to sit on board
         self.square_size = 0.04  # 4cm per square
         
-        # Calculate board corners
-        self.board_min_x = self.board_center_x - 0.16  # -0.14 (corrected)
-        self.board_max_x = self.board_center_x + 0.16  # +0.14 (corrected)
-        self.board_min_y = self.board_center_y - 0.16  # -0.14 (corrected)
-        self.board_max_y = self.board_center_y + 0.16  # +0.14 (corrected)
+        # CORRECTED: Calculate board corners accounting for actual board position
+        # Board squares go from -0.14 to +0.14 relative to board center (0.05, 0)
+        # So absolute coordinates are: (0.05 + (-0.14)) to (0.05 + (+0.14)) = (-0.09) to (0.19)
+        self.board_min_x = self.board_center_x - 0.14  # -0.09 (CORRECTED)
+        self.board_max_x = self.board_center_x + 0.14  # +0.19 (CORRECTED) 
+        self.board_min_y = self.board_center_y - 0.14  # -0.14
+        self.board_max_y = self.board_center_y + 0.14  # +0.14
         
         # Create coordinate mapping
         self.chess_to_gazebo = {}
@@ -66,9 +68,9 @@ class ChessPieceController(Node):
             for rank_idx, rank_char in enumerate(ranks):
                 square = file_char + rank_char
                 
-                # Calculate Gazebo coordinates - FIXED ALIGNMENT
-                # Rank 1 (white pieces) at board_min_x = -0.14
-                # Rank 8 (black pieces) at board_max_x = +0.14
+                # Calculate Gazebo coordinates - CORRECTED ALIGNMENT
+                # Rank 1 (white pieces) at board_min_x = -0.09
+                # Rank 8 (black pieces) at board_max_x = +0.19
                 # Files a-h from board_min_y (-0.14) to board_max_y (+0.14)
                 
                 gazebo_x = self.board_min_x + (rank_idx * self.square_size)

@@ -97,13 +97,13 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 
-  <!-- Base link -->
+  <!-- Base link with INCREASED MASS to prevent falling -->
   <link name="base">
     <inertial>
       <origin xyz="0.020739 0.00204287 0.065966" rpy="0 0 0"/>
-      <mass value="0.147"/>
-      <inertia ixx="0.000136117" ixy="4.59787e-07" ixz="9.75275e-08" 
-               iyy="0.000114686" iyz="-4.97151e-06" izz="0.000130364"/>
+      <mass value="50.0"/>  <!-- INCREASED from 0.147 to prevent falling -->
+      <inertia ixx="0.136117" ixy="4.59787e-06" ixz="9.75275e-07" 
+               iyy="0.114686" iyz="-4.97151e-05" izz="0.130364"/>
     </inertial>
     
     <!-- Base motor holder visual -->

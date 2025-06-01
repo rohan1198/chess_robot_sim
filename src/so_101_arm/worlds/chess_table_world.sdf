@@ -806,168 +806,168 @@
     <!-- White Pawns (row 2) -->
     <include>
       <uri>model://chess_pawn_white</uri>
-      <pose>-0.10 -0.14 0.8315 0 0 0</pose>  <!-- a2 -->
+      <pose>-0.05 -0.14 0.8315 0 0 0</pose>  <!-- a2  -->
       <name>white_pawn_a2</name>
     </include>
     <include>
       <uri>model://chess_pawn_white</uri>
-      <pose>-0.10 -0.10 0.8315 0 0 0</pose>  <!-- b2 -->
+      <pose>-0.05 -0.10 0.8315 0 0 0</pose>  <!-- b2  -->
       <name>white_pawn_b2</name>
     </include>
     <include>
       <uri>model://chess_pawn_white</uri>
-      <pose>-0.10 -0.06 0.8315 0 0 0</pose>  <!-- c2 -->
+      <pose>-0.05 -0.06 0.8315 0 0 0</pose>  <!-- c2  -->
       <name>white_pawn_c2</name>
     </include>
     <include>
       <uri>model://chess_pawn_white</uri>
-      <pose>-0.10 -0.02 0.8315 0 0 0</pose>  <!-- d2 -->
+      <pose>-0.05 -0.02 0.8315 0 0 0</pose>  <!-- d2  -->
       <name>white_pawn_d2</name>
     </include>
     <include>
       <uri>model://chess_pawn_white</uri>
-      <pose>-0.10 0.02 0.8315 0 0 0</pose>   <!-- e2 -->
+      <pose>-0.05 0.02 0.8315 0 0 0</pose>   <!-- e2  -->
       <name>white_pawn_e2</name>
     </include>
     <include>
       <uri>model://chess_pawn_white</uri>
-      <pose>-0.10 0.06 0.8315 0 0 0</pose>   <!-- f2 -->
+      <pose>-0.05 0.06 0.8315 0 0 0</pose>   <!-- f2  -->
       <name>white_pawn_f2</name>
     </include>
     <include>
       <uri>model://chess_pawn_white</uri>
-      <pose>-0.10 0.10 0.8315 0 0 0</pose>   <!-- g2 -->
+      <pose>-0.05 0.10 0.8315 0 0 0</pose>   <!-- g2  -->
       <name>white_pawn_g2</name>
     </include>
     <include>
       <uri>model://chess_pawn_white</uri>
-      <pose>-0.10 0.14 0.8315 0 0 0</pose>   <!-- h2 -->
+      <pose>-0.05 0.14 0.8315 0 0 0</pose>   <!-- h2  -->
       <name>white_pawn_h2</name>
     </include>
 
-    <!-- White Back Pieces (row 1) -->
+    <!-- White Back Pieces (row 1)  POSITIONS -->
     <include>
       <uri>model://chess_rook_white</uri>
-      <pose>-0.14 -0.14 0.8315 0 0 0</pose>  <!-- a1 -->
+      <pose>-0.09 -0.14 0.8315 0 0 0</pose>  <!-- a1 -->
       <name>white_rook_a1</name>
     </include>
     <include>
-      <uri>model://chess_knight_white</uri>
-      <pose>-0.14 -0.10 0.8315 0 0 0</pose>  <!-- b1 -->
+      <uri>model://chess_bishop_white</uri>
+      <pose>-0.09 -0.10 0.8315 0 0 0</pose>  <!-- b1 -->
       <name>white_knight_b1</name>
     </include>
     <include>
-      <uri>model://chess_bishop_white</uri>
-      <pose>-0.14 -0.06 0.8315 0 0 0</pose>  <!-- c1 -->
+      <uri>model://chess_knight_white</uri>
+      <pose>-0.09 -0.06 0.8315 0 0 0</pose>  <!-- c1 -->
       <name>white_bishop_c1</name>
     </include>
     <include>
       <uri>model://chess_queen_white</uri>
-      <pose>-0.14 -0.02 0.8315 0 0 0</pose>  <!-- d1 -->
+      <pose>-0.09 -0.02 0.8315 0 0 0</pose>  <!-- d1 -->
       <name>white_queen_d1</name>
     </include>
     <include>
       <uri>model://chess_king_white</uri>
-      <pose>-0.14 0.02 0.8315 0 0 0</pose>   <!-- e1 -->
+      <pose>-0.09 0.02 0.8315 0 0 0</pose>   <!-- e1 -->
       <name>white_king_e1</name>
     </include>
     <include>
-      <uri>model://chess_bishop_white</uri>
-      <pose>-0.14 0.06 0.8315 0 0 0</pose>   <!-- f1 -->
+      <uri>model://chess_knight_white</uri>
+      <pose>-0.09 0.06 0.8315 0 0 0</pose>   <!-- f1 -->
       <name>white_bishop_f1</name>
     </include>
     <include>
-      <uri>model://chess_knight_white</uri>
-      <pose>-0.14 0.10 0.8315 0 0 0</pose>   <!-- g1 -->
+      <uri>model://chess_bishop_white</uri>
+      <pose>-0.09 0.10 0.8315 0 0 0</pose>   <!-- g1 -->
       <name>white_knight_g1</name>
     </include>
     <include>
       <uri>model://chess_rook_white</uri>
-      <pose>-0.14 0.14 0.8315 0 0 0</pose>   <!-- h1 -->
+      <pose>-0.09 0.14 0.8315 0 0 0</pose>   <!-- h1 -->
       <name>white_rook_h1</name>
     </include>
 
-    <!-- Black Pawns (row 7) -->
+    <!-- Black Pawns (row 7)  POSITIONS -->
     <include>
       <uri>model://chess_pawn_black</uri>
-      <pose>0.10 -0.14 0.8315 0 0 0</pose>   <!-- a7 -->
+      <pose>0.15 -0.14 0.8315 0 0 0</pose>   <!-- a7  -->
       <name>black_pawn_a7</name>
     </include>
     <include>
       <uri>model://chess_pawn_black</uri>
-      <pose>0.10 -0.10 0.8315 0 0 0</pose>   <!-- b7 -->
+      <pose>0.15 -0.10 0.8315 0 0 0</pose>   <!-- b7  -->
       <name>black_pawn_b7</name>
     </include>
     <include>
       <uri>model://chess_pawn_black</uri>
-      <pose>0.10 -0.06 0.8315 0 0 0</pose>   <!-- c7 -->
+      <pose>0.15 -0.06 0.8315 0 0 0</pose>   <!-- c7  -->
       <name>black_pawn_c7</name>
     </include>
     <include>
       <uri>model://chess_pawn_black</uri>
-      <pose>0.10 -0.02 0.8315 0 0 0</pose>   <!-- d7 -->
+      <pose>0.15 -0.02 0.8315 0 0 0</pose>   <!-- d7  -->
       <name>black_pawn_d7</name>
     </include>
     <include>
       <uri>model://chess_pawn_black</uri>
-      <pose>0.10 0.02 0.8315 0 0 0</pose>    <!-- e7 -->
+      <pose>0.15 0.02 0.8315 0 0 0</pose>    <!-- e7  -->
       <name>black_pawn_e7</name>
     </include>
     <include>
       <uri>model://chess_pawn_black</uri>
-      <pose>0.10 0.06 0.8315 0 0 0</pose>    <!-- f7 -->
+      <pose>0.15 0.06 0.8315 0 0 0</pose>    <!-- f7  -->
       <name>black_pawn_f7</name>
     </include>
     <include>
       <uri>model://chess_pawn_black</uri>
-      <pose>0.10 0.10 0.8315 0 0 0</pose>    <!-- g7 -->
+      <pose>0.15 0.10 0.8315 0 0 0</pose>    <!-- g7  -->
       <name>black_pawn_g7</name>
     </include>
     <include>
       <uri>model://chess_pawn_black</uri>
-      <pose>0.10 0.14 0.8315 0 0 0</pose>    <!-- h7 -->
+      <pose>0.15 0.14 0.8315 0 0 0</pose>    <!-- h7  -->
       <name>black_pawn_h7</name>
     </include>
 
-    <!-- Black Back Pieces (row 8) -->
+    <!-- Black Back Pieces (row 8)  POSITIONS -->
     <include>
       <uri>model://chess_rook_black</uri>
-      <pose>0.14 -0.14 0.8315 0 0 0</pose>   <!-- a8 -->
+      <pose>0.19 -0.14 0.8315 0 0 0</pose>   <!-- a8 -->
       <name>black_rook_a8</name>
     </include>
     <include>
-      <uri>model://chess_knight_black</uri>
-      <pose>0.14 -0.10 0.8315 0 0 0</pose>   <!-- b8 -->
+      <uri>model://chess_bishop_black</uri>
+      <pose>0.19 -0.10 0.8315 0 0 0</pose>   <!-- b8 -->
       <name>black_knight_b8</name>
     </include>
     <include>
-      <uri>model://chess_bishop_black</uri>
-      <pose>0.14 -0.06 0.8315 0 0 0</pose>   <!-- c8 -->
+      <uri>model://chess_knight_black</uri>
+      <pose>0.19 -0.06 0.8315 0 0 0</pose>   <!-- c8 -->
       <name>black_bishop_c8</name>
     </include>
     <include>
       <uri>model://chess_queen_black</uri>
-      <pose>0.14 -0.02 0.8315 0 0 0</pose>   <!-- d8 -->
+      <pose>0.19 -0.02 0.8315 0 0 0</pose>   <!-- d8 -->
       <name>black_queen_d8</name>
     </include>
     <include>
       <uri>model://chess_king_black</uri>
-      <pose>0.14 0.02 0.8315 0 0 0</pose>    <!-- e8 -->
+      <pose>0.19 0.02 0.8315 0 0 0</pose>    <!-- e8 -->
       <name>black_king_e8</name>
     </include>
     <include>
-      <uri>model://chess_bishop_black</uri>
-      <pose>0.14 0.06 0.8315 0 0 0</pose>    <!-- f8 -->
+      <uri>model://chess_knight_black</uri>
+      <pose>0.19 0.06 0.8315 0 0 0</pose>    <!-- f8 -->
       <name>black_bishop_f8</name>
     </include>
     <include>
-      <uri>model://chess_knight_black</uri>
-      <pose>0.14 0.10 0.8315 0 0 0</pose>    <!-- g8 -->
+      <uri>model://chess_bishop_black</uri>
+      <pose>0.19 0.10 0.8315 0 0 0</pose>    <!-- g8 -->
       <name>black_knight_g8</name>
     </include>
     <include>
       <uri>model://chess_rook_black</uri>
-      <pose>0.14 0.14 0.8315 0 0 0</pose>    <!-- h8 -->
+      <pose>0.19 0.14 0.8315 0 0 0</pose>    <!-- h8 -->
       <name>black_rook_h8</name>
     </include>
 
