@@ -143,9 +143,9 @@
         </visual>
       </link>
 
-      <!-- Robot mounting platform - exactly where robot will be spawned -->
+      <!-- Robot mounting platform -->
       <link name="robot_mount_platform">
-        <pose>0.4 0 0.445 0 0 -1.5708</pose>  <!-- Match robot spawn position and orientation -->
+        <pose>0.4 0 0.445 0 0 -1.5708</pose>
         <collision name="mount_collision">
           <geometry>
             <box>
@@ -307,26 +307,669 @@
       </joint>
     </model>
 
-    <!-- Chess board reference area -->
-    <model name="chessboard_reference">
+    <!-- Complete Chess Board with All 64 Squares -->
+    <model name="chess_board">
       <static>true</static>
-      <pose>-0.2 0 0.8005 0 0 0</pose>
+      <pose>0.05 0 0.8005 0 0 0</pose>
       
-      <link name="board_outline">
-        <visual name="board_visual">
+      <!-- Board frame -->
+      <link name="board_frame">
+        <collision name="frame_collision">
           <geometry>
             <box>
-              <size>0.4 0.4 0.001</size>
+              <size>0.34 0.34 0.015</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="frame_visual">
+          <geometry>
+            <box>
+              <size>0.34 0.34 0.015</size>
             </box>
           </geometry>
           <material>
-            <ambient>0.8 0.8 0.8 0.3</ambient>
-            <diffuse>0.9 0.9 0.9 0.3</diffuse>
-            <specular>0.1 0.1 0.1 0.3</specular>
+            <ambient>0.2 0.1 0.05 1</ambient>
+            <diffuse>0.3 0.15 0.1 1</diffuse>
+            <specular>0.2 0.1 0.05 1</specular>
           </material>
         </visual>
       </link>
+
+      <!-- ALL 64 CHESS SQUARES - Rank 1 (a1-h1) -->
+      <link name="square_a1">
+        <pose>-0.140 -0.140 0.008 0 0 0</pose>
+        <visual name="a1_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_b1">
+        <pose>-0.140 -0.100 0.008 0 0 0</pose>
+        <visual name="b1_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_c1">
+        <pose>-0.140 -0.060 0.008 0 0 0</pose>
+        <visual name="c1_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_d1">
+        <pose>-0.140 -0.020 0.008 0 0 0</pose>
+        <visual name="d1_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_e1">
+        <pose>-0.140 0.020 0.008 0 0 0</pose>
+        <visual name="e1_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_f1">
+        <pose>-0.140 0.060 0.008 0 0 0</pose>
+        <visual name="f1_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_g1">
+        <pose>-0.140 0.100 0.008 0 0 0</pose>
+        <visual name="g1_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_h1">
+        <pose>-0.140 0.140 0.008 0 0 0</pose>
+        <visual name="h1_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+
+      <!-- Rank 2 (a2-h2) -->
+      <link name="square_a2">
+        <pose>-0.100 -0.140 0.008 0 0 0</pose>
+        <visual name="a2_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_b2">
+        <pose>-0.100 -0.100 0.008 0 0 0</pose>
+        <visual name="b2_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_c2">
+        <pose>-0.100 -0.060 0.008 0 0 0</pose>
+        <visual name="c2_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_d2">
+        <pose>-0.100 -0.020 0.008 0 0 0</pose>
+        <visual name="d2_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_e2">
+        <pose>-0.100 0.020 0.008 0 0 0</pose>
+        <visual name="e2_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_f2">
+        <pose>-0.100 0.060 0.008 0 0 0</pose>
+        <visual name="f2_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_g2">
+        <pose>-0.100 0.100 0.008 0 0 0</pose>
+        <visual name="g2_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_h2">
+        <pose>-0.100 0.140 0.008 0 0 0</pose>
+        <visual name="h2_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+
+      <!-- Rank 3 (a3-h3) -->
+      <link name="square_a3">
+        <pose>-0.060 -0.140 0.008 0 0 0</pose>
+        <visual name="a3_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_b3">
+        <pose>-0.060 -0.100 0.008 0 0 0</pose>
+        <visual name="b3_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_c3">
+        <pose>-0.060 -0.060 0.008 0 0 0</pose>
+        <visual name="c3_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_d3">
+        <pose>-0.060 -0.020 0.008 0 0 0</pose>
+        <visual name="d3_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_e3">
+        <pose>-0.060 0.020 0.008 0 0 0</pose>
+        <visual name="e3_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_f3">
+        <pose>-0.060 0.060 0.008 0 0 0</pose>
+        <visual name="f3_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_g3">
+        <pose>-0.060 0.100 0.008 0 0 0</pose>
+        <visual name="g3_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_h3">
+        <pose>-0.060 0.140 0.008 0 0 0</pose>
+        <visual name="h3_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+
+      <!-- Rank 4 (a4-h4) -->
+      <link name="square_a4">
+        <pose>-0.020 -0.140 0.008 0 0 0</pose>
+        <visual name="a4_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_b4">
+        <pose>-0.020 -0.100 0.008 0 0 0</pose>
+        <visual name="b4_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_c4">
+        <pose>-0.020 -0.060 0.008 0 0 0</pose>
+        <visual name="c4_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_d4">
+        <pose>-0.020 -0.020 0.008 0 0 0</pose>
+        <visual name="d4_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_e4">
+        <pose>-0.020 0.020 0.008 0 0 0</pose>
+        <visual name="e4_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_f4">
+        <pose>-0.020 0.060 0.008 0 0 0</pose>
+        <visual name="f4_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_g4">
+        <pose>-0.020 0.100 0.008 0 0 0</pose>
+        <visual name="g4_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_h4">
+        <pose>-0.020 0.140 0.008 0 0 0</pose>
+        <visual name="h4_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+
+      <!-- Rank 5 (a5-h5) -->
+      <link name="square_a5">
+        <pose>0.020 -0.140 0.008 0 0 0</pose>
+        <visual name="a5_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_b5">
+        <pose>0.020 -0.100 0.008 0 0 0</pose>
+        <visual name="b5_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_c5">
+        <pose>0.020 -0.060 0.008 0 0 0</pose>
+        <visual name="c5_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_d5">
+        <pose>0.020 -0.020 0.008 0 0 0</pose>
+        <visual name="d5_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_e5">
+        <pose>0.020 0.020 0.008 0 0 0</pose>
+        <visual name="e5_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_f5">
+        <pose>0.020 0.060 0.008 0 0 0</pose>
+        <visual name="f5_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_g5">
+        <pose>0.020 0.100 0.008 0 0 0</pose>
+        <visual name="g5_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_h5">
+        <pose>0.020 0.140 0.008 0 0 0</pose>
+        <visual name="h5_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+
+      <!-- Rank 6 (a6-h6) -->
+      <link name="square_a6">
+        <pose>0.060 -0.140 0.008 0 0 0</pose>
+        <visual name="a6_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_b6">
+        <pose>0.060 -0.100 0.008 0 0 0</pose>
+        <visual name="b6_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_c6">
+        <pose>0.060 -0.060 0.008 0 0 0</pose>
+        <visual name="c6_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_d6">
+        <pose>0.060 -0.020 0.008 0 0 0</pose>
+        <visual name="d6_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_e6">
+        <pose>0.060 0.020 0.008 0 0 0</pose>
+        <visual name="e6_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_f6">
+        <pose>0.060 0.060 0.008 0 0 0</pose>
+        <visual name="f6_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_g6">
+        <pose>0.060 0.100 0.008 0 0 0</pose>
+        <visual name="g6_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_h6">
+        <pose>0.060 0.140 0.008 0 0 0</pose>
+        <visual name="h6_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+
+      <!-- Rank 7 (a7-h7) -->
+      <link name="square_a7">
+        <pose>0.100 -0.140 0.008 0 0 0</pose>
+        <visual name="a7_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_b7">
+        <pose>0.100 -0.100 0.008 0 0 0</pose>
+        <visual name="b7_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_c7">
+        <pose>0.100 -0.060 0.008 0 0 0</pose>
+        <visual name="c7_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_d7">
+        <pose>0.100 -0.020 0.008 0 0 0</pose>
+        <visual name="d7_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_e7">
+        <pose>0.100 0.020 0.008 0 0 0</pose>
+        <visual name="e7_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_f7">
+        <pose>0.100 0.060 0.008 0 0 0</pose>
+        <visual name="f7_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_g7">
+        <pose>0.100 0.100 0.008 0 0 0</pose>
+        <visual name="g7_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_h7">
+        <pose>0.100 0.140 0.008 0 0 0</pose>
+        <visual name="h7_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+
+      <!-- Rank 8 (a8-h8) -->
+      <link name="square_a8">
+        <pose>0.140 -0.140 0.008 0 0 0</pose>
+        <visual name="a8_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_b8">
+        <pose>0.140 -0.100 0.008 0 0 0</pose>
+        <visual name="b8_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_c8">
+        <pose>0.140 -0.060 0.008 0 0 0</pose>
+        <visual name="c8_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_d8">
+        <pose>0.140 -0.020 0.008 0 0 0</pose>
+        <visual name="d8_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_e8">
+        <pose>0.140 0.020 0.008 0 0 0</pose>
+        <visual name="e8_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_f8">
+        <pose>0.140 0.060 0.008 0 0 0</pose>
+        <visual name="f8_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_g8">
+        <pose>0.140 0.100 0.008 0 0 0</pose>
+        <visual name="g8_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
+      <link name="square_h8">
+        <pose>0.140 0.140 0.008 0 0 0</pose>
+        <visual name="h8_visual">
+          <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+        </visual>
+      </link>
     </model>
+
+    <!-- Chess pieces with corrected coordinates -->
+    <!-- White pieces (bottom rows for robot perspective) -->
+    
+    <!-- White Pawns (row 2) -->
+    <include>
+      <uri>model://chess_pawn_white</uri>
+      <pose>-0.10 -0.14 0.8315 0 0 0</pose>  <!-- a2 -->
+      <name>white_pawn_a2</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_white</uri>
+      <pose>-0.10 -0.10 0.8315 0 0 0</pose>  <!-- b2 -->
+      <name>white_pawn_b2</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_white</uri>
+      <pose>-0.10 -0.06 0.8315 0 0 0</pose>  <!-- c2 -->
+      <name>white_pawn_c2</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_white</uri>
+      <pose>-0.10 -0.02 0.8315 0 0 0</pose>  <!-- d2 -->
+      <name>white_pawn_d2</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_white</uri>
+      <pose>-0.10 0.02 0.8315 0 0 0</pose>   <!-- e2 -->
+      <name>white_pawn_e2</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_white</uri>
+      <pose>-0.10 0.06 0.8315 0 0 0</pose>   <!-- f2 -->
+      <name>white_pawn_f2</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_white</uri>
+      <pose>-0.10 0.10 0.8315 0 0 0</pose>   <!-- g2 -->
+      <name>white_pawn_g2</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_white</uri>
+      <pose>-0.10 0.14 0.8315 0 0 0</pose>   <!-- h2 -->
+      <name>white_pawn_h2</name>
+    </include>
+
+    <!-- White Back Pieces (row 1) -->
+    <include>
+      <uri>model://chess_rook_white</uri>
+      <pose>-0.14 -0.14 0.8315 0 0 0</pose>  <!-- a1 -->
+      <name>white_rook_a1</name>
+    </include>
+    <include>
+      <uri>model://chess_knight_white</uri>
+      <pose>-0.14 -0.10 0.8315 0 0 0</pose>  <!-- b1 -->
+      <name>white_knight_b1</name>
+    </include>
+    <include>
+      <uri>model://chess_bishop_white</uri>
+      <pose>-0.14 -0.06 0.8315 0 0 0</pose>  <!-- c1 -->
+      <name>white_bishop_c1</name>
+    </include>
+    <include>
+      <uri>model://chess_queen_white</uri>
+      <pose>-0.14 -0.02 0.8315 0 0 0</pose>  <!-- d1 -->
+      <name>white_queen_d1</name>
+    </include>
+    <include>
+      <uri>model://chess_king_white</uri>
+      <pose>-0.14 0.02 0.8315 0 0 0</pose>   <!-- e1 -->
+      <name>white_king_e1</name>
+    </include>
+    <include>
+      <uri>model://chess_bishop_white</uri>
+      <pose>-0.14 0.06 0.8315 0 0 0</pose>   <!-- f1 -->
+      <name>white_bishop_f1</name>
+    </include>
+    <include>
+      <uri>model://chess_knight_white</uri>
+      <pose>-0.14 0.10 0.8315 0 0 0</pose>   <!-- g1 -->
+      <name>white_knight_g1</name>
+    </include>
+    <include>
+      <uri>model://chess_rook_white</uri>
+      <pose>-0.14 0.14 0.8315 0 0 0</pose>   <!-- h1 -->
+      <name>white_rook_h1</name>
+    </include>
+
+    <!-- Black Pawns (row 7) -->
+    <include>
+      <uri>model://chess_pawn_black</uri>
+      <pose>0.10 -0.14 0.8315 0 0 0</pose>   <!-- a7 -->
+      <name>black_pawn_a7</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_black</uri>
+      <pose>0.10 -0.10 0.8315 0 0 0</pose>   <!-- b7 -->
+      <name>black_pawn_b7</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_black</uri>
+      <pose>0.10 -0.06 0.8315 0 0 0</pose>   <!-- c7 -->
+      <name>black_pawn_c7</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_black</uri>
+      <pose>0.10 -0.02 0.8315 0 0 0</pose>   <!-- d7 -->
+      <name>black_pawn_d7</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_black</uri>
+      <pose>0.10 0.02 0.8315 0 0 0</pose>    <!-- e7 -->
+      <name>black_pawn_e7</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_black</uri>
+      <pose>0.10 0.06 0.8315 0 0 0</pose>    <!-- f7 -->
+      <name>black_pawn_f7</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_black</uri>
+      <pose>0.10 0.10 0.8315 0 0 0</pose>    <!-- g7 -->
+      <name>black_pawn_g7</name>
+    </include>
+    <include>
+      <uri>model://chess_pawn_black</uri>
+      <pose>0.10 0.14 0.8315 0 0 0</pose>    <!-- h7 -->
+      <name>black_pawn_h7</name>
+    </include>
+
+    <!-- Black Back Pieces (row 8) -->
+    <include>
+      <uri>model://chess_rook_black</uri>
+      <pose>0.14 -0.14 0.8315 0 0 0</pose>   <!-- a8 -->
+      <name>black_rook_a8</name>
+    </include>
+    <include>
+      <uri>model://chess_knight_black</uri>
+      <pose>0.14 -0.10 0.8315 0 0 0</pose>   <!-- b8 -->
+      <name>black_knight_b8</name>
+    </include>
+    <include>
+      <uri>model://chess_bishop_black</uri>
+      <pose>0.14 -0.06 0.8315 0 0 0</pose>   <!-- c8 -->
+      <name>black_bishop_c8</name>
+    </include>
+    <include>
+      <uri>model://chess_queen_black</uri>
+      <pose>0.14 -0.02 0.8315 0 0 0</pose>   <!-- d8 -->
+      <name>black_queen_d8</name>
+    </include>
+    <include>
+      <uri>model://chess_king_black</uri>
+      <pose>0.14 0.02 0.8315 0 0 0</pose>    <!-- e8 -->
+      <name>black_king_e8</name>
+    </include>
+    <include>
+      <uri>model://chess_bishop_black</uri>
+      <pose>0.14 0.06 0.8315 0 0 0</pose>    <!-- f8 -->
+      <name>black_bishop_f8</name>
+    </include>
+    <include>
+      <uri>model://chess_knight_black</uri>
+      <pose>0.14 0.10 0.8315 0 0 0</pose>    <!-- g8 -->
+      <name>black_knight_g8</name>
+    </include>
+    <include>
+      <uri>model://chess_rook_black</uri>
+      <pose>0.14 0.14 0.8315 0 0 0</pose>    <!-- h8 -->
+      <name>black_rook_h8</name>
+    </include>
 
     <!-- Coordinate frame markers -->
     <model name="coordinate_markers">

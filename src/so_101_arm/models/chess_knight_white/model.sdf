@@ -1,0 +1,416 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="chess_king_white">
+    <link name="link">
+      <pose>0 0 0 0 0 0</pose>
+      
+      <inertial>
+        <mass>0.12</mass>
+        <pose>0 0 0.022 0 0 0</pose>
+        <inertia>
+          <ixx>0.00004</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00004</iyy>
+          <iyz>0</iyz>
+          <izz>0.00001</izz>
+        </inertia>
+      </inertial>
+      
+      <!-- Base -->
+      <collision name="base_collision">
+        <pose>0 0 0.006 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.019</radius>
+            <length>0.012</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+          <bounce>
+            <restitution_coefficient>0.1</restitution_coefficient>
+          </bounce>
+        </surface>
+      </collision>
+      
+      <!-- Main body (royal proportions) -->
+      <collision name="body_bottom_collision">
+        <pose>0 0 0.017 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.016</radius>
+            <length>0.014</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      
+      <collision name="body_middle_collision">
+        <pose>0 0 0.026 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.014</radius>
+            <length>0.010</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      
+      <collision name="body_upper_collision">
+        <pose>0 0 0.033 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.006</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      
+      <!-- Crown base -->
+      <collision name="crown_base_collision">
+        <pose>0 0 0.038 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.016</radius>
+            <length>0.006</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      
+      <!-- Crown band with decorative elements -->
+      <collision name="crown_band_collision">
+        <pose>0 0 0.043 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.017</radius>
+            <length>0.004</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      
+      <!-- Crown decorative points -->
+      <collision name="crown_decoration_1">
+        <pose>0.012 0 0.047 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.004 0.004 0.008</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <collision name="crown_decoration_2">
+        <pose>-0.012 0 0.047 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.004 0.004 0.008</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <collision name="crown_decoration_3">
+        <pose>0 0.012 0.047 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.004 0.004 0.008</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <collision name="crown_decoration_4">
+        <pose>0 -0.012 0.047 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.004 0.004 0.008</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <!-- Cross (distinctive king feature) -->
+      <!-- Vertical part of cross -->
+      <collision name="cross_vertical_collision">
+        <pose>0 0 0.054 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.003 0.003 0.018</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <!-- Horizontal part of cross -->
+      <collision name="cross_horizontal_collision">
+        <pose>0 0 0.058 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.012 0.003 0.003</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <!-- Cross top sphere -->
+      <collision name="cross_top_collision">
+        <pose>0 0 0.063 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.003</radius>
+          </sphere>
+        </geometry>
+      </collision>
+      
+      <!-- Visuals -->
+      <visual name="base_visual">
+        <pose>0 0 0.006 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.019</radius>
+            <length>0.012</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.95 0.95 0.9 1</ambient>
+          <diffuse>0.98 0.98 0.95 1</diffuse>
+          <specular>0.4 0.4 0.4 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="body_bottom_visual">
+        <pose>0 0 0.017 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.016</radius>
+            <length>0.014</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.95 0.95 0.9 1</ambient>
+          <diffuse>0.98 0.98 0.95 1</diffuse>
+          <specular>0.4 0.4 0.4 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="body_middle_visual">
+        <pose>0 0 0.026 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.014</radius>
+            <length>0.010</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.95 0.95 0.9 1</ambient>
+          <diffuse>0.98 0.98 0.95 1</diffuse>
+          <specular>0.4 0.4 0.4 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="body_upper_visual">
+        <pose>0 0 0.033 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.006</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.95 0.95 0.9 1</ambient>
+          <diffuse>0.98 0.98 0.95 1</diffuse>
+          <specular>0.4 0.4 0.4 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="crown_base_visual">
+        <pose>0 0 0.038 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.016</radius>
+            <length>0.006</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.95 0.95 0.9 1</ambient>
+          <diffuse>0.98 0.98 0.95 1</diffuse>
+          <specular>0.5 0.5 0.5 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="crown_band_visual">
+        <pose>0 0 0.043 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.017</radius>
+            <length>0.004</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.6 0.6 0.6 1</specular>
+        </material>
+      </visual>
+      
+      <!-- Crown decorations -->
+      <visual name="crown_decoration_1_visual">
+        <pose>0.012 0 0.047 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.004 0.004 0.008</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.6 0.6 0.6 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="crown_decoration_2_visual">
+        <pose>-0.012 0 0.047 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.004 0.004 0.008</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.6 0.6 0.6 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="crown_decoration_3_visual">
+        <pose>0 0.012 0.047 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.004 0.004 0.008</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.6 0.6 0.6 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="crown_decoration_4_visual">
+        <pose>0 -0.012 0.047 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.004 0.004 0.008</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.6 0.6 0.6 1</specular>
+        </material>
+      </visual>
+      
+      <!-- Cross visuals -->
+      <visual name="cross_vertical_visual">
+        <pose>0 0 0.054 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.003 0.003 0.018</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.7 0.7 0.7 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="cross_horizontal_visual">
+        <pose>0 0 0.058 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.012 0.003 0.003</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.7 0.7 0.7 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="cross_top_visual">
+        <pose>0 0 0.063 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.003</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.8 0.8 0.8 1</specular>
+        </material>
+      </visual>
+      
+      <!-- Decorative bands -->
+      <visual name="band_1">
+        <pose>0 0 0.014 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.017</radius>
+            <length>0.001</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.85 0.85 0.8 1</ambient>
+          <diffuse>0.9 0.9 0.85 1</diffuse>
+          <specular>0.3 0.3 0.3 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="band_2">
+        <pose>0 0 0.024 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.001</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.85 0.85 0.8 1</ambient>
+          <diffuse>0.9 0.9 0.85 1</diffuse>
+          <specular>0.3 0.3 0.3 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="band_3">
+        <pose>0 0 0.031 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.001</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.85 0.85 0.8 1</ambient>
+          <diffuse>0.9 0.9 0.85 1</diffuse>
+          <specular>0.3 0.3 0.3 1</specular>
+        </material>
+      </visual>
+      
+      <!-- Royal jewel at base -->
+      <visual name="royal_jewel">
+        <pose>0 0 0.041 0 0 0</pose>
+        <geometry>
+          <sphere>
+            <radius>0.003</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <ambient>0.8 0.8 1.0 1</ambient>
+          <diffuse>0.9 0.9 1.0 1</diffuse>
+          <specular>0.9 0.9 0.9 1</specular>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

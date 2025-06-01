@@ -1,0 +1,155 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="chess_king_white">
+    <link name="link">
+      <pose>0 0 0 0 0 0</pose>
+      
+      <inertial>
+        <mass>0.12</mass>
+        <inertia>
+          <ixx>0.00004</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00004</iyy>
+          <iyz>0</iyz>
+          <izz>0.00001</izz>
+        </inertia>
+      </inertial>
+      
+      <!-- Base -->
+      <collision name="base_collision">
+        <geometry>
+          <cylinder>
+            <radius>0.017</radius>
+            <length>0.025</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+          <bounce>
+            <restitution_coefficient>0.1</restitution_coefficient>
+          </bounce>
+        </surface>
+      </collision>
+      
+      <!-- Body -->
+      <collision name="body_collision">
+        <pose>0 0 0.030 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.013</radius>
+            <length>0.035</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      
+      <!-- Crown base -->
+      <collision name="crown_base_collision">
+        <pose>0 0 0.052 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.008</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      
+      <!-- Cross vertical -->
+      <collision name="cross_vertical_collision">
+        <pose>0 0 0.060 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.003 0.003 0.015</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <!-- Cross horizontal -->
+      <collision name="cross_horizontal_collision">
+        <pose>0 0 0.065 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.012 0.003 0.003</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <visual name="base_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.017</radius>
+            <length>0.025</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.3 0.3 0.3 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="body_visual">
+        <pose>0 0 0.030 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.013</radius>
+            <length>0.035</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.3 0.3 0.3 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="crown_base_visual">
+        <pose>0 0 0.052 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.008</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.5 0.5 0.5 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="cross_vertical_visual">
+        <pose>0 0 0.060 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.003 0.003 0.015</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.5 0.5 0.5 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="cross_horizontal_visual">
+        <pose>0 0 0.065 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.012 0.003 0.003</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.9 0.9 0.85 1</ambient>
+          <diffuse>0.95 0.95 0.9 1</diffuse>
+          <specular>0.5 0.5 0.5 1</specular>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,236 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="chess_rook_black">
+    <link name="link">
+      <pose>0 0 0 0 0 0</pose>
+      
+      <inertial>
+        <mass>0.08</mass>
+        <pose>0 0 0.015 0 0 0</pose>
+        <inertia>
+          <ixx>0.00002</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00002</iyy>
+          <iyz>0</iyz>
+          <izz>0.00001</izz>
+        </inertia>
+      </inertial>
+      
+      <!-- Base -->
+      <collision name="base_collision">
+        <pose>0 0 0.004 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.016</radius>
+            <length>0.008</length>
+          </cylinder>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+          <bounce>
+            <restitution_coefficient>0.1</restitution_coefficient>
+          </bounce>
+        </surface>
+      </collision>
+      
+      <!-- Main tower body -->
+      <collision name="tower_collision">
+        <pose>0 0 0.018 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.013</radius>
+            <length>0.020</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      
+      <!-- Castle top -->
+      <collision name="castle_base_collision">
+        <pose>0 0 0.030 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.006</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      
+      <!-- Battlements -->
+      <collision name="battlement_1">
+        <pose>0.010 0.010 0.036 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.006 0.006 0.012</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <collision name="battlement_2">
+        <pose>-0.010 0.010 0.036 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.006 0.006 0.012</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <collision name="battlement_3">
+        <pose>0.010 -0.010 0.036 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.006 0.006 0.012</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <collision name="battlement_4">
+        <pose>-0.010 -0.010 0.036 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.006 0.006 0.012</size>
+          </box>
+        </geometry>
+      </collision>
+      
+      <!-- Visuals -->
+      <visual name="base_visual">
+        <pose>0 0 0.004 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.016</radius>
+            <length>0.008</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.1 0.1 0.1 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
+          <specular>0.4 0.4 0.4 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="tower_visual">
+        <pose>0 0 0.018 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.013</radius>
+            <length>0.020</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.1 0.1 0.1 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
+          <specular>0.4 0.4 0.4 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="castle_base_visual">
+        <pose>0 0 0.030 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.006</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.1 0.1 0.1 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
+          <specular>0.4 0.4 0.4 1</specular>
+        </material>
+      </visual>
+      
+      <!-- Battlement visuals -->
+      <visual name="battlement_1_visual">
+        <pose>0.010 0.010 0.036 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.006 0.006 0.012</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.1 0.1 0.1 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
+          <specular>0.4 0.4 0.4 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="battlement_2_visual">
+        <pose>-0.010 0.010 0.036 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.006 0.006 0.012</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.1 0.1 0.1 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
+          <specular>0.4 0.4 0.4 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="battlement_3_visual">
+        <pose>0.010 -0.010 0.036 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.006 0.006 0.012</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.1 0.1 0.1 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
+          <specular>0.4 0.4 0.4 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="battlement_4_visual">
+        <pose>-0.010 -0.010 0.036 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.006 0.006 0.012</size>
+          </box>
+        </geometry>
+        <material>
+          <ambient>0.1 0.1 0.1 1</ambient>
+          <diffuse>0.2 0.2 0.2 1</diffuse>
+          <specular>0.4 0.4 0.4 1</specular>
+        </material>
+      </visual>
+      
+      <!-- Decorative bands -->
+      <visual name="band_1">
+        <pose>0 0 0.012 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.014</radius>
+            <length>0.001</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.05 0.05 0.05 1</ambient>
+          <diffuse>0.15 0.15 0.15 1</diffuse>
+          <specular>0.3 0.3 0.3 1</specular>
+        </material>
+      </visual>
+      
+      <visual name="band_2">
+        <pose>0 0 0.024 0 0 0</pose>
+        <geometry>
+          <cylinder>
+            <radius>0.014</radius>
+            <length>0.001</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.05 0.05 0.05 1</ambient>
+          <diffuse>0.15 0.15 0.15 1</diffuse>
+          <specular>0.3 0.3 0.3 1</specular>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
