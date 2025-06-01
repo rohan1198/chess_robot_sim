@@ -143,7 +143,7 @@
         </visual>
       </link>
 
-      <!-- Robot mounting platform -->
+      <!-- Robot mounting platform with enhanced contact properties -->
       <link name="robot_mount_platform">
         <pose>0.4 0 0.445 0 0 -1.5708</pose>
         <collision name="mount_collision">
@@ -152,6 +152,25 @@
               <size>0.15 0.15 0.07</size>
             </box>
           </geometry>
+          <!-- Enhanced surface properties for better robot contact -->
+          <surface>
+            <friction>
+              <ode>
+                <mu>1.5</mu>    <!-- Higher friction coefficient -->
+                <mu2>1.5</mu2>  <!-- Higher friction coefficient -->
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <soft_cfm>0.0001</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1000000</kp>  <!-- High stiffness for stable contact -->
+                <kd>100</kd>      <!-- Damping for stability -->
+                <max_vel>0.01</max_vel>
+                <min_depth>0.001</min_depth>
+              </ode>
+            </contact>
+          </surface>
         </collision>
         <visual name="mount_visual">
           <geometry>
@@ -852,12 +871,12 @@
       <name>white_rook_a1</name>
     </include>
     <include>
-      <uri>model://chess_bishop_white</uri>
+      <uri>model://chess_knight_white</uri>
       <pose>-0.09 -0.10 0.8315 0 0 0</pose>  <!-- b1 -->
       <name>white_knight_b1</name>
     </include>
     <include>
-      <uri>model://chess_knight_white</uri>
+      <uri>model://chess_bishop_white</uri>
       <pose>-0.09 -0.06 0.8315 0 0 0</pose>  <!-- c1 -->
       <name>white_bishop_c1</name>
     </include>
@@ -872,12 +891,12 @@
       <name>white_king_e1</name>
     </include>
     <include>
-      <uri>model://chess_knight_white</uri>
+      <uri>model://chess_bishop_white</uri>
       <pose>-0.09 0.06 0.8315 0 0 0</pose>   <!-- f1 -->
       <name>white_bishop_f1</name>
     </include>
     <include>
-      <uri>model://chess_bishop_white</uri>
+      <uri>model://chess_knight_white</uri>
       <pose>-0.09 0.10 0.8315 0 0 0</pose>   <!-- g1 -->
       <name>white_knight_g1</name>
     </include>
@@ -936,12 +955,12 @@
       <name>black_rook_a8</name>
     </include>
     <include>
-      <uri>model://chess_bishop_black</uri>
+      <uri>model://chess_knight_black</uri>
       <pose>0.19 -0.10 0.8315 0 0 0</pose>   <!-- b8 -->
       <name>black_knight_b8</name>
     </include>
     <include>
-      <uri>model://chess_knight_black</uri>
+      <uri>model://chess_bishop_black</uri>
       <pose>0.19 -0.06 0.8315 0 0 0</pose>   <!-- c8 -->
       <name>black_bishop_c8</name>
     </include>
@@ -956,12 +975,12 @@
       <name>black_king_e8</name>
     </include>
     <include>
-      <uri>model://chess_knight_black</uri>
+      <uri>model://chess_bishop_black</uri>
       <pose>0.19 0.06 0.8315 0 0 0</pose>    <!-- f8 -->
       <name>black_bishop_f8</name>
     </include>
     <include>
-      <uri>model://chess_bishop_black</uri>
+      <uri>model://chess_knight_black</uri>
       <pose>0.19 0.10 0.8315 0 0 0</pose>    <!-- g8 -->
       <name>black_knight_g8</name>
     </include>

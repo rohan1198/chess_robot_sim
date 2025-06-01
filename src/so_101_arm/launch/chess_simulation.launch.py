@@ -51,7 +51,7 @@ def generate_launch_description():
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
-        n='robot_state_publisher',
+        name='robot_state_publisher',
         output='screen',
         parameters=[{
             'robot_description': robot_description_content,
@@ -81,7 +81,7 @@ def generate_launch_description():
     gazebo_bridge_node = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        n='parameter_bridge',
+        name='parameter_bridge',
         arguments=[
             '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
             '/model/so_101_arm/pose@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V',
@@ -106,7 +106,7 @@ def generate_launch_description():
         ]
     )
 
-    # Spawn robot in Ignition Gazebo
+    # Spawn robot in Ignition Gazebo - positioned correctly on the mounting platform
     spawn_robot_timer = TimerAction(
         period=8.0,
         actions=[
@@ -114,13 +114,13 @@ def generate_launch_description():
                 cmd=[
                     'ros2', 'run', 'ros_gz_sim', 'create',
                     '-file', '/tmp/so_101_arm_processed.urdf',
-                    '-n', 'so_101_arm',
+                    '-name', 'so_101_arm',
                     '-x', '0.4',
                     '-y', '0',
-                    '-z', '0.7751',
+                    '-z', '0.88',  # FIXED: Correct height - mount platform top surface at z=0.88
                     '-R', '0',
                     '-P', '0',
-                    '-Y', '-1.5708'  # 90 degrees clockwise rotation
+                    '-Y', '-1.5708'  # 90 degrees clockwise rotation to match mount orientation
                 ],
                 output='screen'
             )
@@ -187,7 +187,7 @@ def generate_launch_description():
             Node(
                 package='so_101_arm',
                 executable='chess_piece_controller.py',
-                n='chess_piece_controller',
+                name='chess_piece_controller',
                 output='screen',
                 condition=IfCondition(LaunchConfiguration('auto_start_chess'))
             )
@@ -201,7 +201,7 @@ def generate_launch_description():
             Node(
                 package='rviz2',
                 executable='rviz2',
-                n='rviz2',
+                name='rviz2',
                 arguments=['-d', PathJoinSubstitution([
                     FindPackageShare('so_101_arm'),
                     'config',
@@ -219,15 +219,15 @@ def generate_launch_description():
         
         # Set environment variables
         SetEnvironmentVariable(
-            n='IGN_GAZEBO_RESOURCE_PATH',
+            name='IGN_GAZEBO_RESOURCE_PATH',
             value=[PathJoinSubstitution([pkg_share, 'models']), os.pathsep, os.environ.get('IGN_GAZEBO_RESOURCE_PATH', '')]
         ),
         SetEnvironmentVariable(
-            n='GZ_SIM_RESOURCE_PATH', 
+            name='GZ_SIM_RESOURCE_PATH', 
             value=[PathJoinSubstitution([pkg_share, 'models']), os.pathsep, os.environ.get('GZ_SIM_RESOURCE_PATH', '')]
         ),
         SetEnvironmentVariable(
-            n='GZ_SIM_SYSTEM_PLUGIN_PATH',
+            name='GZ_SIM_SYSTEM_PLUGIN_PATH',
             value=[os.path.join(get_package_share_directory('gz_ros2_control'), 'lib'),
                    os.pathsep,
                    os.environ.get('GZ_SIM_SYSTEM_PLUGIN_PATH', '')]

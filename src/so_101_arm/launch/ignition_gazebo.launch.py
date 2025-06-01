@@ -78,7 +78,7 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Spawn robot in Ignition Gazebo - positioned exactly on the mounting platform
+    # Spawn robot in Ignition Gazebo - positioned correctly on the mounting platform
     spawn_robot_timer = TimerAction(
         period=8.0,
         actions=[
@@ -89,10 +89,10 @@ def generate_launch_description():
                     '-name', 'so_101_arm',
                     '-x', '0.4',
                     '-y', '0',
-                    '-z', '0.7751',
+                    '-z', '0.88',  # FIXED: Correct height - mount platform top surface at z=0.88
                     '-R', '0',
                     '-P', '0',
-                    '-Y', '-1.5708'  # 90 degrees clockwise rotation
+                    '-Y', '-1.5708'  # 90 degrees clockwise rotation to match mount orientation
                 ],
                 output='screen'
             )
@@ -114,7 +114,7 @@ def generate_launch_description():
     )
 
     # Robot should now be properly positioned on the mount platform
-    # No additional attachment needed since physics handles the contact
+    # The heavy base mass (50.0 kg) and correct positioning should keep it stable
 
     # Joint state broadcaster spawner
     joint_state_broadcaster_spawner_timer = TimerAction(

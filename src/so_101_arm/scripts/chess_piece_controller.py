@@ -84,11 +84,11 @@ class ChessPieceController(Node):
                 self.gazebo_to_chess[key] = square
     
     def setup_robot_workspace(self):
-        """Analyze robot workspace and reachability"""
-        # Robot arm position and workspace
+        """Analyze robot workspace and reachability - UPDATED for corrected robot position"""
+        # Robot arm position - CORRECTED to match actual spawn position
         self.robot_x = 0.4
         self.robot_y = 0.0  
-        self.robot_z = 0.7751
+        self.robot_z = 0.88  # UPDATED: Robot base now at mount platform surface level
         
         # Estimate robot reach (conservative estimate)
         self.robot_reach_radius = 0.45  # 45cm reach
