@@ -97,7 +97,7 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 
-  <!-- Base link with INCREASED MASS to prevent falling -->
+  <!-- Base link with INCREASED MASS and IMPROVED COLLISION GEOMETRY -->
   <link name="base">
     <inertial>
       <origin xyz="0.020739 0.00204287 0.065966" rpy="0 0 0"/>
@@ -116,11 +116,30 @@
         <color rgba="0.9 0.9 0.9 1.0"/>
       </material>
     </visual>
+    <!-- IMPROVED: Base collision geometry that extends to the bottom -->
     <collision name="base_motor_holder_collision">
-      <origin xyz="0.0206915 0.0221255 0.0300817" rpy="1.5708 0 0"/>
+      <origin xyz="0.0206915 0.0221255 0.010" rpy="0 0 0"/>
       <geometry>
-        <box size="0.05 0.05 0.05"/>
+        <box size="0.08 0.08 0.02"/>
       </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>1.0</mu>
+            <mu2>1.0</mu2>
+          </ode>
+        </friction>
+        <contact>
+          <ode>
+            <soft_cfm>0.0001</soft_cfm>
+            <soft_erp>0.2</soft_erp>
+            <kp>1000000</kp>
+            <kd>100</kd>
+            <max_vel>0.01</max_vel>
+            <min_depth>0.001</min_depth>
+          </ode>
+        </contact>
+      </surface>
     </collision>
     
     <!-- Base main body visual -->
@@ -133,11 +152,30 @@
         <color rgba="0.8 0.8 0.8 1.0"/>
       </material>
     </visual>
+    <!-- IMPROVED: Base main collision that provides stable contact -->
     <collision name="base_main_collision">
-      <origin xyz="0.0207909 0.0221255 0.0300817" rpy="1.5708 0 0"/>
+      <origin xyz="0.0207909 0.0221255 0.030" rpy="0 0 0"/>
       <geometry>
-        <box size="0.08 0.08 0.08"/>
+        <box size="0.10 0.10 0.06"/>
       </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>1.0</mu>
+            <mu2>1.0</mu2>
+          </ode>
+        </friction>
+        <contact>
+          <ode>
+            <soft_cfm>0.0001</soft_cfm>
+            <soft_erp>0.2</soft_erp>
+            <kp>1000000</kp>
+            <kd>100</kd>
+            <max_vel>0.01</max_vel>
+            <min_depth>0.001</min_depth>
+          </ode>
+        </contact>
+      </surface>
     </collision>
 
     <!-- Base motor visual -->

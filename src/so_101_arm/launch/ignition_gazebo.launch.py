@@ -78,7 +78,7 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Spawn robot in Ignition Gazebo - positioned correctly on the mounting platform
+    # Spawn robot in Ignition Gazebo - FIXED positioning for proper contact with mount
     spawn_robot_timer = TimerAction(
         period=8.0,
         actions=[
@@ -89,7 +89,7 @@ def generate_launch_description():
                     '-name', 'so_101_arm',
                     '-x', '0.4',
                     '-y', '0',
-                    '-z', '0.88',  # FIXED: Correct height - mount platform top surface at z=0.88
+                    '-z', '0.885',  # FIXED: Adjusted height to account for collision geometry offset
                     '-R', '0',
                     '-P', '0',
                     '-Y', '-1.5708'  # 90 degrees clockwise rotation to match mount orientation
