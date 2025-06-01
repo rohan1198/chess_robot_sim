@@ -10,17 +10,17 @@ from ament_index_python.packages import get_package_share_directory
 class IgnitionGazeboRobotSpawner(Node):
     def __init__(self):
         super().__init__('ignition_gazebo_robot_spawner')
-        self.get_logger().info('Starting Ignition Gazebo robot spawner...')
+        self.get_logger().info('Creating processed URDF for robot spawning...')
         
         try:
             # Get the URDF content and process it for Ignition Gazebo
             urdf_content = self.get_processed_urdf()
             
-            # Spawn the robot in Ignition Gazebo
-            self.spawn_robot(urdf_content)
+            # Save processed URDF to fixed location for spawn command
+            self.save_processed_urdf(urdf_content)
             
         except Exception as e:
-            self.get_logger().error(f'Failed to spawn robot: {str(e)}')
+            self.get_logger().error(f'Failed to process URDF: {str(e)}')
         
     def get_processed_urdf(self):
         """Process XACRO file and convert package:// URIs to file:// URIs for Ignition Gazebo"""
@@ -73,60 +73,19 @@ class IgnitionGazeboRobotSpawner(Node):
             self.get_logger().error(f'Error processing URDF: {str(e)}')
             raise
     
-    def spawn_robot(self, urdf_content):
-        """Spawn robot in Ignition Gazebo using the processed URDF content"""
+    def save_processed_urdf(self, urdf_content):
+        """Save the processed URDF content to a file for spawning"""
         
         try:
-            temp_urdf_path = '/tmp/so_101_arm_ignition_gazebo.urdf'
+            temp_urdf_path = '/tmp/so_101_arm_processed.urdf'
             with open(temp_urdf_path, 'w') as f:
                 f.write(urdf_content)
             
-            self.get_logger().info(f'Temporary URDF written to: {temp_urdf_path}')
+            self.get_logger().info(f'Processed URDF written to: {temp_urdf_path}')
+            self.get_logger().info('URDF file ready for robot spawning')
             
-            # Z-coordinate for spawn (base_link origin to place robot bottom on mount surface)
-            # Mount top surface Z_world = 0.845m
-            # Offset of Waveshare plate bottom from base_link origin = 0.0698817m (visual_z - thickness/2)
-            # Target Z for base_link origin = 0.845 - 0.0698817 = 0.7751183
-            spawn_z = '0.77512' 
-            
-            # 90 degrees clockwise about z-axis = -π/2 = -1.5708 radians
-            spawn_yaw = '-1.5708'
-
-            spawn_cmd = [
-                'ros2', 'run', 'ros_gz_sim', 'create',
-                '-file', temp_urdf_path,
-                '-name', 'so_101_arm',
-                '-x', '0.4',    
-                '-y', '0',      
-                '-z', spawn_z,  
-                '-R', '0',      
-                '-P', '0',      
-                '-Y', spawn_yaw  # 90 degrees clockwise rotation
-            ]
-            
-            self.get_logger().info(f'Spawning robot with command: {" ".join(spawn_cmd)}')
-            self.get_logger().info(f'Robot will be rotated 90 degrees clockwise (yaw = {spawn_yaw})')
-            
-            result = subprocess.run(spawn_cmd, capture_output=True, text=True, timeout=30)
-            
-            if result.returncode == 0:
-                self.get_logger().info('Robot spawned successfully.')
-                if result.stdout:
-                    self.get_logger().info(f'Spawn output: {result.stdout}')
-            else:
-                self.get_logger().error(f'Failed to spawn robot: {result.stderr}')
-                if result.stdout: 
-                    self.get_logger().error(f'Spawn stdout (on error): {result.stdout}')
-            
-            if os.path.exists(temp_urdf_path):
-                os.remove(temp_urdf_path)
-                self.get_logger().info('Temporary URDF file cleaned up')
-                
-        except subprocess.TimeoutExpired:
-            self.get_logger().error('Robot spawning timed out.')
-            raise
         except Exception as e:
-            self.get_logger().error(f'Error spawning robot: {str(e)}')
+            self.get_logger().error(f'Error saving processed URDF: {str(e)}')
             raise
 
 def main(args=None):

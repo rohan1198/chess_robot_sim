@@ -106,8 +106,8 @@
       </link>
     </model>
 
-    <!-- Chess/Work Table - optimized dimensions for robot arm and future chessboard -->
-    <model name="chess_table">
+    <!-- Chess/Work Table with integrated robot mount -->
+    <model name="chess_table_with_mount">
       <static>true</static>
       <pose>0 0 0.4 0 0 0</pose>
       
@@ -117,7 +117,7 @@
         <collision name="top_collision">
           <geometry>
             <box>
-              <size>1.0 1.0 0.05</size>  <!-- Square table perfect for chess -->
+              <size>1.0 1.0 0.05</size>
             </box>
           </geometry>
           <surface>
@@ -143,13 +143,13 @@
         </visual>
       </link>
 
-      <!-- Robot mounting bracket - attaches to table edge -->
-      <link name="robot_mount">
-        <pose>0.4 0 0.41 0 0 0</pose>  <!-- Positioned at table edge -->
+      <!-- Robot mounting platform - exactly where robot will be spawned -->
+      <link name="robot_mount_platform">
+        <pose>0.4 0 0.445 0 0 -1.5708</pose>  <!-- Match robot spawn position and orientation -->
         <collision name="mount_collision">
           <geometry>
             <box>
-              <size>0.15 0.15 0.07</size>  <!-- Mounting platform -->
+              <size>0.15 0.15 0.07</size>
             </box>
           </geometry>
         </collision>
@@ -167,7 +167,7 @@
         </visual>
       </link>
 
-      <!-- Support bracket connecting mount to table -->
+      <!-- Support bracket -->
       <link name="support_bracket">
         <pose>0.42 0 0.39 0 0 0</pose>
         <collision name="bracket_collision">
@@ -280,7 +280,7 @@
         </visual>
       </link>
 
-      <!-- Fixed joints to connect legs to table top -->
+      <!-- Fixed joints to connect everything -->
       <joint name="leg1_joint" type="fixed">
         <parent>table_top</parent>
         <child>leg_1</child>
@@ -297,11 +297,9 @@
         <parent>table_top</parent>
         <child>leg_4</child>
       </joint>
-
-      <!-- Mount the robot bracket to the table -->
       <joint name="mount_joint" type="fixed">
         <parent>table_top</parent>
-        <child>robot_mount</child>
+        <child>robot_mount_platform</child>
       </joint>
       <joint name="bracket_joint" type="fixed">
         <parent>table_top</parent>
@@ -309,64 +307,32 @@
       </joint>
     </model>
 
-    <!-- Static anchor for welding the robot base -->
-    <model name="robot_weld_anchor">
-      <static>true</static>
-      <pose>0.4 0 0.77512 0 0 -1.5708</pose>  <!-- 90 degrees clockwise rotation -->
-      
-      <link name="weld_anchor_link">
-        <pose>0 0 0 0 0 0</pose>
-        <!-- Invisible anchor point -->
-        <collision name="weld_collision">
-          <geometry>
-            <box>
-              <size>0.001 0.001 0.001</size>
-            </box>
-          </geometry>
-        </collision>
-        <!-- Optional: tiny visual marker for debugging -->
-        <visual name="weld_visual">
-          <geometry>
-            <sphere>
-              <radius>0.005</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <ambient>1 0 0 1</ambient>  <!-- Red marker -->
-            <diffuse>1 0 0 1</diffuse>
-          </material>
-        </visual>
-      </link>
-    </model>
-
-    <!-- Chess board reference area (visual guide for development) -->
+    <!-- Chess board reference area -->
     <model name="chessboard_reference">
       <static>true</static>
-      <pose>-0.2 0 0.8005 0 0 0</pose>  <!-- Slightly above table surface -->
+      <pose>-0.2 0 0.8005 0 0 0</pose>
       
       <link name="board_outline">
         <visual name="board_visual">
           <geometry>
             <box>
-              <size>0.4 0.4 0.001</size>  <!-- Standard chessboard size -->
+              <size>0.4 0.4 0.001</size>
             </box>
           </geometry>
           <material>
-            <ambient>0.8 0.8 0.8 0.3</ambient>  <!-- Semi-transparent -->
+            <ambient>0.8 0.8 0.8 0.3</ambient>
             <diffuse>0.9 0.9 0.9 0.3</diffuse>
             <specular>0.1 0.1 0.1 0.3</specular>
           </material>
         </visual>
-        <!-- No collision - just visual reference -->
       </link>
     </model>
 
-    <!-- Reference coordinate frame markers (helpful for development) -->
+    <!-- Coordinate frame markers -->
     <model name="coordinate_markers">
       <static>true</static>
       <pose>0.6 0.6 0.8 0 0 0</pose>
       
-      <!-- X-axis marker (red) -->
       <link name="x_axis">
         <visual name="x_visual">
           <geometry>
@@ -383,7 +349,6 @@
         </visual>
       </link>
       
-      <!-- Y-axis marker (green) -->
       <link name="y_axis">
         <visual name="y_visual">
           <geometry>
@@ -400,7 +365,6 @@
         </visual>
       </link>
       
-      <!-- Z-axis marker (blue) -->
       <link name="z_axis">
         <visual name="z_visual">
           <geometry>
