@@ -143,20 +143,22 @@
         </visual>
       </link>
 
-      <!-- Robot mounting platform -->
+      <!-- Robot mounting platform - positioned for optimal reach -->
       <link name="robot_mount_platform">
-        <pose>0.4 0 0.44 0 0 -1.5708</pose>
-        <collision name="mount_collision">
+        <!-- Position optimized for chess board reach -->
+        <pose>0.35 0.0 0.4025 0 0 0</pose>
+        
+        <!-- Base mounting plate -->
+        <collision name="mount_base_collision">
           <geometry>
             <box>
-              <size>0.15 0.15 0.08</size>
+              <size>0.12 0.12 0.005</size>
             </box>
           </geometry>
-
           <surface>
             <friction>
               <ode>
-                <mu>2.0</mu> 
+                <mu>2.0</mu>
                 <mu2>2.0</mu2>
               </ode>
             </friction>
@@ -172,10 +174,10 @@
             </contact>
           </surface>
         </collision>
-        <visual name="mount_visual">
+        <visual name="mount_base_visual">
           <geometry>
             <box>
-              <size>0.15 0.15 0.08</size>
+              <size>0.12 0.12 0.005</size>
             </box>
           </geometry>
           <material>
@@ -184,28 +186,61 @@
             <specular>0.1 0.1 0.1 1</specular>
           </material>
         </visual>
-      </link>
-
-      <!-- Support bracket -->
-      <link name="support_bracket">
-        <pose>0.42 0 0.39 0 0 0</pose>
-        <collision name="bracket_collision">
+        
+        <!-- Mounting holes representation -->
+        <visual name="mount_hole_1">
+          <pose>0.04 0.04 0.0025 0 0 0</pose>
           <geometry>
-            <box>
-              <size>0.11 0.08 0.03</size>
-            </box>
-          </geometry>
-        </collision>
-        <visual name="bracket_visual">
-          <geometry>
-            <box>
-              <size>0.11 0.08 0.03</size>
-            </box>
+            <cylinder>
+              <radius>0.003</radius>
+              <length>0.005</length>
+            </cylinder>
           </geometry>
           <material>
-            <ambient>0.2 0.2 0.2 1</ambient>
-            <diffuse>0.3 0.3 0.3 1</diffuse>
-            <specular>0.1 0.1 0.1 1</specular>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.1 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="mount_hole_2">
+          <pose>-0.04 0.04 0.0025 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.003</radius>
+              <length>0.005</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.1 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="mount_hole_3">
+          <pose>0.04 -0.04 0.0025 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.003</radius>
+              <length>0.005</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.1 0.1 0.1 1</diffuse>
+          </material>
+        </visual>
+        
+        <visual name="mount_hole_4">
+          <pose>-0.04 -0.04 0.0025 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.003</radius>
+              <length>0.005</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.1 0.1 0.1 1</ambient>
+            <diffuse>0.1 0.1 0.1 1</diffuse>
           </material>
         </visual>
       </link>
@@ -319,10 +354,6 @@
       <joint name="mount_joint" type="fixed">
         <parent>table_top</parent>
         <child>robot_mount_platform</child>
-      </joint>
-      <joint name="bracket_joint" type="fixed">
-        <parent>table_top</parent>
-        <child>support_bracket</child>
       </joint>
     </model>
 
