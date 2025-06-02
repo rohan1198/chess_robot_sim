@@ -42,10 +42,10 @@ class ChessPieceController(Node):
         self.square_size = 0.04  # 4cm per square
 
         # Calculate board corners
-        self.board_min_x = self.board_center_x - 0.14  # -0.09
-        self.board_max_x = self.board_center_x + 0.14  # +0.19 
-        self.board_min_y = self.board_center_y - 0.14  # -0.14
-        self.board_max_y = self.board_center_y + 0.14  # +0.14
+        self.board_min_x = self.board_center_x - 0.16  # -0.11
+        self.board_max_x = self.board_center_x + 0.16  # +0.21
+        self.board_min_y = self.board_center_y - 0.16  # -0.16
+        self.board_max_y = self.board_center_y + 0.16  # +0.16
 
         # Create coordinate mapping
         self.chess_to_gazebo = {}
