@@ -1,102 +1,91 @@
 #!/usr/bin/env python3
 
-import rclpy
-from rclpy.node import Node
-from geometry_msgs.msg import Pose, Point, Quaternion
-from gazebo_msgs.srv import SetEntityState, GetEntityState
-from gazebo_msgs.msg import EntityState
+from typing import Tuple
 import numpy as np
 import chess
-import chess.engine
-from typing import Dict, Tuple, Optional
+import rclpy
+from rclpy.node import Node
+from gazebo_msgs.srv import SetEntityState, GetEntityState
+from gazebo_msgs.msg import EntityState
+
 
 class ChessPieceController(Node):
     """
-    ROS2 Node for controlling chess pieces in Gazebo simulation.
+    ROS2 node for controlling chess pieces in gazebo.
     Provides chess game logic and piece movement coordination.
     """
-    
     def __init__(self):
         super().__init__('chess_piece_controller')
-        
-        # Initialize chess board
+
         self.board = chess.Board()
-        
-        # Service clients for Gazebo
+
         self.set_entity_client = self.create_client(SetEntityState, '/gazebo/set_entity_state')
         self.get_entity_client = self.create_client(GetEntityState, '/gazebo/get_entity_state')
-        
-        # Chess board coordinate mapping
+
         self.setup_coordinate_mapping()
-        
-        # Piece name mapping
+
         self.setup_piece_mapping()
-        
-        # Robot workspace analysis
+
         self.setup_robot_workspace()
-        
+
         self.get_logger().info('Chess Piece Controller initialized')
         self.get_logger().info(f'Board center: ({self.board_center_x}, {self.board_center_y}, {self.board_height})')
         self.get_logger().info(f'Robot position: ({self.robot_x}, {self.robot_y}, {self.robot_z})')
     
     def setup_coordinate_mapping(self):
-        """Setup mapping between chess notation and Gazebo coordinates - CORRECTED"""
-        # Chess board center at (0.05, 0, 0.8315) in Gazebo
-        # Board size: 32cm x 32cm, square size: 4cm
-        
-        self.board_center_x = 0.05
+        """
+        Setup mapping between chess notation and Gazebo coordinates
+        """
+        self.board_center_x = 0.005
         self.board_center_y = 0.0
-        self.board_height = 0.8315  # Height for pieces to sit on board
+        self.board_height = 0.8315
         self.square_size = 0.04  # 4cm per square
-        
-        # CORRECTED: Calculate board corners accounting for actual board position
-        # Board squares go from -0.14 to +0.14 relative to board center (0.05, 0)
-        # So absolute coordinates are: (0.05 + (-0.14)) to (0.05 + (+0.14)) = (-0.09) to (0.19)
-        self.board_min_x = self.board_center_x - 0.14  # -0.09 (CORRECTED)
-        self.board_max_x = self.board_center_x + 0.14  # +0.19 (CORRECTED) 
+
+        # Calculate board corners
+        self.board_min_x = self.board_center_x - 0.14  # -0.09
+        self.board_max_x = self.board_center_x + 0.14  # +0.19 
         self.board_min_y = self.board_center_y - 0.14  # -0.14
         self.board_max_y = self.board_center_y + 0.14  # +0.14
-        
+
         # Create coordinate mapping
         self.chess_to_gazebo = {}
         self.gazebo_to_chess = {}
-        
+
         files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
         ranks = ['1', '2', '3', '4', '5', '6', '7', '8']
-        
+
         for file_idx, file_char in enumerate(files):
             for rank_idx, rank_char in enumerate(ranks):
                 square = file_char + rank_char
-                
-                # Calculate Gazebo coordinates - CORRECTED ALIGNMENT
+
                 # Rank 1 (white pieces) at board_min_x = -0.09
-                # Rank 8 (black pieces) at board_max_x = +0.19
-                # Files a-h from board_min_y (-0.14) to board_max_y (+0.14)
-                
+                # Rank 8 (black_pieces) at board_max_x = +0.19
+                # Files a-h from board_min_y (-0.14) to board_max_y (0.14)
+
                 gazebo_x = self.board_min_x + (rank_idx * self.square_size)
                 gazebo_y = self.board_min_y + (file_idx * self.square_size)
                 gazebo_z = self.board_height
-                
+
                 self.chess_to_gazebo[square] = (gazebo_x, gazebo_y, gazebo_z)
-                
-                # Store reverse mapping (rounded for lookup)
+
                 key = (round(gazebo_x, 3), round(gazebo_y, 3))
                 self.gazebo_to_chess[key] = square
     
     def setup_robot_workspace(self):
-        """Analyze robot workspace and reachability - UPDATED for corrected robot position"""
-        # Robot arm position - CORRECTED to match actual spawn position
-        self.robot_x = 0.4
-        self.robot_y = 0.0  
-        self.robot_z = 0.88  # UPDATED: Robot base now at mount platform surface level
-        
-        # Estimate robot reach (conservative estimate)
-        self.robot_reach_radius = 0.45  # 45cm reach
-        
-        # Check reachability for all squares
+        """
+        Analyse robot workspace and reachability
+        """
+        # - Base collision geometry offset after -90° rotation
+        # - Proper mounting on platform surface
+        self.robot_x = 0.3779  # Corrected X position (0.4 - rotated offset)
+        self.robot_y = 0.0208  # Corrected Y position (0.0 + rotated offset)
+        self.robot_z = 0.88    # Exact mount platform surface height
+
+        self.robot_reach_radius = 0.45  # 45cm
+
         self.reachable_squares = {}
         self.unreachable_squares = []
-        
+
         for square, (x, y, z) in self.chess_to_gazebo.items():
             distance = np.sqrt((x - self.robot_x)**2 + (y - self.robot_y)**2)
             is_reachable = distance <= self.robot_reach_radius
@@ -114,9 +103,20 @@ class ChessPieceController(Node):
             self.get_logger().warn(f'Potentially unreachable squares: {self.unreachable_squares}')
         else:
             self.get_logger().info('All chess squares are within robot reach!')
+            
+        key_squares = ['e2', 'e4', 'd4', 'f4', 'a1', 'h1', 'a8', 'h8']
+        for square in key_squares:
+            if square in self.reachable_squares:
+                info = self.reachable_squares[square]
+                status = "✓" if info['reachable'] else "⚠"
+                self.get_logger().info(
+                    f'Square {square}: {info["distance"]:.3f}m [{status}]'
+                )
     
     def setup_piece_mapping(self):
-        """Setup mapping between chess pieces and Gazebo model names"""
+        """
+        Setup mapping between chess pieces and gazebo model names.
+        """
         self.initial_piece_positions = {
             # White pieces
             'a1': 'white_rook_a1', 'b1': 'white_knight_b1', 'c1': 'white_bishop_c1', 'd1': 'white_queen_d1',
@@ -130,8 +130,7 @@ class ChessPieceController(Node):
             'a7': 'black_pawn_a7', 'b7': 'black_pawn_b7', 'c7': 'black_pawn_c7', 'd7': 'black_pawn_d7',
             'e7': 'black_pawn_e7', 'f7': 'black_pawn_f7', 'g7': 'black_pawn_g7', 'h7': 'black_pawn_h7',
         }
-        
-        # Track current piece positions
+
         self.current_piece_positions = self.initial_piece_positions.copy()
     
     def get_square_coordinates(self, square: str) -> Tuple[float, float, float]:
@@ -153,29 +152,27 @@ class ChessPieceController(Node):
             return self.reachable_squares[square]['distance']
         return float('inf')
     
-    def move_piece_to_coordinates(self, piece_name: str, x: float, y: float, z: float) -> bool:
-        """Move a piece to specific Gazebo coordinates"""
+    def move_piece_to_corrdinates(self, piece_name: str, x: float, y: float, z: float) -> bool:
+        """Move a piece to specific Gazebo coordicates"""
         if not self.set_entity_client.wait_for_service(timeout_sec=5.0):
             self.get_logger().error('Set entity service not available')
             return False
         
-        # Create entity state
         entity_state = EntityState()
         entity_state.name = piece_name
         entity_state.pose.position.x = x
         entity_state.pose.position.y = y
         entity_state.pose.position.z = z
         entity_state.pose.orientation.w = 1.0  # No rotation
-        
-        # Create service request
+
         request = SetEntityState.Request()
         request.state = entity_state
-        
+
         try:
             future = self.set_entity_client.call_async(request)
             rclpy.spin_until_future_complete(self, future)
             result = future.result()
-            
+
             if result.success:
                 self.get_logger().info(f'Successfully moved {piece_name} to ({x:.3f}, {y:.3f}, {z:.3f})')
                 return True
@@ -199,43 +196,40 @@ class ChessPieceController(Node):
         except ValueError as e:
             self.get_logger().error(str(e))
             return False
-    
+        
     def move_piece_off_board(self, piece_name: str, side: str = 'right') -> bool:
         """Move captured piece to off-board storage area"""
         # Define storage areas for captured pieces
         if side == 'right':
-            # Right side of board (closer to robot)
-            storage_x = 0.3
-            storage_y = 0.4
+            # Right side of board
+            storage_x = 0.25  # Closer to robot
+            storage_y = 0.35
         else:
             # Left side of board
-            storage_x = 0.3
-            storage_y = -0.4
+            storage_x = 0.25
+            storage_y = -0.35
         
         storage_z = self.board_height
-        
-        return self.move_piece_to_coordinates(piece_name, storage_x, storage_y, storage_z)
-    
+
+        return self.move_piece_to_corrdinates(piece_name, storage_x, storage_y, storage_z)
+
     def execute_chess_move(self, move_uci: str) -> bool:
-        """Execute a chess move in UCI notation (e.g., 'e2e4')"""
+        """Execute a chess move in UCI notation (e.g. e2e4)"""
         try:
             move = chess.Move.from_uci(move_uci)
-            
+
             if move not in self.board.legal_moves:
-                self.get_logger().error(f'Illegal move: {move_uci}')
+                self.get_logger().error(f"Illegal move: {move_uci}")
                 return False
             
-            # Get source and target squares
             from_square = chess.square_name(move.from_square)
             to_square = chess.square_name(move.to_square)
-            
-            # Check reachability
+
             if not self.is_square_reachable(from_square):
                 self.get_logger().warn(f'Source square {from_square} is at edge of reach')
             if not self.is_square_reachable(to_square):
                 self.get_logger().warn(f'Target square {to_square} is at edge of reach')
             
-            # Find piece to move
             piece_name = None
             for square, name in self.current_piece_positions.items():
                 if square == from_square:
@@ -243,10 +237,9 @@ class ChessPieceController(Node):
                     break
             
             if piece_name is None:
-                self.get_logger().error(f'No piece found at {from_square}')
+                self.get_logger().error(f"No piece found at {from_square}")
                 return False
             
-            # Handle captures
             if to_square in self.current_piece_positions:
                 captured_piece = self.current_piece_positions[to_square]
                 # Move captured piece off the board
@@ -255,20 +248,16 @@ class ChessPieceController(Node):
                 del self.current_piece_positions[to_square]
                 self.get_logger().info(f'Captured piece {captured_piece} from {to_square}')
             
-            # Move the piece
             success = self.move_piece_to_square(piece_name, to_square)
             
             if success:
-                # Update internal board state
                 self.board.push(move)
                 
-                # Update piece position tracking
                 del self.current_piece_positions[from_square]
                 self.current_piece_positions[to_square] = piece_name
                 
                 self.get_logger().info(f'Executed move: {move_uci} ({from_square} -> {to_square})')
                 
-                # Log distance information
                 distance = self.get_square_distance_from_robot(to_square)
                 self.get_logger().info(f'Piece now at distance {distance:.3f}m from robot')
                 
@@ -339,13 +328,13 @@ class ChessPieceController(Node):
                     f'[{"✓" if reachable else "⚠"}] dist: {distance:.3f}m'
                 )
 
+
 def main(args=None):
     rclpy.init(args=args)
     
     chess_controller = ChessPieceController()
     
     try:
-        # Example usage and diagnostics
         chess_controller.get_logger().info('Chess controller ready')
         chess_controller.print_board_state()
         chess_controller.print_coordinate_mapping()

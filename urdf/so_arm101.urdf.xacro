@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
-<!-- SO-101 Robot Arm URDF.XACRO for Ignition Gazebo -->
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="so_101_arm">
+<!-- SO-ARM101 Robot Arm URDF.XACRO -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="so_arm101">
   
   <!-- XACRO Parameters -->
-  <xacro:arg name="controller_config_file" default="$(find so_101_arm)/config/controllers_6dof.yaml"/>
+  <xacro:arg name="controller_config_file" default="$(find so_arm101)/config/controllers_6dof.yaml"/>
   <xacro:property name="controller_config" value="$(arg controller_config_file)"/>
   
-  <!-- ROS2 Control configuration for IGNITION GAZEBO -->
+  <!-- ROS2 Control configuration -->
   <ros2_control name="GazeboSimSystem" type="system">
       <hardware>
           <plugin>gz_ros2_control/GazeboSimSystem</plugin>
@@ -73,7 +73,7 @@
       </joint>
   </ros2_control>
 
-  <!-- Ignition Gazebo Plugin (NOT Gazebo Classic) -->
+  <!-- Ignition Gazebo Plugin -->
   <gazebo>
     <plugin filename="libgz_ros2_control-system.so" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
         <parameters>${controller_config}</parameters>
@@ -97,11 +97,11 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 
-  <!-- Base link with INCREASED MASS and IMPROVED COLLISION GEOMETRY -->
+  <!-- Base -->
   <link name="base">
     <inertial>
       <origin xyz="0.020739 0.00204287 0.065966" rpy="0 0 0"/>
-      <mass value="50.0"/>  <!-- INCREASED from 0.147 to prevent falling -->
+      <mass value="50.0"/>  <!-- Unrealistic, but essential to keep the arm from tipping over -->
       <inertia ixx="0.136117" ixy="4.59787e-06" ixz="9.75275e-07" 
                iyy="0.114686" iyz="-4.97151e-05" izz="0.130364"/>
     </inertial>
@@ -110,13 +110,13 @@
     <visual name="base_motor_holder_visual">
       <origin xyz="0.0206915 0.0221255 0.0300817" rpy="1.5708 0 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/base_motor_holder_so101_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/base_motor_holder_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.1 0.1 0.1 1.0"/>
       </material>
     </visual>
-    <!-- IMPROVED: Base collision geometry that extends to the bottom -->
+    
     <collision name="base_motor_holder_collision">
       <origin xyz="0.0206915 0.0221255 0.010" rpy="0 0 0"/>
       <geometry>
@@ -146,13 +146,13 @@
     <visual name="base_main_visual">
       <origin xyz="0.0207909 0.0221255 0.0300817" rpy="1.5708 0 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/base_so101_v2.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/base_so101_v2.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.05 0.05 0.05 1.0"/>
       </material>
     </visual>
-    <!-- IMPROVED: Base main collision that provides stable contact -->
+
     <collision name="base_main_collision">
       <origin xyz="0.0207909 0.0221255 0.030" rpy="0 0 0"/>
       <geometry>
@@ -182,7 +182,7 @@
     <visual name="base_motor_visual">
       <origin xyz="0.0207909 -0.0105745 0.0761817" rpy="0 0 -1.5708"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/sts3215_03a_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -199,7 +199,7 @@
     <visual name="waveshare_visual">
       <origin xyz="0.0205915 0.0467435 0.0798817" rpy="1.5708 0 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/waveshare_mounting_plate_so101_v2.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/waveshare_mounting_plate_so101_v2.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.7 0.7 0.7 1.0"/>
@@ -231,7 +231,7 @@
     <visual name="shoulder_motor_visual">
       <origin xyz="-0.0303992 0.000422241 -0.0417" rpy="1.5708 1.5708 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/sts3215_03a_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -248,7 +248,7 @@
     <visual name="motor_holder_visual">
       <origin xyz="-0.0675992 -0.000177759 0.0158499" rpy="1.5708 -1.5708 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/motor_holder_so101_base_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/motor_holder_so101_base_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.1 0.1 0.1 1.0"/>
@@ -265,7 +265,7 @@
     <visual name="rotation_pitch_visual">
       <origin xyz="0.0122008 2.22413e-05 0.0464" rpy="-1.5708 0 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/rotation_pitch_so101_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/rotation_pitch_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.08 0.08 0.08 1.0"/>
@@ -307,7 +307,7 @@
     <visual name="upper_arm_motor_visual">
       <origin xyz="-0.11257 -0.0155 0.0187" rpy="-3.14159 0 -1.5708"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/sts3215_03a_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -324,7 +324,7 @@
     <visual name="upper_arm_body_visual">
       <origin xyz="-0.065085 0.012 0.0182" rpy="3.14159 0 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/upper_arm_so101_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/upper_arm_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.1 0.1 0.1 1.0"/>
@@ -366,7 +366,7 @@
     <visual name="under_arm_visual">
       <origin xyz="-0.0648499 -0.032 0.0182" rpy="-3.14159 0 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/under_arm_so101_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/under_arm_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.1 0.1 0.1 1.0"/>
@@ -383,7 +383,7 @@
     <visual name="motor_holder_wrist_visual">
       <origin xyz="-0.0648499 -0.032 0.018" rpy="-3.14159 0 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/motor_holder_so101_wrist_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/motor_holder_so101_wrist_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.08 0.08 0.08 1.0"/>
@@ -394,7 +394,7 @@
     <visual name="lower_arm_motor_visual">
       <origin xyz="-0.1224 0.0052 0.0187" rpy="-3.14159 0 -3.14159"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/sts3215_03a_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -436,7 +436,7 @@
     <visual name="wrist_motor_visual">
       <origin xyz="0 -0.0424 0.0306" rpy="1.5708 1.5708 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_no_horn_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/sts3215_03a_no_horn_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -453,7 +453,7 @@
     <visual name="wrist_roll_pitch_visual">
       <origin xyz="0 -0.028 0.0181" rpy="-1.5708 -1.5708 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/wrist_roll_pitch_so101_v2.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/wrist_roll_pitch_so101_v2.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.1 0.1 0.1 1.0"/>
@@ -495,7 +495,7 @@
     <visual name="gripper_motor_visual">
       <origin xyz="0.0077 0.0001 -0.0234" rpy="-1.5708 0 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/sts3215_03a_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/sts3215_03a_v1.stl"/>
       </geometry>
       <material name="motor">
         <color rgba="0.2 0.2 0.2 1.0"/>
@@ -512,7 +512,7 @@
     <visual name="wrist_roll_follower_visual">
       <origin xyz="0 -0.000218214 0.000949706" rpy="-3.14159 0 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/wrist_roll_follower_so101_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/wrist_roll_follower_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.1 0.1 0.1 1.0"/>
@@ -554,7 +554,7 @@
     <visual name="moving_jaw_visual">
       <origin xyz="0 0 0.0189" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://so_101_arm/models/so_101_arm/meshes/moving_jaw_so101_v1.stl"/>
+        <mesh filename="package://chess_robot_sim/models/so_arm101/meshes/moving_jaw_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
         <color rgba="0.1 0.1 0.1 1.0"/>

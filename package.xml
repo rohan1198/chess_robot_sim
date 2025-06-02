@@ -1,22 +1,14 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>so_101_arm</name>
+  <name>chess_robot_sim</name>
   <version>0.1.0</version>
   <description>
-     This package provides ROS2 support for the SO-101 robot arm (6-DOF configuration) with chess playing capabilities. 
-     Generated package with all the configuration and launch files for using the so_101_arm 
-     with the MoveIt Motion Planning Framework, Gazebo simulation, and chess piece manipulation.
+     This package provides ROS2 support for the SO-101 robot arm (6-DOF configuration) with a chess environment. 
   </description>
-  <maintainer email="your@email.com">Your Name</maintainer>
+  <maintainer email="rohan1198@gmail.com">Rohan Khandekar</maintainer>
 
   <license>Apache</license>
-
-  <url type="website">http://moveit.ros.org/</url>
-  <url type="bugtracker">https://github.com/moveit/moveit2/issues</url>
-  <url type="repository">https://github.com/moveit/moveit2</url>
-
-  <author email="your@email.com">Your Name</author>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

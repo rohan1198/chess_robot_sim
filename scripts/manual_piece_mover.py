@@ -1,27 +1,23 @@
 #!/usr/bin/env python3
 
-import rclpy
-from rclpy.node import Node
 import subprocess
 import sys
 import argparse
 import time
-from typing import Tuple
+import rclpy
+from rclpy.node import Node
+
 
 class NativeGazeboPieceMover(Node):
     """
     Piece mover using native Gazebo/Ignition services directly.
     Uses 'ign service' or 'gz service' commands to manipulate entities.
     """
-    
     def __init__(self):
         super().__init__('native_gazebo_piece_mover')
-        
-        # Chess coordinate mapping
         self.setup_coordinate_mapping()
         self.setup_piece_names()
         
-        # Test which Gazebo command is available
         self.gazebo_cmd = self.detect_gazebo_command()
         
         self.get_logger().info(f'Native Gazebo Piece Mover ready using: {self.gazebo_cmd}')
@@ -29,23 +25,21 @@ class NativeGazeboPieceMover(Node):
     def detect_gazebo_command(self):
         """Detect whether to use 'ign' or 'gz' command"""
         try:
-            # Try 'ign' first (older Ignition)
             result = subprocess.run(['ign', 'service', '-l'], 
                                   capture_output=True, text=True, timeout=3)
             if result.returncode == 0:
                 self.get_logger().info("Using 'ign' command for Gazebo")
                 return 'ign'
-        except:
+        except Exception:
             pass
         
         try:
-            # Try 'gz' (newer Gazebo) 
             result = subprocess.run(['gz', 'service', '-l'], 
                                   capture_output=True, text=True, timeout=3)
             if result.returncode == 0:
                 self.get_logger().info("Using 'gz' command for Gazebo")
                 return 'gz'
-        except:
+        except Exception:
             pass
         
         self.get_logger().error("Neither 'ign' nor 'gz' command available!")
@@ -113,22 +107,21 @@ class NativeGazeboPieceMover(Node):
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=5)
             
             if result.returncode == 0:
-                # Check if response indicates success
                 if 'data: true' in result.stdout:
-                    self.get_logger().info(f'✅ Moved {piece_name} to ({x:.3f}, {y:.3f}, {z:.3f})')
+                    self.get_logger().info(f'Moved {piece_name} to ({x:.3f}, {y:.3f}, {z:.3f})')
                     return True
                 else:
-                    self.get_logger().warn(f'⚠️ Service call succeeded but response unclear: {result.stdout}')
+                    self.get_logger().warn(f'Service call succeeded but response unclear: {result.stdout}')
                     return True  # Assume success if service call worked
             else:
-                self.get_logger().error(f'❌ Failed to move {piece_name}: {result.stderr}')
+                self.get_logger().error(f'Failed to move {piece_name}: {result.stderr}')
                 return False
                 
         except subprocess.TimeoutExpired:
-            self.get_logger().error(f'❌ Timeout moving {piece_name}')
+            self.get_logger().error(f'Timeout moving {piece_name}')
             return False
         except Exception as e:
-            self.get_logger().error(f'❌ Error moving {piece_name}: {str(e)}')
+            self.get_logger().error(f'Error moving {piece_name}: {str(e)}')
             return False
     
     def move_piece_to_square(self, piece_name: str, square: str) -> bool:
@@ -143,7 +136,7 @@ class NativeGazeboPieceMover(Node):
     def list_gazebo_services(self):
         """List available Gazebo services"""
         if not self.gazebo_cmd:
-            print("❌ No Gazebo command available")
+            print("No Gazebo command available")
             return
         
         try:
@@ -151,7 +144,7 @@ class NativeGazeboPieceMover(Node):
                                   capture_output=True, text=True, timeout=3)
             
             if result.returncode == 0:
-                print("🔧 Available Gazebo services:")
+                print("Available Gazebo services:")
                 services = result.stdout.strip().split('\n')
                 world_services = [s for s in services if 'world' in s]
                 
@@ -162,15 +155,15 @@ class NativeGazeboPieceMover(Node):
                     print("  (No world services found)")
                     
             else:
-                print(f"❌ Failed to list services: {result.stderr}")
+                print(f"Failed to list services: {result.stderr}")
                 
         except Exception as e:
-            print(f"❌ Error listing services: {e}")
+            print(f"Error listing services: {e}")
     
     def test_service_call(self):
         """Test a simple service call"""
         if not self.gazebo_cmd:
-            print("❌ No Gazebo command available")
+            print("No Gazebo command available")
             return False
         
         try:
@@ -184,7 +177,7 @@ class NativeGazeboPieceMover(Node):
                 '--req', 'name: "white_pawn_e2", position: {x: -0.05, y: 0.02, z: 0.832}'
             ]
             
-            print("🧪 Testing service call...")
+            print("Testing service call...")
             print(f"Command: {' '.join(cmd)}")
             
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=5)
@@ -196,12 +189,12 @@ class NativeGazeboPieceMover(Node):
             return result.returncode == 0
             
         except Exception as e:
-            print(f"❌ Test failed: {e}")
+            print(f"Test failed: {e}")
             return False
     
     def interactive_mode(self):
         """Interactive mode for manual piece movement"""
-        print("\n🎮 Interactive Native Gazebo Piece Mover")
+        print("\nInteractive Native Gazebo Piece Mover")
         print("Commands:")
         print("  move <piece_name> <square>  - Move piece to square")
         print("  coords <piece_name> <x> <y> <z> - Move piece to coordinates")
@@ -225,7 +218,7 @@ class NativeGazeboPieceMover(Node):
                         piece_name, square = parts[1], parts[2]
                         self.move_piece_to_square(piece_name, square)
                     else:
-                        print("❌ Usage: move <piece_name> <square>")
+                        print("Usage: move <piece_name> <square>")
                 elif command.startswith('coords '):
                     parts = command.split()
                     if len(parts) == 5:
@@ -234,13 +227,13 @@ class NativeGazeboPieceMover(Node):
                             x, y, z = float(parts[2]), float(parts[3]), float(parts[4])
                             self.move_piece_to_coordinates(piece_name, x, y, z)
                         except ValueError:
-                            print("❌ Invalid coordinates")
+                            print("Invalid coordinates")
                     else:
-                        print("❌ Usage: coords <piece_name> <x> <y> <z>")
+                        print("Usage: coords <piece_name> <x> <y> <z>")
                 elif command == '':
                     continue
                 else:
-                    print("❌ Unknown command")
+                    print("Unknown command")
                 
             except KeyboardInterrupt:
                 break
@@ -276,11 +269,11 @@ def main():
                 success = mover.move_piece_to_coordinates(piece_name, x, y, z)
                 return 0 if success else 1
             except ValueError:
-                print("❌ Invalid coordinates")
+                print("Invalid coordinates")
                 return 1
         
         elif args.test_opening:
-            print("🧪 Testing opening sequence with native Gazebo...")
+            print("Testing opening sequence with native Gazebo...")
             
             moves = [
                 ('white_pawn_e2', 'e4'),
@@ -293,11 +286,11 @@ def main():
                 print(f"Moving {piece} to {square}...")
                 success = mover.move_piece_to_square(piece, square)
                 if not success:
-                    print(f"❌ Failed to move {piece}")
+                    print(f"Failed to move {piece}")
                     return 1
                 time.sleep(1.5)
             
-            print("✅ Test opening completed!")
+            print("Test opening completed!")
             return 0
         
         elif args.test_service:
@@ -317,7 +310,7 @@ def main():
             return 0
     
     except KeyboardInterrupt:
-        print("\n👋 Interrupted")
+        print("\nInterrupted")
     finally:
         rclpy.shutdown()
 

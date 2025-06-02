@@ -1,12 +1,10 @@
 moveit_setup_assistant_config:
   urdf:
-    package: so_101_arm
-    relative_path: urdf/so_101_arm_6dof.urdf
-  srdf:
-    relative_path: config/so_101_arm.srdf
+    package: chess_robot_sim
+    relative_path: urdf/so_arm101.urdf.xacro
   package_settings:
-    author_name: Your Name
-    author_email: your@email.com
+    author_name: Rohan Khandekar
+    author_email: rohan1198@gmail.com
     generated_timestamp: 1741952847
   control_xacro:
     command:

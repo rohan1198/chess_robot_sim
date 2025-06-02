@@ -53,7 +53,7 @@ arm_controller:
     
     constraints:
       stopped_velocity_tolerance: 0.01
-      goal_time: 2.0  # Allow more time for goals
+      goal_time: 2.0
       base_joint:
         trajectory: 0.1
         goal: 0.05

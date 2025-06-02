@@ -1,45 +1,37 @@
 #!/usr/bin/env python3
 
-import rclpy
-from rclpy.node import Node
-import chess
-import chess.engine
-from gazebo_msgs.srv import SetEntityState
-from gazebo_msgs.msg import EntityState
-from geometry_msgs.msg import Pose, Point, Quaternion
-import numpy as np
-from typing import Dict, Tuple, Optional
 import os
 import time
+import numpy as np
+import chess
+import chess.engine
+import rclpy
+from rclpy.node import Node
+from gazebo_msgs.srv import SetEntityState
+from gazebo_msgs.msg import EntityState
+
 
 class ManualChessGame(Node):
     """
     Manual Chess Game System - Human vs Chess Engine
-    
     The human makes moves manually (via CLI commands), and the chess engine
     responds automatically by moving pieces in Gazebo.
     """
     
     def __init__(self):
         super().__init__('manual_chess_game')
-        
-        # Initialize chess board
         self.board = chess.Board()
         self.game_active = True
-        self.human_color = chess.WHITE  # Human plays white, engine plays black
+        self.human_color = chess.WHITE
         
-        # Ignition Gazebo piece manipulation
         self.set_entity_client = self.create_client(SetEntityState, '/world/chess_table_world/set_entity_state')
         
-        # Wait for Gazebo service
         while not self.set_entity_client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('Waiting for Ignition Gazebo set_entity_state service...')
         
-        # Chess coordinate mapping (from your existing code)
         self.setup_coordinate_mapping()
         self.setup_piece_mapping()
         
-        # Chess engine setup
         self.engine = None
         self.setup_chess_engine()
         
@@ -86,7 +78,6 @@ class ManualChessGame(Node):
             'e7': 'black_pawn_e7', 'f7': 'black_pawn_f7', 'g7': 'black_pawn_g7', 'h7': 'black_pawn_h7',
         }
         
-        # Storage area for captured pieces
         self.captured_pieces = []
         self.white_capture_area = (0.3, 0.4, self.board_height)
         self.black_capture_area = (0.3, -0.4, self.board_height)
@@ -94,7 +85,6 @@ class ManualChessGame(Node):
     def setup_chess_engine(self):
         """Setup chess engine (Stockfish)"""
         try:
-            # Try to find Stockfish
             stockfish_paths = [
                 '/usr/bin/stockfish',
                 '/usr/local/bin/stockfish', 
@@ -107,10 +97,10 @@ class ManualChessGame(Node):
                 if os.path.exists(path) or path == 'stockfish':
                     try:
                         engine = chess.engine.SimpleEngine.popen_uci(path)
-                        engine.quit()  # Test and close
+                        engine.quit()
                         stockfish_path = path
                         break
-                    except:
+                    except Exception:
                         continue
             
             if stockfish_path:
@@ -159,7 +149,6 @@ class ManualChessGame(Node):
         else:
             area = self.black_capture_area
         
-        # Offset by number of captured pieces to avoid overlap
         num_captured = len([p for p in self.captured_pieces if p[1] == is_white_piece])
         offset_x = 0.05 * (num_captured % 4)
         offset_y = 0.05 * (num_captured // 4)
@@ -179,7 +168,6 @@ class ManualChessGame(Node):
         from_square = chess.square_name(move.from_square)
         to_square = chess.square_name(move.to_square)
         
-        # Find piece to move
         piece_name = None
         for square, name in self.current_piece_positions.items():
             if square == from_square:
@@ -190,13 +178,11 @@ class ManualChessGame(Node):
             self.get_logger().error(f'No piece found at {from_square}')
             return False
         
-        # Handle captures
         captured_piece = None
         if to_square in self.current_piece_positions:
             captured_piece = self.current_piece_positions[to_square]
             is_white_capture = 'white' in captured_piece.lower()
             
-            # Move captured piece to storage area
             if not self.move_piece_to_capture_area(captured_piece, is_white_capture):
                 self.get_logger().error(f'Failed to move captured piece {captured_piece}')
                 return False
@@ -204,12 +190,10 @@ class ManualChessGame(Node):
             del self.current_piece_positions[to_square]
             self.get_logger().info(f'Captured {captured_piece}')
         
-        # Move the piece
         target_x, target_y, target_z = self.chess_to_coords[to_square]
         if not self.move_piece_in_gazebo(piece_name, target_x, target_y, target_z):
             return False
         
-        # Update tracking
         del self.current_piece_positions[from_square]
         self.current_piece_positions[to_square] = piece_name
         
@@ -226,13 +210,11 @@ class ManualChessGame(Node):
                 self.get_logger().info('Legal moves: ' + ', '.join([m.uci() for m in self.board.legal_moves]))
                 return False
             
-            # Make move on logical board
             self.board.push(move)
             
             self.get_logger().info(f'Human move: {move_str}')
             self.print_board()
             
-            # Check for game end
             if self.board.is_checkmate():
                 self.get_logger().info('🎉 Human wins by checkmate!')
                 self.game_active = False
@@ -253,7 +235,6 @@ class ManualChessGame(Node):
     def make_engine_move(self) -> bool:
         """Let the chess engine make a move"""
         if not self.engine:
-            # Fallback to random move if no engine
             legal_moves = list(self.board.legal_moves)
             if not legal_moves:
                 return False
@@ -262,17 +243,14 @@ class ManualChessGame(Node):
             self.get_logger().info('Engine making random move (no Stockfish)')
         else:
             try:
-                # Get best move from engine
                 result = self.engine.play(self.board, chess.engine.Limit(time=1.0))
                 move = result.move
             except Exception as e:
                 self.get_logger().error(f'Engine error: {e}')
                 return False
         
-        # Make move on logical board
         self.board.push(move)
         
-        # Execute move in Gazebo
         if not self.execute_move_in_gazebo(move):
             self.get_logger().error('Failed to execute engine move in Gazebo')
             return False
@@ -280,7 +258,6 @@ class ManualChessGame(Node):
         self.get_logger().info(f'🤖 Engine move: {move.uci()}')
         self.print_board()
         
-        # Check for game end
         if self.board.is_checkmate():
             self.get_logger().info('🤖 Engine wins by checkmate!')
             self.game_active = False
@@ -306,7 +283,7 @@ class ManualChessGame(Node):
     def print_help(self):
         """Print help information"""
         print("""
-🎮 Manual Chess Game Commands:
+Manual Chess Game Commands:
   
   To make a move: enter move in UCI format (e.g., 'e2e4', 'd7d5')
   
@@ -323,7 +300,7 @@ class ManualChessGame(Node):
     g1f3  - Move knight from g1 to f3
     e1g1  - Castle kingside (if legal)
     
-  🎯 Goal: Beat the chess engine!
+  Goal: Beat the chess engine!
         """)
     
     def get_legal_moves_str(self) -> str:
@@ -337,9 +314,7 @@ class ManualChessGame(Node):
             self.get_logger().warn('Not enough moves to undo')
             return False
         
-        # Undo engine move
         self.board.pop()
-        # Undo human move  
         self.board.pop()
         
         self.get_logger().info('Undid last move pair')
@@ -369,7 +344,6 @@ def main():
         print("You are White. Enter your move (e.g., 'e2e4') or 'help' for commands.")
         
         while rclpy.ok() and game.game_active:
-            # Human turn (White)
             if game.board.turn == chess.WHITE:
                 try:
                     user_input = input("\nYour move: ").strip().lower()
@@ -394,11 +368,9 @@ def main():
                     elif user_input == '':
                         continue
                     else:
-                        # Try to make the move
                         if game.make_human_move(user_input):
-                            # Successful human move, now engine plays
                             if game.game_active and game.board.turn == chess.BLACK:
-                                print("\n🤔 Engine thinking...")
+                                print("\nEngine thinking...")
                                 time.sleep(1)  # Brief pause for effect
                                 game.make_engine_move()
                         
@@ -407,7 +379,6 @@ def main():
                 except EOFError:
                     break
             
-            # Keep ROS spinning
             rclpy.spin_once(game, timeout_sec=0.1)
         
         print("\n🏁 Game ended. Thanks for playing!")

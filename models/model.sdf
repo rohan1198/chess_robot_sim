@@ -1,6 +1,6 @@
 <?xml version='1.0'?>
 <sdf version='1.7'>
-  <model name='so_101_arm'>
+  <model name='so_arm101'>
     <pose>0 0 0 0 0 0</pose>
     
     <!-- Base link -->
@@ -24,7 +24,7 @@
         <pose>0.0206915 0.0221255 0.0300817 1.5708 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://so_101_arm/meshes/base_motor_holder_so101_v1.stl</uri>
+            <uri>model://so_arm101/meshes/base_motor_holder_so101_v1.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -36,7 +36,7 @@
         <pose>0.0206915 0.0221255 0.0300817 1.5708 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://so_101_arm/meshes/base_motor_holder_so101_v1.stl</uri>
+            <uri>model://so_arm101/meshes/base_motor_holder_so101_v1.stl</uri>
           </mesh>
         </geometry>
       </collision>
@@ -46,7 +46,7 @@
         <pose>0.0207909 0.0221255 0.0300817 1.5708 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://so_101_arm/meshes/base_so101_v2.stl</uri>
+            <uri>model://so_arm101/meshes/base_so101_v2.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -58,7 +58,7 @@
         <pose>0.0207909 0.0221255 0.0300817 1.5708 0 0</pose>
         <geometry>
           <mesh>
-            <uri>model://so_101_arm/meshes/base_so101_v2.stl</uri>
+            <uri>model://so_arm101/meshes/base_so101_v2.stl</uri>
           </mesh>
         </geometry>
       </collision>

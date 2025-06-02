@@ -1,5 +1,3 @@
-# Default initial positions for so_101_arm's ros2_control fake system
-
 initial_positions:
   base_joint: 0.0
   shoulder_joint: 0.0

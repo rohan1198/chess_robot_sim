@@ -106,7 +106,7 @@
       </link>
     </model>
 
-    <!-- Chess/Work Table with integrated robot mount -->
+    <!-- Chess/Work Table -->
     <model name="chess_table_with_mount">
       <static>true</static>
       <pose>0 0 0.4 0 0 0</pose>
@@ -143,7 +143,7 @@
         </visual>
       </link>
 
-      <!-- Enhanced robot mounting platform with better contact properties -->
+      <!-- Robot mounting platform -->
       <link name="robot_mount_platform">
         <pose>0.4 0 0.44 0 0 -1.5708</pose>
         <collision name="mount_collision">
@@ -152,20 +152,20 @@
               <size>0.15 0.15 0.08</size>
             </box>
           </geometry>
-          <!-- Enhanced surface properties for better robot contact -->
+
           <surface>
             <friction>
               <ode>
-                <mu>2.0</mu>    <!-- Even higher friction coefficient -->
-                <mu2>2.0</mu2>  <!-- Even higher friction coefficient -->
+                <mu>2.0</mu> 
+                <mu2>2.0</mu2>
               </ode>
             </friction>
             <contact>
               <ode>
                 <soft_cfm>0.00001</soft_cfm>
                 <soft_erp>0.2</soft_erp>
-                <kp>10000000</kp>  <!-- Very high stiffness for stable contact -->
-                <kd>1000</kd>      <!-- Higher damping for stability -->
+                <kp>10000000</kp>
+                <kd>1000</kd>
                 <max_vel>0.001</max_vel>
                 <min_depth>0.0001</min_depth>
               </ode>
@@ -326,7 +326,7 @@
       </joint>
     </model>
 
-    <!-- Complete Chess Board with All 64 Squares -->
+    <!-- Chess Board -->
     <model name="chess_board">
       <static>true</static>
       <pose>0.05 0 0.8005 0 0 0</pose>
@@ -354,7 +354,7 @@
         </visual>
       </link>
 
-      <!-- ALL 64 CHESS SQUARES - Rank 1 (a1-h1) -->
+      <!-- Rank 1 (a1-h1) -->
       <link name="square_a1">
         <pose>-0.140 -0.140 0.008 0 0 0</pose>
         <visual name="a1_visual">
@@ -818,9 +818,6 @@
         </visual>
       </link>
     </model>
-
-    <!-- Chess pieces with corrected coordinates -->
-    <!-- White pieces (bottom rows for robot perspective) -->
     
     <!-- White Pawns (row 2) -->
     <include>
@@ -864,7 +861,7 @@
       <name>white_pawn_h2</name>
     </include>
 
-    <!-- White Back Pieces (row 1)  POSITIONS -->
+    <!-- White Back Pieces (row 1) -->
     <include>
       <uri>model://chess_rook_white</uri>
       <pose>-0.09 -0.14 0.8315 0 0 0</pose>  <!-- a1 -->
@@ -906,7 +903,7 @@
       <name>white_rook_h1</name>
     </include>
 
-    <!-- Black Pawns (row 7)  POSITIONS -->
+    <!-- Black Pawns (row 7) -->
     <include>
       <uri>model://chess_pawn_black</uri>
       <pose>0.15 -0.14 0.8315 0 0 0</pose>   <!-- a7  -->
@@ -948,7 +945,7 @@
       <name>black_pawn_h7</name>
     </include>
 
-    <!-- Black Back Pieces (row 8)  POSITIONS -->
+    <!-- Black Back Pieces (row 8) -->
     <include>
       <uri>model://chess_rook_black</uri>
       <pose>0.19 -0.14 0.8315 0 0 0</pose>   <!-- a8 -->

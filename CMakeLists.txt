@@ -1,12 +1,11 @@
 cmake_minimum_required(VERSION 3.22)
-project(so_101_arm)
+project(chess_robot_sim)
 
 find_package(ament_cmake REQUIRED)
 find_package(rclpy REQUIRED)
 
-# Install directories
 install(
-  DIRECTORY 
+  DIRECTORY
     models
     urdf
     launch
@@ -19,7 +18,7 @@ install(
 )
 
 install(
-  DIRECTORY 
+  DIRECTORY
     models/chess_pawn_white
     models/chess_pawn_black
     models/chess_rook_white
@@ -36,7 +35,6 @@ install(
   USE_SOURCE_PERMISSIONS
 )
 
-# Install Python scripts
 install(PROGRAMS
   scripts/spawn_robot_gazebo.py
   scripts/chess_piece_controller.py
