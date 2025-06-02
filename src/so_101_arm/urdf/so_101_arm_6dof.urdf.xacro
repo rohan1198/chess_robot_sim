@@ -113,7 +113,7 @@
         <mesh filename="package://so_101_arm/models/so_101_arm/meshes/base_motor_holder_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
-        <color rgba="0.9 0.9 0.9 1.0"/>
+        <color rgba="0.1 0.1 0.1 1.0"/>
       </material>
     </visual>
     <!-- IMPROVED: Base collision geometry that extends to the bottom -->
@@ -149,7 +149,7 @@
         <mesh filename="package://so_101_arm/models/so_101_arm/meshes/base_so101_v2.stl"/>
       </geometry>
       <material name="plastic">
-        <color rgba="0.8 0.8 0.8 1.0"/>
+        <color rgba="0.05 0.05 0.05 1.0"/>
       </material>
     </visual>
     <!-- IMPROVED: Base main collision that provides stable contact -->
@@ -251,7 +251,7 @@
         <mesh filename="package://so_101_arm/models/so_101_arm/meshes/motor_holder_so101_base_v1.stl"/>
       </geometry>
       <material name="plastic">
-        <color rgba="0.9 0.9 0.9 1.0"/>
+        <color rgba="0.1 0.1 0.1 1.0"/>
       </material>
     </visual>
     <collision name="motor_holder_collision">
@@ -268,7 +268,7 @@
         <mesh filename="package://so_101_arm/models/so_101_arm/meshes/rotation_pitch_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
-        <color rgba="0.85 0.85 0.85 1.0"/>
+        <color rgba="0.08 0.08 0.08 1.0"/>
       </material>
     </visual>
     <collision name="rotation_pitch_collision">
@@ -327,7 +327,7 @@
         <mesh filename="package://so_101_arm/models/so_101_arm/meshes/upper_arm_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
-        <color rgba="0.9 0.9 0.9 1.0"/>
+        <color rgba="0.1 0.1 0.1 1.0"/>
       </material>
     </visual>
     <collision name="upper_arm_body_collision">
@@ -369,7 +369,7 @@
         <mesh filename="package://so_101_arm/models/so_101_arm/meshes/under_arm_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
-        <color rgba="0.9 0.9 0.9 1.0"/>
+        <color rgba="0.1 0.1 0.1 1.0"/>
       </material>
     </visual>
     <collision name="under_arm_collision">
@@ -386,7 +386,7 @@
         <mesh filename="package://so_101_arm/models/so_101_arm/meshes/motor_holder_so101_wrist_v1.stl"/>
       </geometry>
       <material name="plastic">
-        <color rgba="0.85 0.85 0.85 1.0"/>
+        <color rgba="0.08 0.08 0.08 1.0"/>
       </material>
     </visual>
 
@@ -456,7 +456,7 @@
         <mesh filename="package://so_101_arm/models/so_101_arm/meshes/wrist_roll_pitch_so101_v2.stl"/>
       </geometry>
       <material name="plastic">
-        <color rgba="0.9 0.9 0.9 1.0"/>
+        <color rgba="0.1 0.1 0.1 1.0"/>
       </material>
     </visual>
     <collision name="wrist_roll_pitch_collision">
@@ -515,7 +515,7 @@
         <mesh filename="package://so_101_arm/models/so_101_arm/meshes/wrist_roll_follower_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
-        <color rgba="0.9 0.9 0.9 1.0"/>
+        <color rgba="0.1 0.1 0.1 1.0"/>
       </material>
     </visual>
     <collision name="wrist_roll_follower_collision">
@@ -557,7 +557,7 @@
         <mesh filename="package://so_101_arm/models/so_101_arm/meshes/moving_jaw_so101_v1.stl"/>
       </geometry>
       <material name="plastic">
-        <color rgba="0.9 0.9 0.9 1.0"/>
+        <color rgba="0.1 0.1 0.1 1.0"/>
       </material>
     </visual>
     <collision name="moving_jaw_collision">

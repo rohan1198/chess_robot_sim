@@ -136,9 +136,9 @@
             </box>
           </geometry>
           <material>
-            <ambient>0.4 0.3 0.2 1</ambient>
-            <diffuse>0.6 0.4 0.25 1</diffuse>
-            <specular>0.2 0.1 0.05 1</specular>
+            <ambient>0.2 0.15 0.1 1</ambient>
+            <diffuse>0.3 0.2 0.15 1</diffuse>
+            <specular>0.1 0.05 0.02 1</specular>
           </material>
         </visual>
       </link>
@@ -227,8 +227,8 @@
             </box>
           </geometry>
           <material>
-            <ambient>0.3 0.2 0.1 1</ambient>
-            <diffuse>0.5 0.3 0.15 1</diffuse>
+            <ambient>0.15 0.1 0.08 1</ambient>
+            <diffuse>0.25 0.15 0.12 1</diffuse>
           </material>
         </visual>
       </link>
@@ -249,8 +249,8 @@
             </box>
           </geometry>
           <material>
-            <ambient>0.3 0.2 0.1 1</ambient>
-            <diffuse>0.5 0.3 0.15 1</diffuse>
+            <ambient>0.15 0.1 0.08 1</ambient>
+            <diffuse>0.25 0.15 0.12 1</diffuse>
           </material>
         </visual>
       </link>
@@ -271,8 +271,8 @@
             </box>
           </geometry>
           <material>
-            <ambient>0.3 0.2 0.1 1</ambient>
-            <diffuse>0.5 0.3 0.15 1</diffuse>
+            <ambient>0.15 0.1 0.08 1</ambient>
+            <diffuse>0.25 0.15 0.12 1</diffuse>
           </material>
         </visual>
       </link>
@@ -293,8 +293,8 @@
             </box>
           </geometry>
           <material>
-            <ambient>0.3 0.2 0.1 1</ambient>
-            <diffuse>0.5 0.3 0.15 1</diffuse>
+            <ambient>0.15 0.1 0.08 1</ambient>
+            <diffuse>0.25 0.15 0.12 1</diffuse>
           </material>
         </visual>
       </link>
