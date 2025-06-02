@@ -36,7 +36,7 @@ class ChessPieceController(Node):
         """
         Setup mapping between chess notation and Gazebo coordinates
         """
-        self.board_center_x = 0.005
+        self.board_center_x = 0.05
         self.board_center_y = 0.0
         self.board_height = 0.8315
         self.square_size = 0.04  # 4cm per square
@@ -59,7 +59,7 @@ class ChessPieceController(Node):
                 square = file_char + rank_char
 
                 # Rank 1 (white pieces) at board_min_x = -0.09
-                # Rank 8 (black_pieces) at board_max_x = +0.19
+                # Rank 8 (black pieces) at board_max_x = +0.19
                 # Files a-h from board_min_y (-0.14) to board_max_y (0.14)
 
                 gazebo_x = self.board_min_x + (rank_idx * self.square_size)
@@ -75,13 +75,12 @@ class ChessPieceController(Node):
         """
         Analyse robot workspace and reachability
         """
-        # - Base collision geometry offset after -90° rotation
-        # - Proper mounting on platform surface
-        self.robot_x = 0.3779  # Corrected X position (0.4 - rotated offset)
-        self.robot_y = 0.0208  # Corrected Y position (0.0 + rotated offset)
-        self.robot_z = 0.88    # Exact mount platform surface height
+        # Fixed robot position to match launch file and mount platform
+        self.robot_x = 0.30    # Mount platform X position 
+        self.robot_y = 0.0     # Mount platform Y position
+        self.robot_z = 0.805   # Mount platform surface height
 
-        self.robot_reach_radius = 0.45  # 45cm
+        self.robot_reach_radius = 0.50
 
         self.reachable_squares = {}
         self.unreachable_squares = []
@@ -104,7 +103,7 @@ class ChessPieceController(Node):
         else:
             self.get_logger().info('All chess squares are within robot reach!')
             
-        key_squares = ['e2', 'e4', 'd4', 'f4', 'a1', 'h1', 'a8', 'h8']
+        key_squares = ['a1', 'h1', 'a8', 'h8', 'e2', 'e4', 'd4', 'f4']
         for square in key_squares:
             if square in self.reachable_squares:
                 info = self.reachable_squares[square]
@@ -152,8 +151,8 @@ class ChessPieceController(Node):
             return self.reachable_squares[square]['distance']
         return float('inf')
     
-    def move_piece_to_corrdinates(self, piece_name: str, x: float, y: float, z: float) -> bool:
-        """Move a piece to specific Gazebo coordicates"""
+    def move_piece_to_coordinates(self, piece_name: str, x: float, y: float, z: float) -> bool:
+        """Move a piece to specific Gazebo coordinates"""
         if not self.set_entity_client.wait_for_service(timeout_sec=5.0):
             self.get_logger().error('Set entity service not available')
             return False
@@ -199,19 +198,19 @@ class ChessPieceController(Node):
         
     def move_piece_off_board(self, piece_name: str, side: str = 'right') -> bool:
         """Move captured piece to off-board storage area"""
-        # Define storage areas for captured pieces
+        # Define storage areas for captured pieces (optimized for robot reach)
         if side == 'right':
-            # Right side of board
-            storage_x = 0.25  # Closer to robot
-            storage_y = 0.35
+            # Right side of board (closer to robot)
+            storage_x = 0.20  # Closer to robot than before
+            storage_y = 0.30
         else:
             # Left side of board
-            storage_x = 0.25
-            storage_y = -0.35
+            storage_x = 0.20
+            storage_y = -0.30
         
         storage_z = self.board_height
 
-        return self.move_piece_to_corrdinates(piece_name, storage_x, storage_y, storage_z)
+        return self.move_piece_to_coordinates(piece_name, storage_x, storage_y, storage_z)
 
     def execute_chess_move(self, move_uci: str) -> bool:
         """Execute a chess move in UCI notation (e.g. e2e4)"""
