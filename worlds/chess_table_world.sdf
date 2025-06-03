@@ -391,56 +391,56 @@
         <pose>-0.140 -0.140 0.008 0 0 0</pose>
         <visual name="a1_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_b1">
         <pose>-0.140 -0.100 0.008 0 0 0</pose>
         <visual name="b1_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_c1">
         <pose>-0.140 -0.060 0.008 0 0 0</pose>
         <visual name="c1_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_d1">
         <pose>-0.140 -0.020 0.008 0 0 0</pose>
         <visual name="d1_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_e1">
         <pose>-0.140 0.020 0.008 0 0 0</pose>
         <visual name="e1_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_f1">
         <pose>-0.140 0.060 0.008 0 0 0</pose>
         <visual name="f1_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_g1">
         <pose>-0.140 0.100 0.008 0 0 0</pose>
         <visual name="g1_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_h1">
         <pose>-0.140 0.140 0.008 0 0 0</pose>
         <visual name="h1_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
 
@@ -449,56 +449,56 @@
         <pose>-0.100 -0.140 0.008 0 0 0</pose>
         <visual name="a2_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_b2">
         <pose>-0.100 -0.100 0.008 0 0 0</pose>
         <visual name="b2_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_c2">
         <pose>-0.100 -0.060 0.008 0 0 0</pose>
         <visual name="c2_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_d2">
         <pose>-0.100 -0.020 0.008 0 0 0</pose>
         <visual name="d2_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_e2">
         <pose>-0.100 0.020 0.008 0 0 0</pose>
         <visual name="e2_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_f2">
         <pose>-0.100 0.060 0.008 0 0 0</pose>
         <visual name="f2_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_g2">
         <pose>-0.100 0.100 0.008 0 0 0</pose>
         <visual name="g2_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_h2">
         <pose>-0.100 0.140 0.008 0 0 0</pose>
         <visual name="h2_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
 
@@ -507,56 +507,56 @@
         <pose>-0.060 -0.140 0.008 0 0 0</pose>
         <visual name="a3_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_b3">
         <pose>-0.060 -0.100 0.008 0 0 0</pose>
         <visual name="b3_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_c3">
         <pose>-0.060 -0.060 0.008 0 0 0</pose>
         <visual name="c3_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_d3">
         <pose>-0.060 -0.020 0.008 0 0 0</pose>
         <visual name="d3_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_e3">
         <pose>-0.060 0.020 0.008 0 0 0</pose>
         <visual name="e3_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_f3">
         <pose>-0.060 0.060 0.008 0 0 0</pose>
         <visual name="f3_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_g3">
         <pose>-0.060 0.100 0.008 0 0 0</pose>
         <visual name="g3_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_h3">
         <pose>-0.060 0.140 0.008 0 0 0</pose>
         <visual name="h3_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
 
@@ -565,56 +565,56 @@
         <pose>-0.020 -0.140 0.008 0 0 0</pose>
         <visual name="a4_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_b4">
         <pose>-0.020 -0.100 0.008 0 0 0</pose>
         <visual name="b4_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_c4">
         <pose>-0.020 -0.060 0.008 0 0 0</pose>
         <visual name="c4_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_d4">
         <pose>-0.020 -0.020 0.008 0 0 0</pose>
         <visual name="d4_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_e4">
         <pose>-0.020 0.020 0.008 0 0 0</pose>
         <visual name="e4_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_f4">
         <pose>-0.020 0.060 0.008 0 0 0</pose>
         <visual name="f4_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_g4">
         <pose>-0.020 0.100 0.008 0 0 0</pose>
         <visual name="g4_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_h4">
         <pose>-0.020 0.140 0.008 0 0 0</pose>
         <visual name="h4_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
 
@@ -623,56 +623,56 @@
         <pose>0.020 -0.140 0.008 0 0 0</pose>
         <visual name="a5_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_b5">
         <pose>0.020 -0.100 0.008 0 0 0</pose>
         <visual name="b5_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_c5">
         <pose>0.020 -0.060 0.008 0 0 0</pose>
         <visual name="c5_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_d5">
         <pose>0.020 -0.020 0.008 0 0 0</pose>
         <visual name="d5_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_e5">
         <pose>0.020 0.020 0.008 0 0 0</pose>
         <visual name="e5_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_f5">
         <pose>0.020 0.060 0.008 0 0 0</pose>
         <visual name="f5_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_g5">
         <pose>0.020 0.100 0.008 0 0 0</pose>
         <visual name="g5_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_h5">
         <pose>0.020 0.140 0.008 0 0 0</pose>
         <visual name="h5_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
 
@@ -681,56 +681,56 @@
         <pose>0.060 -0.140 0.008 0 0 0</pose>
         <visual name="a6_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_b6">
         <pose>0.060 -0.100 0.008 0 0 0</pose>
         <visual name="b6_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_c6">
         <pose>0.060 -0.060 0.008 0 0 0</pose>
         <visual name="c6_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_d6">
         <pose>0.060 -0.020 0.008 0 0 0</pose>
         <visual name="d6_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_e6">
         <pose>0.060 0.020 0.008 0 0 0</pose>
         <visual name="e6_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_f6">
         <pose>0.060 0.060 0.008 0 0 0</pose>
         <visual name="f6_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_g6">
         <pose>0.060 0.100 0.008 0 0 0</pose>
         <visual name="g6_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_h6">
         <pose>0.060 0.140 0.008 0 0 0</pose>
         <visual name="h6_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
 
@@ -739,56 +739,56 @@
         <pose>0.100 -0.140 0.008 0 0 0</pose>
         <visual name="a7_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_b7">
         <pose>0.100 -0.100 0.008 0 0 0</pose>
         <visual name="b7_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_c7">
         <pose>0.100 -0.060 0.008 0 0 0</pose>
         <visual name="c7_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_d7">
         <pose>0.100 -0.020 0.008 0 0 0</pose>
         <visual name="d7_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_e7">
         <pose>0.100 0.020 0.008 0 0 0</pose>
         <visual name="e7_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_f7">
         <pose>0.100 0.060 0.008 0 0 0</pose>
         <visual name="f7_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_g7">
         <pose>0.100 0.100 0.008 0 0 0</pose>
         <visual name="g7_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_h7">
         <pose>0.100 0.140 0.008 0 0 0</pose>
         <visual name="h7_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
 
@@ -797,56 +797,56 @@
         <pose>0.140 -0.140 0.008 0 0 0</pose>
         <visual name="a8_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_b8">
         <pose>0.140 -0.100 0.008 0 0 0</pose>
         <visual name="b8_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_c8">
         <pose>0.140 -0.060 0.008 0 0 0</pose>
         <visual name="c8_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_d8">
         <pose>0.140 -0.020 0.008 0 0 0</pose>
         <visual name="d8_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_e8">
         <pose>0.140 0.020 0.008 0 0 0</pose>
         <visual name="e8_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_f8">
         <pose>0.140 0.060 0.008 0 0 0</pose>
         <visual name="f8_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_g8">
         <pose>0.140 0.100 0.008 0 0 0</pose>
         <visual name="g8_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
       <link name="square_h8">
         <pose>0.140 0.140 0.008 0 0 0</pose>
         <visual name="h8_visual">
           <geometry><box><size>0.04 0.04 0.001</size></box></geometry>
-          <material><ambient>0.3 0.15 0.1 1</ambient><diffuse>0.4 0.2 0.15 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
+          <material><ambient>0.95 0.95 0.85 1</ambient><diffuse>0.98 0.98 0.9 1</diffuse><specular>0.1 0.1 0.1 1</specular></material>
         </visual>
       </link>
     </model>
