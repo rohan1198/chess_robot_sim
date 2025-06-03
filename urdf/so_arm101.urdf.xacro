@@ -101,10 +101,36 @@
   <link name="base">
     <inertial>
       <origin xyz="0.020739 0.00204287 0.065966" rpy="0 0 0"/>
-      <mass value="50.0"/>  <!-- Unrealistic, but essential to keep the arm from tipping over -->
+      <mass value="100.0"/>  <!-- Unrealistic, but essential to keep the arm from tipping over -->
       <inertia ixx="0.136117" ixy="4.59787e-06" ixz="9.75275e-07" 
                iyy="0.114686" iyz="-4.97151e-05" izz="0.130364"/>
     </inertial>
+
+    <!-- Add a more stable base collision -->
+    <collision name="base_stable_collision">
+      <origin xyz="0.0207909 0.0221255 0.010" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.10 0.10 0.02"/>  <!-- Wider, flatter base for better contact -->
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>10.0</mu>   <!-- High friction to prevent sliding -->
+            <mu2>10.0</mu2>
+          </ode>
+        </friction>
+        <contact>
+          <ode>
+            <soft_cfm>0.0001</soft_cfm>
+            <soft_erp>0.2</soft_erp>
+            <kp>1000000</kp>
+            <kd>100</kd>
+            <max_vel>0.01</max_vel>
+            <min_depth>0.001</min_depth>
+          </ode>
+        </contact>
+      </surface>
+    </collision>
     
     <!-- Base motor holder visual -->
     <visual name="base_motor_holder_visual">

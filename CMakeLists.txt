@@ -38,9 +38,7 @@ install(
 install(PROGRAMS
   scripts/spawn_robot_gazebo.py
   scripts/chess_piece_controller.py
-  scripts/manual_chess_game.py
   scripts/manual_piece_mover.py
-  scripts/move_to_corners.py
   scripts/joint_movement_debugger.py
   DESTINATION lib/${PROJECT_NAME}
 )

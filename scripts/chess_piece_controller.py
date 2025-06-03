@@ -76,9 +76,9 @@ class ChessPieceController(Node):
         Analyse robot workspace and reachability
         """
         # Fixed robot position to match launch file and mount platform
-        self.robot_x = 0.30    # Mount platform X position 
+        self.robot_x = 0.35    # Mount platform X position 
         self.robot_y = 0.0     # Mount platform Y position
-        self.robot_z = 0.805   # Mount platform surface height
+        self.robot_z = 0.778   # Mount platform surface height
 
         self.robot_reach_radius = 0.50
 
