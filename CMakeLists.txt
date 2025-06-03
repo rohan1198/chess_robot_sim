@@ -40,6 +40,7 @@ install(PROGRAMS
   scripts/chess_piece_controller.py
   scripts/manual_piece_mover.py
   scripts/joint_movement_debugger.py
+  scripts/move_to_square.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
