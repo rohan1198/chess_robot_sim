@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="so_arm_101">
+
+  <xacro:arg name="initial_positions_file" default="$(find so_arm_101_gazebo)/config/initial_positions.yaml"/>
+
+  <!-- Include the robot URDF -->
+  <xacro:include filename="$(find so_arm_101_gazebo)/urdf/so_arm_101.urdf.xacro"/>
+
+  <!-- Include ros2_control macro -->
+  <xacro:include filename="$(find so_arm_101_gazebo)/config/so_arm_101.ros2_control.xacro"/>
+
+  <!-- Add ros2_control -->
+  <xacro:so_arm_101_ros2_control 
+    name="so_arm_101_gazebo_system" 
+    initial_positions_file="$(arg initial_positions_file)"/>
+
+  <!-- Gazebo ros2_control plugin -->
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(find so_arm_101_gazebo)/config/controllers.yaml</parameters>
+      <robot_param>robot_description</robot_param>
+      <robot_param_node>robot_state_publisher</robot_param_node>
+    </plugin>
+  </gazebo>
+
+  <!-- Gazebo friction settings for stability -->
+  <gazebo reference="base_link">
+    <static>true</static>
+  </gazebo>
+
+  <!-- Ground plane contact settings -->
+  <gazebo reference="base">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <material>Gazebo/Grey</material>
+  </gazebo>
+
+</robot>
