@@ -53,12 +53,22 @@ def main():
         
         print("\n✅ PS5 Arm Controller System is running!")
         print("📋 Press Ctrl+C to stop all processes")
-        print("\n🎮 PS5 Controller Help:")
-        print("   • L1 + button to select joints")
-        print("   • X/O to move selected joint")
-        print("   • Triangle/Square for gripper")
-        print("   • Select button for status")
-        print("   • L2+R2 for emergency home")
+        print("\n🎮 PS5 Controller Direct Control Help:")
+        print("   📍 ARM JOINT CONTROLS (2 buttons per joint):")
+        print("      • Joint 0 (Shoulder Rotation): L1(+) / L2(-)")
+        print("      • Joint 1 (Shoulder Pitch)  : R1(+) / R2(-)")
+        print("      • Joint 2 (Elbow)           : X(+)  / O(-)")
+        print("      • Joint 3 (Wrist Pitch)     : △(+)  / □(-)")
+        print("      • Joint 4 (Wrist Roll)      : L3(+) / R3(-)")
+        print("")
+        print("   🦾 GRIPPER CONTROLS (Dedicated Controller):")
+        print("      • Open: ↑ (D-pad Up)")
+        print("      • Close: ↓ (D-pad Down)")
+        print("")
+        print("   ⚙️  SPECIAL:")
+        print("      • Emergency Home: SELECT + START")
+        print("      • Status Info: PS Button")
+        print("      • Fine Control: Hold any shoulder button while moving")
         
         # Wait for processes
         for process in processes:
