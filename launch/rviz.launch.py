@@ -1,57 +1,36 @@
+#!/usr/bin/env python3
+
+import os
 from launch import LaunchDescription
-from launch.substitutions import Command, PathJoinSubstitution
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-from launch_ros.parameter_descriptions import ParameterValue
 
 
 def generate_launch_description():
-    pkg_share = FindPackageShare('chess_robot_sim')
-    
-    controller_config = PathJoinSubstitution([
-        pkg_share,
-        'config',
-        'controllers_6dof.yaml'
-    ])
-    
-    robot_description_content = ParameterValue(
-        Command([
-            'xacro ',
-            PathJoinSubstitution([
-                pkg_share,
-                'urdf',
-                'so_arm101.urdf.xacro'
-            ]),
-            ' controller_config_file:=',
-            controller_config
-        ]),
-        value_type=str
+    # Declare arguments
+    declared_arguments = []
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "rviz_config_file",
+            default_value=PathJoinSubstitution(
+                [FindPackageShare("so_arm_101_gazebo"), "rviz", "so_arm_101.rviz"]
+            ),
+            description="RViz configuration file",
+        )
     )
 
-    return LaunchDescription([
-        Node(
-            package='robot_state_publisher',
-            executable='robot_state_publisher',
-            name='robot_state_publisher',
-            output='screen',
-            parameters=[{
-                'robot_description': robot_description_content,
-                'use_sim_time': True
-            }]
-        ),
+    # Initialize Arguments
+    rviz_config_file = LaunchConfiguration("rviz_config_file")
 
-        Node(
-            package='rviz2',
-            executable='rviz2',
-            name='rviz2',
-            arguments=['-d', PathJoinSubstitution([
-                FindPackageShare('chess_robot_sim'),
-                'config',
-                'urdf.rviz'
-            ])],
-            parameters=[{
-                'use_sim_time': True
-            }],
-            output='screen'
-        )
-    ])
+    # RViz node
+    rviz_node = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz2",
+        output="screen",
+        arguments=["-d", rviz_config_file],
+    )
+
+    return LaunchDescription(declared_arguments + [rviz_node])
