@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="so_arm_101_ros2_control" params="name initial_positions_file">
+    <xacro:property name="initial_positions" value="${xacro.load_yaml(initial_positions_file)['initial_positions']}"/>
+
+    <ros2_control name="${name}" type="system">
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </hardware>
+      
+      <joint name="shoulder_rotation">
+        <command_interface name="position">
+          <param name="min">-1.91986</param>
+          <param name="max">1.91986</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-2.0</param>
+          <param name="max">2.0</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['shoulder_rotation']}</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      
+      <joint name="shoulder_pitch">
+        <command_interface name="position">
+          <param name="min">-1.74533</param>
+          <param name="max">1.74533</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-2.0</param>
+          <param name="max">2.0</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['shoulder_pitch']}</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      
+      <joint name="elbow">
+        <command_interface name="position">
+          <param name="min">-1.74533</param>
+          <param name="max">1.5708</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-2.0</param>
+          <param name="max">2.0</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['elbow']}</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      
+      <joint name="wrist_pitch">
+        <command_interface name="position">
+          <param name="min">-1.65806</param>
+          <param name="max">1.65806</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-2.0</param>
+          <param name="max">2.0</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['wrist_pitch']}</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      
+      <joint name="wrist_roll">
+        <command_interface name="position">
+          <param name="min">-2.79253</param>
+          <param name="max">2.79253</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-2.0</param>
+          <param name="max">2.0</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['wrist_roll']}</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+      
+      <joint name="gripper_joint">
+        <command_interface name="position">
+          <param name="min">-0.174533</param>
+          <param name="max">1.74533</param>
+        </command_interface>
+        <command_interface name="velocity">
+          <param name="min">-1.0</param>
+          <param name="max">1.0</param>
+        </command_interface>
+        <state_interface name="position">
+          <param name="initial_value">${initial_positions['gripper_joint']}</param>
+        </state_interface>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+      </joint>
+    </ros2_control>
+
+  </xacro:macro>
+
+</robot>

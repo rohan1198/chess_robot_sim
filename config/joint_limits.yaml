@@ -1,34 +1,61 @@
-default_velocity_scaling_factor: 0.1
-default_acceleration_scaling_factor: 0.1
+# Joint limits for SO-ARM101
+# These limits match the original SO-ARM101 CAD model
+# Updated with more permissive velocity/acceleration limits
+
+default_velocity_scaling_factor: 0.2
+default_acceleration_scaling_factor: 0.2
 
 joint_limits:
-  base_joint:
+  shoulder_rotation:
     has_velocity_limits: true
-    max_velocity: 1.0
+    max_velocity: 2.0        # Increased from 1.0
     has_acceleration_limits: true
-    max_acceleration: 1.0
-  shoulder_joint:
+    max_acceleration: 2.0    # Increased from 1.0
+    has_position_limits: true
+    min_position: -1.91986  # -110 degrees
+    max_position: 1.91986   # +110 degrees
+    
+  shoulder_pitch:
     has_velocity_limits: true
-    max_velocity: 1.0
+    max_velocity: 2.0        # Increased from 1.0
     has_acceleration_limits: true
-    max_acceleration: 1.0
-  elbow_joint:
+    max_acceleration: 2.0    # Increased from 1.0
+    has_position_limits: true
+    min_position: -1.74533  # -100 degrees
+    max_position: 1.74533   # +100 degrees
+    
+  elbow:
     has_velocity_limits: true
-    max_velocity: 1.0
+    max_velocity: 2.0        # Increased from 1.0
     has_acceleration_limits: true
-    max_acceleration: 1.0
-  wrist_pitch_joint:
+    max_acceleration: 2.0    # Increased from 1.0
+    has_position_limits: true
+    min_position: -1.74533  # -100 degrees
+    max_position: 1.5708    # +90 degrees
+    
+  wrist_pitch:
     has_velocity_limits: true
-    max_velocity: 1.0
+    max_velocity: 2.0        # Increased from 1.0
     has_acceleration_limits: true
-    max_acceleration: 1.0
-  wrist_roll_joint:
+    max_acceleration: 2.0    # Increased from 1.0
+    has_position_limits: true
+    min_position: -1.65806  # -95 degrees
+    max_position: 1.65806   # +95 degrees
+    
+  wrist_roll:
     has_velocity_limits: true
-    max_velocity: 1.0
+    max_velocity: 2.0        # Increased from 1.0
     has_acceleration_limits: true
-    max_acceleration: 1.0
+    max_acceleration: 2.0    # Increased from 1.0
+    has_position_limits: true
+    min_position: -2.79253  # -160 degrees
+    max_position: 2.79253   # +160 degrees
+    
   gripper_joint:
     has_velocity_limits: true
     max_velocity: 1.0
     has_acceleration_limits: true
     max_acceleration: 1.0
+    has_position_limits: true
+    min_position: -0.174533  # -10 degrees
+    max_position: 1.74533    # +100 degrees
