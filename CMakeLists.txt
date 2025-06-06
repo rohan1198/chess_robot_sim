@@ -17,7 +17,15 @@ install(
     urdf
     worlds
     rviz
+    scripts
   DESTINATION share/${PROJECT_NAME}/
+)
+
+install(PROGRAMS
+  scripts/ps5_arm_controller.py
+  scripts/test_joints.py
+  scripts/chess_test.py
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 if(BUILD_TESTING)
