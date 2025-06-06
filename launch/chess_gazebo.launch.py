@@ -42,28 +42,28 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "robot_x",
-            default_value="0.0",
+            default_value="0.75",  # Centered with table/board center for optimal reach
             description="X position of the robot base",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "robot_y", 
-            default_value="-0.4",
+            default_value="0.25",  # Moved even closer to board center for optimal reach
             description="Y position of the robot base",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "robot_z",
-            default_value="0.0", 
+            default_value="0.375",  # Table center height (robot sits ON table)
             description="Z position of the robot base",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "robot_yaw",
-            default_value="0.0",
+            default_value="0.0",  # Facing straight toward the board center for symmetric reach
             description="Yaw rotation of the robot base (radians)",
         )
     )

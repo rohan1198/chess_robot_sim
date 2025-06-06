@@ -25,6 +25,8 @@ install(PROGRAMS
   scripts/ps5_arm_controller.py
   scripts/test_joints.py
   scripts/chess_test.py
+  scripts/chess_piece_movement_test.py
+  scripts/positioning_helper.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

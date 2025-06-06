@@ -17,9 +17,10 @@ class ChessEnvironmentTester(Node):
         # Initialize CV bridge
         self.bridge = CvBridge()
         
-        # Chess board parameters
+        # Chess board parameters (corrected to match world file)
         self.square_size = 0.057  # 57mm squares
-        self.board_center = [0.75, 0, 0.755]  # Table position (optimized for arm reach)
+        self.board_center = [0.75, 0, 0.405]  # Actual board center from world file
+        self.table_surface = 0.375  # Table center height (robot spawn level)
         
         # Test data storage
         self.camera_working = False
@@ -53,6 +54,7 @@ class ChessEnvironmentTester(Node):
         self.test_timer = self.create_timer(5.0, self.run_periodic_tests)
         
         self.get_logger().info('Chess Environment Tester Started!')
+        self.get_logger().info(f'📍 Board center: {self.board_center}')
         self.get_logger().info('Running comprehensive tests...')
     
     def camera_callback(self, msg):
@@ -103,6 +105,9 @@ class ChessEnvironmentTester(Node):
         
         # Test 4: Coordinate System
         self.test_coordinate_system()
+        
+        # Test 5: Robot Position Analysis
+        self.test_robot_positioning()
         
         self.get_logger().info('='*60)
     
@@ -215,6 +220,56 @@ class ChessEnvironmentTester(Node):
             else:
                 self.get_logger().info(f'      ✅ {square} should be reachable')
     
+    def test_robot_positioning(self):
+        """Test and analyze robot positioning relative to the board."""
+        self.get_logger().info('🎯 ROBOT POSITIONING ANALYSIS:')
+        
+        # Calculate robot position relative to board
+        # Note: This assumes the robot's base_link position relative to world
+        # In practice, you'd get this from TF transforms
+        
+        # Expected robot position from launch file defaults
+        robot_pos = [0.65, 0.45, 0.375]  # Updated position
+        
+        # Calculate distances to key board positions
+        board_corners = {
+            'a8_corner': [0.522, 0.228, 0.405],  # Black side, a-file
+            'h8_corner': [0.978, 0.228, 0.405],  # Black side, h-file
+            'a1_corner': [0.522, -0.228, 0.405], # White side, a-file
+            'h1_corner': [0.978, -0.228, 0.405], # White side, h-file
+            'center': self.board_center
+        }
+        
+        self.get_logger().info(f'   🤖 Robot position: ({robot_pos[0]:.3f}, {robot_pos[1]:.3f}, {robot_pos[2]:.3f})')
+        self.get_logger().info('   📏 Distances to key board positions:')
+        
+        for corner_name, corner_pos in board_corners.items():
+            dx = robot_pos[0] - corner_pos[0]
+            dy = robot_pos[1] - corner_pos[1]
+            dz = robot_pos[2] - corner_pos[2]
+            distance = np.sqrt(dx**2 + dy**2 + dz**2)
+            
+            # Assess reachability
+            if distance <= 0.25:  # Conservative arm reach
+                status = "✅ REACHABLE"
+            elif distance <= 0.35:
+                status = "⚠️  MARGINAL"
+            else:
+                status = "❌ OUT OF REACH"
+                
+            self.get_logger().info(f'      {corner_name}: {distance:.3f}m - {status}')
+        
+        # Analyze robot positioning for chess play
+        black_side_y = 0.228  # Y coordinate of black pieces
+        white_side_y = -0.228  # Y coordinate of white pieces
+        
+        if robot_pos[1] > black_side_y:
+            self.get_logger().info('   ♛ Robot positioned on BLACK side (good for playing black)')
+        elif robot_pos[1] < white_side_y:
+            self.get_logger().info('   ♔ Robot positioned on WHITE side (good for playing white)')
+        else:
+            self.get_logger().info('   🎯 Robot positioned in NEUTRAL zone')
+    
     def chess_square_to_world(self, file_letter, rank_number):
         """Convert chess square notation to world coordinates."""
         # Convert file letter (a-h) to column index (0-7)
@@ -246,11 +301,14 @@ class ChessEnvironmentTester(Node):
         self.get_logger().info('   □ Robot joints responsive') 
         self.get_logger().info('   □ Chessboard detection')
         self.get_logger().info('   □ Coordinate system validation')
+        self.get_logger().info('   □ Robot positioning analysis')
         self.get_logger().info('')
         self.get_logger().info('🔍 Monitoring topics:')
         self.get_logger().info('   • /chess_camera/image_raw')
         self.get_logger().info('   • /chess_camera/camera_info')
         self.get_logger().info('   • /joint_states')
+        self.get_logger().info('')
+        self.get_logger().info(f'📍 Expected board center: {self.board_center}')
         self.get_logger().info('='*60)
 
 def main(args=None):

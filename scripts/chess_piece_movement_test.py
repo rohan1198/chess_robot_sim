@@ -35,11 +35,11 @@ class ChessPieceMovementTester(Node):
             10
         )
         
-        # Chess board parameters (optimized positioning)
+        # Chess board parameters (corrected to match world file)
         self.square_size = 0.057  # 57mm squares
-        self.board_center = [0.75, 0, 0.755]  # Table center position
+        self.board_center = [0.75, 0, 0.405]  # Actual board center from world file
         self.piece_height = 0.030  # Average piece height
-        self.hover_height = 0.100  # Height to hover above pieces
+        self.hover_height = 0.080  # Height to hover above pieces (reduced for better precision)
         
         # Joint names
         self.joint_names = [
@@ -54,14 +54,18 @@ class ChessPieceMovementTester(Node):
         self.current_joint_positions = {}
         self.joint_states_received = False
         
-        # Test positions (chess squares)
+        # Test positions (chess squares) - focused on reachable squares
         self.test_positions = {
-            'e4': self.chess_square_to_world('e', 4),  # Center square
-            'e5': self.chess_square_to_world('e', 5),  # Another center square
+            'd7': self.chess_square_to_world('d', 7),  # Black pawn center-left
+            'e7': self.chess_square_to_world('e', 7),  # Black pawn center-right
+            'd8': self.chess_square_to_world('d', 8),  # Black queen
+            'e8': self.chess_square_to_world('e', 8),  # Black king
             'home': [0.0, 0.0, 0.0, 0.0, 0.0],       # Home position
         }
         
         self.get_logger().info('🏁 Chess Piece Movement Tester Ready!')
+        self.get_logger().info(f'📍 Board center: {self.board_center}')
+        self.get_logger().info(f'🎯 Test positions: {list(self.test_positions.keys())}')
         
     def joint_state_callback(self, msg):
         """Update current joint positions."""
@@ -93,8 +97,7 @@ class ChessPieceMovementTester(Node):
     
     def world_to_joint_angles(self, target_xyz):
         """
-        Simple inverse kinematics for SO-ARM101.
-        This is a simplified solution - in practice you'd use a proper IK solver.
+        Improved inverse kinematics for SO-ARM101.
         """
         x, y, z = target_xyz
         
@@ -104,19 +107,25 @@ class ChessPieceMovementTester(Node):
         # Distance from base to target (projected on XY plane)
         r = math.sqrt(x*x + y*y)
         
-        # Height from base
-        h = z - 0.095  # Approximate base height
+        # Height from base (adjusted for actual base height)
+        h = z - 0.095  # Base height from URDF
         
-        # Arm segment lengths (approximate for SO-ARM101)
-        L1 = 0.115  # Upper arm length
-        L2 = 0.135  # Forearm length
+        # Arm segment lengths (from URDF analysis)
+        L1 = 0.113  # Upper arm length (shoulder to elbow)
+        L2 = 0.135  # Forearm length (elbow to wrist)
         
         # Distance from shoulder joint to target
         d = math.sqrt(r*r + h*h)
         
         # Check if target is reachable
-        if d > (L1 + L2 - 0.05):  # Leave some margin
-            self.get_logger().warn(f"Target might be out of reach: {d:.3f}m")
+        max_reach = L1 + L2 - 0.02  # Small margin for safety
+        if d > max_reach:
+            self.get_logger().warn(f"Target might be out of reach: {d:.3f}m > {max_reach:.3f}m")
+            # Scale down to maximum reach
+            scale = max_reach / d
+            r *= scale
+            h *= scale
+            d = max_reach
         
         # Elbow angle using cosine rule
         cos_elbow = (L1*L1 + L2*L2 - d*d) / (2*L1*L2)
@@ -247,37 +256,73 @@ class ChessPieceMovementTester(Node):
             self.get_logger().error('❌ Gripper movement failed!')
             return False
     
+    def test_reachability(self):
+        """Test reachability of key chess squares."""
+        self.get_logger().info('\n🔍 Testing Chess Square Reachability')
+        self.get_logger().info('=' * 50)
+        
+        # Test various squares to assess reachability
+        test_squares = ['a8', 'b8', 'c8', 'd8', 'e8', 'f8', 'g8', 'h8',  # Black back rank
+                       'a7', 'b7', 'c7', 'd7', 'e7', 'f7', 'g7', 'h7',  # Black pawns
+                       'd4', 'e4', 'd5', 'e5',                          # Center squares
+                       'a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1'] # White back rank
+        
+        reachable_squares = []
+        unreachable_squares = []
+        
+        for square in test_squares:
+            world_pos = self.chess_square_to_world(square[0], int(square[1]))
+            joint_angles = self.world_to_joint_angles(world_pos)
+            
+            # Calculate actual reach distance
+            x, y, z = world_pos
+            distance = math.sqrt(x*x + y*y + (z-0.095)**2)
+            
+            if distance <= 0.23:  # Conservative reach limit
+                reachable_squares.append(square)
+                self.get_logger().info(f'   ✅ {square}: {distance:.3f}m - REACHABLE')
+            else:
+                unreachable_squares.append(square)
+                self.get_logger().warn(f'   ❌ {square}: {distance:.3f}m - OUT OF REACH')
+        
+        self.get_logger().info(f'\n📊 Reachability Summary:')
+        self.get_logger().info(f'   Reachable squares ({len(reachable_squares)}): {reachable_squares}')
+        self.get_logger().info(f'   Unreachable squares ({len(unreachable_squares)}): {unreachable_squares}')
+        
+        return reachable_squares, unreachable_squares
+    
     def test_basic_movement(self):
         """Test basic arm movement to chess squares."""
         self.get_logger().info('\n🔍 Testing Basic Movement to Chess Squares')
         self.get_logger().info('=' * 50)
         
-        # Test movement to center squares
-        test_squares = ['e4', 'e5']
+        # Test movement to reachable squares
+        test_squares = ['d7', 'e7', 'd8', 'e8']
         
         for square in test_squares:
-            world_pos = self.test_positions[square]
-            hover_pos = world_pos.copy()
-            hover_pos[2] += self.hover_height  # Hover above
-            
-            self.get_logger().info(f'\n📍 Testing movement to {square}')
-            self.get_logger().info(f'   World position: ({world_pos[0]:.3f}, {world_pos[1]:.3f}, {world_pos[2]:.3f})')
-            
-            # Move to hover position first
-            if self.move_arm_to_world_position(hover_pos, 4.0):
-                self.get_logger().info(f'✅ Successfully reached hover position above {square}')
-                time.sleep(1)
+            if square in self.test_positions:
+                world_pos = self.test_positions[square]
+                hover_pos = world_pos.copy()
+                hover_pos[2] += self.hover_height  # Hover above
                 
-                # Move down to piece level
-                if self.move_arm_to_world_position(world_pos, 2.0):
-                    self.get_logger().info(f'✅ Successfully reached {square} square!')
+                self.get_logger().info(f'\n📍 Testing movement to {square}')
+                self.get_logger().info(f'   World position: ({world_pos[0]:.3f}, {world_pos[1]:.3f}, {world_pos[2]:.3f})')
+                
+                # Move to hover position first
+                if self.move_arm_to_world_position(hover_pos, 4.0):
+                    self.get_logger().info(f'✅ Successfully reached hover position above {square}')
                     time.sleep(1)
+                    
+                    # Move down to piece level
+                    if self.move_arm_to_world_position(world_pos, 2.0):
+                        self.get_logger().info(f'✅ Successfully reached {square} square!')
+                        time.sleep(1)
+                    else:
+                        self.get_logger().error(f'❌ Failed to reach {square} square')
                 else:
-                    self.get_logger().error(f'❌ Failed to reach {square} square')
-            else:
-                self.get_logger().error(f'❌ Failed to reach hover position above {square}')
-            
-            time.sleep(2)
+                    self.get_logger().error(f'❌ Failed to reach hover position above {square}')
+                
+                time.sleep(2)
     
     def test_gripper_operation(self):
         """Test gripper open/close operations."""
@@ -305,24 +350,24 @@ class ChessPieceMovementTester(Node):
             self.get_logger().error('❌ Failed to open gripper')
     
     def test_piece_move_simulation(self):
-        """Simulate moving a piece from e4 to e5."""
-        self.get_logger().info('\n♟️  Simulating Piece Move: e4 → e5')
+        """Simulate moving a piece from d7 to d6."""
+        self.get_logger().info('\n♟️  Simulating Piece Move: d7 → d6')
         self.get_logger().info('=' * 40)
         
         # Get positions
-        e4_pos = self.test_positions['e4'].copy()
-        e5_pos = self.test_positions['e5'].copy()
+        d7_pos = self.chess_square_to_world('d', 7)
+        d6_pos = self.chess_square_to_world('d', 6)
         
         # Create hover positions
-        e4_hover = e4_pos.copy()
-        e4_hover[2] += self.hover_height
+        d7_hover = d7_pos.copy()
+        d7_hover[2] += self.hover_height
         
-        e5_hover = e5_pos.copy()
-        e5_hover[2] += self.hover_height
+        d6_hover = d6_pos.copy()
+        d6_hover[2] += self.hover_height
         
-        # Step 1: Move to hover above e4
-        self.get_logger().info('Step 1: Moving to hover above e4...')
-        if not self.move_arm_to_world_position(e4_hover, 3.0):
+        # Step 1: Move to hover above d7
+        self.get_logger().info('Step 1: Moving to hover above d7...')
+        if not self.move_arm_to_world_position(d7_hover, 3.0):
             self.get_logger().error('❌ Failed step 1')
             return False
         
@@ -332,9 +377,9 @@ class ChessPieceMovementTester(Node):
             self.get_logger().error('❌ Failed step 2')
             return False
         
-        # Step 3: Move down to e4 (pick up piece)
-        self.get_logger().info('Step 3: Moving down to pick up piece at e4...')
-        if not self.move_arm_to_world_position(e4_pos, 2.0):
+        # Step 3: Move down to d7 (pick up piece)
+        self.get_logger().info('Step 3: Moving down to pick up piece at d7...')
+        if not self.move_arm_to_world_position(d7_pos, 2.0):
             self.get_logger().error('❌ Failed step 3')
             return False
         
@@ -348,19 +393,19 @@ class ChessPieceMovementTester(Node):
         
         # Step 5: Lift piece
         self.get_logger().info('Step 5: Lifting piece...')
-        if not self.move_arm_to_world_position(e4_hover, 2.0):
+        if not self.move_arm_to_world_position(d7_hover, 2.0):
             self.get_logger().error('❌ Failed step 5')
             return False
         
-        # Step 6: Move to hover above e5
-        self.get_logger().info('Step 6: Moving to hover above e5...')
-        if not self.move_arm_to_world_position(e5_hover, 3.0):
+        # Step 6: Move to hover above d6
+        self.get_logger().info('Step 6: Moving to hover above d6...')
+        if not self.move_arm_to_world_position(d6_hover, 3.0):
             self.get_logger().error('❌ Failed step 6')
             return False
         
-        # Step 7: Move down to e5 (place piece)
-        self.get_logger().info('Step 7: Moving down to place piece at e5...')
-        if not self.move_arm_to_world_position(e5_pos, 2.0):
+        # Step 7: Move down to d6 (place piece)
+        self.get_logger().info('Step 7: Moving down to place piece at d6...')
+        if not self.move_arm_to_world_position(d6_pos, 2.0):
             self.get_logger().error('❌ Failed step 7')
             return False
         
@@ -372,7 +417,7 @@ class ChessPieceMovementTester(Node):
         
         # Step 9: Move back to hover
         self.get_logger().info('Step 9: Moving back to safe position...')
-        if not self.move_arm_to_world_position(e5_hover, 2.0):
+        if not self.move_arm_to_world_position(d6_hover, 2.0):
             self.get_logger().error('❌ Failed step 9')
             return False
         
@@ -436,15 +481,19 @@ class ChessPieceMovementTester(Node):
         time.sleep(2)
         
         try:
-            # Test 1: Basic movement
+            # Test 1: Reachability analysis
+            self.test_reachability()
+            time.sleep(2)
+            
+            # Test 2: Basic movement
             self.test_basic_movement()
             time.sleep(2)
             
-            # Test 2: Gripper operation
+            # Test 3: Gripper operation
             self.test_gripper_operation()
             time.sleep(2)
             
-            # Test 3: Complete piece move simulation
+            # Test 4: Complete piece move simulation
             self.test_piece_move_simulation()
             time.sleep(2)
             
