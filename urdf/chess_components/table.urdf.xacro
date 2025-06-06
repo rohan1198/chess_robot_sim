@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="chess_table">
+
+  <!-- Table properties -->
+  <xacro:property name="table_length" value="1.2"/>
+  <xacro:property name="table_width" value="0.8"/>
+  <xacro:property name="table_height" value="0.75"/>
+  <xacro:property name="table_thickness" value="0.05"/>
+  <xacro:property name="leg_width" value="0.05"/>
+  <xacro:property name="leg_height" value="${table_height - table_thickness}"/>
+
+  <!-- Materials -->
+  <material name="table_wood">
+    <color rgba="0.8 0.6 0.4 1.0"/>
+  </material>
+
+  <material name="table_legs">
+    <color rgba="0.4 0.3 0.2 1.0"/>
+  </material>
+
+  <!-- Table top -->
+  <link name="table_top">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="20.0"/>
+      <inertia ixx="1.33" ixy="0" ixz="0" iyy="2.4" iyz="0" izz="3.73"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${table_length} ${table_width} ${table_thickness}"/>
+      </geometry>
+      <material name="table_wood"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${table_length} ${table_width} ${table_thickness}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Table legs -->
+  <xacro:macro name="table_leg" params="name x y">
+    <link name="table_leg_${name}">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="2.0"/>
+        <inertia ixx="0.02" ixy="0" ixz="0" iyy="0.02" iyz="0" izz="0.001"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${leg_width} ${leg_width} ${leg_height}"/>
+        </geometry>
+        <material name="table_legs"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${leg_width} ${leg_width} ${leg_height}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="table_top_to_leg_${name}" type="fixed">
+      <parent link="table_top"/>
+      <child link="table_leg_${name}"/>
+      <origin xyz="${x} ${y} ${-table_thickness/2 - leg_height/2}" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Create all four legs -->
+  <xacro:table_leg name="fl" x="${table_length/2 - leg_width/2}" y="${table_width/2 - leg_width/2}"/>
+  <xacro:table_leg name="fr" x="${table_length/2 - leg_width/2}" y="${-table_width/2 + leg_width/2}"/>
+  <xacro:table_leg name="bl" x="${-table_length/2 + leg_width/2}" y="${table_width/2 - leg_width/2}"/>
+  <xacro:table_leg name="br" x="${-table_length/2 + leg_width/2}" y="${-table_width/2 + leg_width/2}"/>
+
+  <!-- Gazebo properties -->
+  <gazebo reference="table_top">
+    <material>Gazebo/Wood</material>
+    <mu1>0.6</mu1>
+    <mu2>0.6</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+  </gazebo>
+
+  <gazebo reference="table_leg_fl">
+    <material>Gazebo/Wood</material>
+  </gazebo>
+  <gazebo reference="table_leg_fr">
+    <material>Gazebo/Wood</material>
+  </gazebo>
+  <gazebo reference="table_leg_bl">
+    <material>Gazebo/Wood</material>
+  </gazebo>
+  <gazebo reference="table_leg_br">
+    <material>Gazebo/Wood</material>
+  </gazebo>
+
+</robot>

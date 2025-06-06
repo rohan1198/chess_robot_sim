@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="chessboard">
+
+  <!-- Chessboard properties (standard tournament size) -->
+  <xacro:property name="square_size" value="0.057"/>  <!-- 57mm squares -->
+  <xacro:property name="board_size" value="${8 * square_size}"/>  <!-- 456mm total -->
+  <xacro:property name="board_thickness" value="0.01"/>  <!-- 10mm thick -->
+  <xacro:property name="border_width" value="0.03"/>  <!-- 30mm border -->
+  <xacro:property name="total_size" value="${board_size + 2 * border_width}"/>
+
+  <!-- Materials -->
+  <material name="board_light">
+    <color rgba="0.95 0.95 0.85 1.0"/>  <!-- Light squares -->
+  </material>
+
+  <material name="board_dark">
+    <color rgba="0.4 0.3 0.2 1.0"/>  <!-- Dark squares -->
+  </material>
+
+  <material name="board_border">
+    <color rgba="0.2 0.15 0.1 1.0"/>  <!-- Border -->
+  </material>
+
+  <!-- Base board with border -->
+  <link name="chessboard_base">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="2.0"/>
+      <inertia ixx="0.05" ixy="0" ixz="0" iyy="0.05" iyz="0" izz="0.1"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${total_size} ${total_size} ${board_thickness}"/>
+      </geometry>
+      <material name="board_border"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${total_size} ${total_size} ${board_thickness}"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Generate chess squares -->
+  <xacro:macro name="chess_square" params="row col">
+    <xacro:property name="square_name" value="square_${row}_${col}"/>
+    <!-- Calculate if square should be light or dark -->
+    <xacro:property name="is_light" value="${(row + col) % 2}"/>
+    
+    <!-- Position calculation (center the board) -->
+    <xacro:property name="x_pos" value="${(col - 3.5) * square_size}"/>
+    <xacro:property name="y_pos" value="${(3.5 - row) * square_size}"/>
+    
+    <link name="${square_name}">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="${square_size} ${square_size} 0.001"/>
+        </geometry>
+        <material name="${'board_light' if is_light else 'board_dark'}"/>
+      </visual>
+    </link>
+
+    <joint name="base_to_${square_name}" type="fixed">
+      <parent link="chessboard_base"/>
+      <child link="${square_name}"/>
+      <origin xyz="${x_pos} ${y_pos} ${board_thickness/2 + 0.0005}" rpy="0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Generate all 64 squares -->
+  <xacro:macro name="generate_board">
+    <xacro:property name="rows" value="0 1 2 3 4 5 6 7"/>
+    <xacro:property name="cols" value="0 1 2 3 4 5 6 7"/>
+    
+    <!-- Row 0 (rank 8) -->
+    <xacro:chess_square row="0" col="0"/><xacro:chess_square row="0" col="1"/>
+    <xacro:chess_square row="0" col="2"/><xacro:chess_square row="0" col="3"/>
+    <xacro:chess_square row="0" col="4"/><xacro:chess_square row="0" col="5"/>
+    <xacro:chess_square row="0" col="6"/><xacro:chess_square row="0" col="7"/>
+    
+    <!-- Row 1 (rank 7) -->
+    <xacro:chess_square row="1" col="0"/><xacro:chess_square row="1" col="1"/>
+    <xacro:chess_square row="1" col="2"/><xacro:chess_square row="1" col="3"/>
+    <xacro:chess_square row="1" col="4"/><xacro:chess_square row="1" col="5"/>
+    <xacro:chess_square row="1" col="6"/><xacro:chess_square row="1" col="7"/>
+    
+    <!-- Row 2 (rank 6) -->
+    <xacro:chess_square row="2" col="0"/><xacro:chess_square row="2" col="1"/>
+    <xacro:chess_square row="2" col="2"/><xacro:chess_square row="2" col="3"/>
+    <xacro:chess_square row="2" col="4"/><xacro:chess_square row="2" col="5"/>
+    <xacro:chess_square row="2" col="6"/><xacro:chess_square row="2" col="7"/>
+    
+    <!-- Row 3 (rank 5) -->
+    <xacro:chess_square row="3" col="0"/><xacro:chess_square row="3" col="1"/>
+    <xacro:chess_square row="3" col="2"/><xacro:chess_square row="3" col="3"/>
+    <xacro:chess_square row="3" col="4"/><xacro:chess_square row="3" col="5"/>
+    <xacro:chess_square row="3" col="6"/><xacro:chess_square row="3" col="7"/>
+    
+    <!-- Row 4 (rank 4) -->
+    <xacro:chess_square row="4" col="0"/><xacro:chess_square row="4" col="1"/>
+    <xacro:chess_square row="4" col="2"/><xacro:chess_square row="4" col="3"/>
+    <xacro:chess_square row="4" col="4"/><xacro:chess_square row="4" col="5"/>
+    <xacro:chess_square row="4" col="6"/><xacro:chess_square row="4" col="7"/>
+    
+    <!-- Row 5 (rank 3) -->
+    <xacro:chess_square row="5" col="0"/><xacro:chess_square row="5" col="1"/>
+    <xacro:chess_square row="5" col="2"/><xacro:chess_square row="5" col="3"/>
+    <xacro:chess_square row="5" col="4"/><xacro:chess_square row="5" col="5"/>
+    <xacro:chess_square row="5" col="6"/><xacro:chess_square row="5" col="7"/>
+    
+    <!-- Row 6 (rank 2) -->
+    <xacro:chess_square row="6" col="0"/><xacro:chess_square row="6" col="1"/>
+    <xacro:chess_square row="6" col="2"/><xacro:chess_square row="6" col="3"/>
+    <xacro:chess_square row="6" col="4"/><xacro:chess_square row="6" col="5"/>
+    <xacro:chess_square row="6" col="6"/><xacro:chess_square row="6" col="7"/>
+    
+    <!-- Row 7 (rank 1) -->
+    <xacro:chess_square row="7" col="0"/><xacro:chess_square row="7" col="1"/>
+    <xacro:chess_square row="7" col="2"/><xacro:chess_square row="7" col="3"/>
+    <xacro:chess_square row="7" col="4"/><xacro:chess_square row="7" col="5"/>
+    <xacro:chess_square row="7" col="6"/><xacro:chess_square row="7" col="7"/>
+  </xacro:macro>
+
+  <!-- Generate the complete board -->
+  <xacro:generate_board/>
+
+  <!-- Add coordinate labels (a-h, 1-8) -->
+  <link name="board_labels">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>  <!-- Invisible placeholder -->
+      </geometry>
+      <material name="board_border"/>
+    </visual>
+  </link>
+
+  <joint name="base_to_labels" type="fixed">
+    <parent link="chessboard_base"/>
+    <child link="board_labels"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- Gazebo properties -->
+  <gazebo reference="chessboard_base">
+    <material>Gazebo/Wood</material>
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+  </gazebo>
+
+</robot>
