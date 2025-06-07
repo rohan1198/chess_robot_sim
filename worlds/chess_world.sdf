@@ -2,7 +2,7 @@
 <sdf version="1.6">
   <world name="chess_world">
     
-    <!-- Physics configuration optimized for chess pieces -->
+    <!-- Physics configuration -->
     <physics name="1ms" type="ignored">
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1.0</real_time_factor>
@@ -19,7 +19,7 @@
       <render_engine>ogre2</render_engine>
     </plugin>
 
-    <!-- Improved lighting for chess environment -->
+    <!-- Improved lighting -->
     <light type="directional" name="sun">
       <cast_shadows>true</cast_shadows>
       <pose>2 2 4 0 0.5 -0.5</pose>
@@ -34,7 +34,7 @@
       <direction>-0.5 -0.5 -0.8</direction>
     </light>
 
-    <!-- Additional overhead light for board visibility -->
+    <!-- Additional overhead light -->
     <light type="point" name="overhead_light">
       <cast_shadows>false</cast_shadows>
       <pose>0.75 0 1.5 0 0 0</pose>
@@ -87,9 +87,9 @@
       </link>
     </model>
 
-    <!-- Chess table - optimized position for arm reach -->
+    <!-- Chess table -->
     <model name="chess_table">
-      <pose>0.75 0 0.375 0 0 0</pose>  <!-- Centered for optimal reach -->
+      <pose>0.75 0 0.375 0 0 0</pose>
       <static>true</static>
       
       <!-- Table top -->
@@ -274,87 +274,9 @@
       </joint>
     </model>
 
-    <!-- Chessboard - positioned on table center -->
-    <model name="chessboard">
-      <pose>0.75 0 0.405 0 0 0</pose>  <!-- On table surface: table_center_z (0.375) + table_thickness/2 (0.025) + board_thickness/2 (0.005) -->
-      <static>true</static>
-      
-      <!-- Board base with coordinate markings -->
-      <link name="board_base">
-        <inertial>
-          <mass>2.0</mass>
-          <inertia>
-            <ixx>0.05</ixx><ixy>0</ixy><ixz>0</ixz>
-            <iyy>0.05</iyy><iyz>0</iyz>
-            <izz>0.1</izz>
-          </inertia>
-        </inertial>
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>0.516 0.516 0.01</size>  <!-- Board + border -->
-            </box>
-          </geometry>
-          <surface>
-            <contact>
-              <collide_bitmask>0xffff</collide_bitmask>
-            </contact>
-            <friction>
-              <ode>
-                <mu>0.8</mu>
-                <mu2>0.8</mu2>
-              </ode>
-            </friction>
-          </surface>
-        </collision>
-        
-        <!-- Border -->
-        <visual name="border">
-          <geometry>
-            <box>
-              <size>0.516 0.516 0.01</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.2 0.15 0.1 1</ambient>
-            <diffuse>0.2 0.15 0.1 1</diffuse>
-          </material>
-        </visual>
-        
-        <!-- Light squares -->
-        <visual name="light_squares">
-          <pose>0 0 0.0051 0 0 0</pose>
-          <geometry>
-            <box>
-              <size>0.456 0.456 0.001</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.95 0.95 0.85 1</ambient>
-            <diffuse>0.95 0.95 0.85 1</diffuse>
-            <specular>0.1 0.1 0.1 1</specular>
-          </material>
-        </visual>
-        
-        <!-- Dark squares pattern (simplified representation) -->
-        <visual name="dark_pattern">
-          <pose>0 0 0.0052 0 0 0</pose>
-          <geometry>
-            <box>
-              <size>0.001 0.001 0.0001</size>  <!-- Invisible marker -->
-            </box>
-          </geometry>
-          <material>
-            <ambient>0.4 0.3 0.2 1</ambient>
-            <diffuse>0.4 0.3 0.2 1</diffuse>
-          </material>
-        </visual>
-      </link>
-    </model>
-
-    <!-- Camera mount - positioned for optimal board view -->
+    <!-- Camera mount -->
     <model name="camera_mount">
-      <pose>0.3 0.6 0.0 0 0 0</pose>  <!-- Side position for clear view, on the ground -->
+      <pose>0.3 0.6 0.0 0 0 0</pose>
       <static>true</static>
       
       <!-- Mount base -->
@@ -424,7 +346,7 @@
 
       <!-- Camera housing -->
       <link name="camera_housing">
-        <pose>0 0 1.0 0 0.5 -0.785</pose>  <!-- High up on pole, angled down toward board center -->
+        <pose>0 0 1.0 0 0.5 -0.785</pose>
         <inertial>
           <mass>0.5</mass>
           <inertia>
@@ -455,7 +377,7 @@
         <sensor type="camera" name="chess_camera">
           <update_rate>30.0</update_rate>
           <camera name="head">
-            <horizontal_fov>1.0472</horizontal_fov>  <!-- 60 degrees -->
+            <horizontal_fov>1.0472</horizontal_fov>
             <image>
               <width>1920</width>
               <height>1080</height>
