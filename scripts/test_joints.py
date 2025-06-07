@@ -8,7 +8,6 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from sensor_msgs.msg import JointState
 from builtin_interfaces.msg import Duration
 import time
-import math
 
 class SO101JointTester(Node):
     def __init__(self):
@@ -336,7 +335,7 @@ class SO101JointTester(Node):
         neg_position[joint_index] = min_pos
         self.get_logger().info(f'2. Moving to negative limit ({min_pos:.3f} rad)...')
         if not self.move_to_position(neg_position):
-            self.get_logger().error(f'Failed to reach negative limit.')
+            self.get_logger().error('Failed to reach negative limit.')
             return False
         time.sleep(1)
         
@@ -345,7 +344,7 @@ class SO101JointTester(Node):
         pos_position[joint_index] = max_pos
         self.get_logger().info(f'3. Moving to positive limit ({max_pos:.3f} rad)...')
         if not self.move_to_position(pos_position):
-            self.get_logger().error(f'Failed to reach positive limit.')
+            self.get_logger().error('Failed to reach positive limit.')
             return False
         time.sleep(1)
         
@@ -389,7 +388,7 @@ class SO101JointTester(Node):
                 limit_info = "60% of max"
             print(f"  {i}: {joint_name:<20} (safe: {safe_min:6.2f} to {safe_max:5.2f} rad, {limit_info})")
         print(f"  {len(self.joint_names)}: Test ALL joints (safe limits)")
-        print(f"  g: Test gripper (open/close)")
+        print("  g: Test gripper (open/close)")
         print("  o: Open gripper")
         print("  c: Close gripper")
         print("  h: Move to home position")
@@ -615,7 +614,7 @@ def main(args=None):
         print("Returning to home position before exit...")
         try:
             node.reset_to_home()
-        except:
+        except Exception:
             pass
         
         node.destroy_node()
