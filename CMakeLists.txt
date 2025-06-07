@@ -24,7 +24,6 @@ install(
 install(PROGRAMS
   scripts/ps5_arm_controller.py
   scripts/test_joints.py
-  scripts/camera_viewer.py
   DESTINATION lib/${PROJECT_NAME}
 )
 
