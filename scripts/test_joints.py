@@ -117,18 +117,19 @@ class SO101JointTester(Node):
             self.get_logger().error('Timeout waiting for joint states!')
             return False
     
-    def calculate_smart_duration(self, current_positions, target_positions, min_duration=4.0):
+    def calculate_smart_duration(self, current_positions, target_positions, min_duration=3.0):
         """Calculate an appropriate duration based on the largest joint movement."""
         max_distance = max(abs(target_positions[i] - current_positions[i]) for i in range(len(current_positions)))
         
-        # More conservative duration calculation: allow 3 seconds per radian for safety
-        calculated_duration = max_distance * 3.0
+        # More aggressive duration calculation: allow 2 seconds per radian (was 3.0)
+        # This should work with our increased velocity limits
+        calculated_duration = max_distance * 2.0
         
         # Ensure minimum duration
         duration = max(min_duration, calculated_duration)
         
         # Cap at reasonable maximum
-        duration = min(duration, 15.0)
+        duration = min(duration, 12.0)  # Reduced from 15.0
         
         return duration
     
@@ -138,8 +139,8 @@ class SO101JointTester(Node):
         vel_from_prev = [(current_pos[i] - prev_pos[i]) / time_to_prev for i in range(len(current_pos))]
         vel_to_next = [(next_pos[i] - current_pos[i]) / time_to_next for i in range(len(current_pos))]
         
-        # Average them for smooth transition, scaled down for safety
-        smooth_vel = [(vel_from_prev[i] + vel_to_next[i]) * 0.5 for i in range(len(current_pos))]
+        # Average them for smooth transition, but be more aggressive
+        smooth_vel = [(vel_from_prev[i] + vel_to_next[i]) * 0.7 for i in range(len(current_pos))]  # Increased from 0.5
         
         return smooth_vel
     
@@ -161,7 +162,7 @@ class SO101JointTester(Node):
         points = []
         
         # For small movements, use simple two-point trajectory
-        if max_distance <= 1.0:
+        if max_distance <= 0.5:  # Reduced from 1.0 for faster small movements
             # Start point
             start_point = JointTrajectoryPoint()
             start_point.positions = current_positions
@@ -178,8 +179,8 @@ class SO101JointTester(Node):
             end_point.time_from_start = Duration(sec=int(duration_sec), nanosec=0)
             points.append(end_point)
         else:
-            # For large movements, create smooth trajectory with proper velocities
-            num_segments = max(3, int(max_distance / 0.8))  # More segments for smoother motion
+            # For large movements, create smooth trajectory with fewer segments for speed
+            num_segments = max(2, int(max_distance / 1.0))  # Fewer segments, larger steps
             
             self.get_logger().info(f'Large movement ({max_distance:.2f} rad), creating {num_segments} segments')
             
@@ -230,8 +231,8 @@ class SO101JointTester(Node):
         self.get_logger().info(f'Created smooth trajectory with {len(points)} points over {duration_sec:.1f}s')
         return trajectory, duration_sec
     
-    def send_trajectory_goal(self, target_positions, duration_sec=None):
-        """Send a trajectory goal and wait for completion."""
+    def send_trajectory_goal(self, target_positions, duration_sec=None, retry_count=0):
+        """Send a trajectory goal and wait for completion with retry logic."""
         current_positions = self.get_current_positions()
         
         # Check if target positions are within limits
@@ -248,34 +249,35 @@ class SO101JointTester(Node):
         # Calculate movement distance for logging
         max_distance = max(abs(target_positions[i] - current_positions[i]) for i in range(len(current_positions)))
         
-        self.get_logger().info(f'Moving from {[f"{p:.2f}" for p in current_positions]} to {[f"{p:.2f}" for p in target_positions]} in {actual_duration:.1f}s (max dist: {max_distance:.2f})')
+        retry_info = f" (retry {retry_count})" if retry_count > 0 else ""
+        self.get_logger().info(f'Moving from {[f"{p:.2f}" for p in current_positions]} to {[f"{p:.2f}" for p in target_positions]} in {actual_duration:.1f}s (max dist: {max_distance:.2f}){retry_info}')
         
         # Send goal
         future = self.arm_action_client.send_goal_async(goal_msg)
         
         # Wait for goal to be accepted
-        rclpy.spin_until_future_complete(self, future, timeout_sec=5.0)
+        rclpy.spin_until_future_complete(self, future, timeout_sec=10.0)  # Increased timeout
         
         if not future.done():
             self.get_logger().error('Goal send timeout!')
-            return False
+            return self._retry_trajectory(target_positions, duration_sec, retry_count)
             
         goal_handle = future.result()
         
         if not goal_handle.accepted:
             self.get_logger().error('Goal rejected!')
-            return False
+            return self._retry_trajectory(target_positions, duration_sec, retry_count)
         
         self.get_logger().info('Goal accepted, executing...')
         
         # Wait for completion with extra time for large movements
-        wait_timeout = actual_duration + 10.0
+        wait_timeout = actual_duration + 15.0  # Increased buffer
         result_future = goal_handle.get_result_async()
         rclpy.spin_until_future_complete(self, result_future, timeout_sec=wait_timeout)
         
         if not result_future.done():
             self.get_logger().error('Goal execution timeout!')
-            return False
+            return self._retry_trajectory(target_positions, duration_sec, retry_count)
         
         result = result_future.result().result
         if result.error_code == FollowJointTrajectory.Result.SUCCESSFUL:
@@ -283,7 +285,19 @@ class SO101JointTester(Node):
             return True
         else:
             self.get_logger().error(f'Trajectory failed with error code: {result.error_code}')
+            return self._retry_trajectory(target_positions, duration_sec, retry_count)
+    
+    def _retry_trajectory(self, target_positions, duration_sec, retry_count):
+        """Retry trajectory with longer duration."""
+        if retry_count >= 2:  # Max 2 retries
+            self.get_logger().error('Max retries reached, trajectory failed')
             return False
+        
+        # Increase duration by 50% for retry
+        new_duration = (duration_sec or 5.0) * 1.5
+        self.get_logger().warn(f'Retrying with longer duration: {new_duration:.1f}s')
+        time.sleep(1)  # Brief pause before retry
+        return self.send_trajectory_goal(target_positions, new_duration, retry_count + 1)
     
     def move_to_position(self, target_positions, duration_sec=None):
         """Move to a target position smoothly with smart duration calculation."""

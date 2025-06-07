@@ -15,8 +15,8 @@
           <param name="max">1.91986</param>
         </command_interface>
         <command_interface name="velocity">
-          <param name="min">-2.0</param>
-          <param name="max">2.0</param>
+          <param name="min">-3.0</param>
+          <param name="max">3.0</param>
         </command_interface>
         <state_interface name="position">
           <param name="initial_value">${initial_positions['shoulder_rotation']}</param>
@@ -31,8 +31,8 @@
           <param name="max">1.74533</param>
         </command_interface>
         <command_interface name="velocity">
-          <param name="min">-2.0</param>
-          <param name="max">2.0</param>
+          <param name="min">-3.0</param>
+          <param name="max">3.0</param>
         </command_interface>
         <state_interface name="position">
           <param name="initial_value">${initial_positions['shoulder_pitch']}</param>
@@ -47,8 +47,8 @@
           <param name="max">1.5708</param>
         </command_interface>
         <command_interface name="velocity">
-          <param name="min">-2.0</param>
-          <param name="max">2.0</param>
+          <param name="min">-3.0</param>
+          <param name="max">3.0</param>
         </command_interface>
         <state_interface name="position">
           <param name="initial_value">${initial_positions['elbow']}</param>
@@ -63,8 +63,8 @@
           <param name="max">1.65806</param>
         </command_interface>
         <command_interface name="velocity">
-          <param name="min">-2.0</param>
-          <param name="max">2.0</param>
+          <param name="min">-3.0</param>
+          <param name="max">3.0</param>
         </command_interface>
         <state_interface name="position">
           <param name="initial_value">${initial_positions['wrist_pitch']}</param>
@@ -79,8 +79,8 @@
           <param name="max">2.79253</param>
         </command_interface>
         <command_interface name="velocity">
-          <param name="min">-2.0</param>
-          <param name="max">2.0</param>
+          <param name="min">-3.0</param>
+          <param name="max">3.0</param>
         </command_interface>
         <state_interface name="position">
           <param name="initial_value">${initial_positions['wrist_roll']}</param>
@@ -95,8 +95,8 @@
           <param name="max">1.74533</param>
         </command_interface>
         <command_interface name="velocity">
-          <param name="min">-1.0</param>
-          <param name="max">1.0</param>
+          <param name="min">-2.0</param>
+          <param name="max">2.0</param>
         </command_interface>
         <state_interface name="position">
           <param name="initial_value">${initial_positions['gripper_joint']}</param>
