@@ -144,8 +144,8 @@ def generate_launch_description():
         executable="parameter_bridge",
         name="camera_bridge",
         arguments=[
-            "/chess_camera/image_raw@sensor_msgs/msg/Image[gz.msgs.Image",
-            "/chess_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
+            "/chess_camera/image_raw@sensor_msgs/msg/Image[ignition.msgs.Image",
+            "/chess_camera/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo",
         ],
         output="screen",
     )

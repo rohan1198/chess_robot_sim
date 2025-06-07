@@ -26,6 +26,7 @@ install(PROGRAMS
   scripts/test_joints.py
   scripts/chess_test.py
   scripts/chess_piece_movement_test.py
+  scripts/camera_viewer.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

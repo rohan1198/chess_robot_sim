@@ -10,11 +10,14 @@
       <gravity>0 0 -9.81</gravity>
     </physics>
     
-    <!-- Essential Gazebo plugins -->
-    <plugin filename="libgz-sim-physics-system.so" name="gz::sim::systems::Physics"/>
-    <plugin filename="libgz-sim-user-commands-system.so" name="gz::sim::systems::UserCommands"/>
-    <plugin filename="libgz-sim-scene-broadcaster-system.so" name="gz::sim::systems::SceneBroadcaster"/>
-    <plugin filename="libgz-sim-contact-system.so" name="gz::sim::systems::Contact"/>
+    <!-- Essential Gazebo plugins for Ignition -->
+    <plugin filename="libignition-gazebo-physics-system.so" name="ignition::gazebo::systems::Physics"/>
+    <plugin filename="libignition-gazebo-user-commands-system.so" name="ignition::gazebo::systems::UserCommands"/>
+    <plugin filename="libignition-gazebo-scene-broadcaster-system.so" name="ignition::gazebo::systems::SceneBroadcaster"/>
+    <plugin filename="libignition-gazebo-contact-system.so" name="ignition::gazebo::systems::Contact"/>
+    <plugin filename="libignition-gazebo-sensors-system.so" name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
 
     <!-- Improved lighting for chess environment -->
     <light type="directional" name="sun">
@@ -449,7 +452,6 @@
           </material>
         </visual>
         
-        <!-- Camera sensor -->
         <sensor type="camera" name="chess_camera">
           <update_rate>30.0</update_rate>
           <camera name="head">
@@ -469,11 +471,6 @@
               <stddev>0.007</stddev>
             </noise>
           </camera>
-          <plugin name="camera_controller" filename="libgz-sim-camera-system.so">
-            <cameraName>chess_camera</cameraName>
-            <imageTopicName>/chess_camera/image_raw</imageTopicName>
-            <cameraInfoTopicName>/chess_camera/camera_info</cameraInfoTopicName>
-          </plugin>
         </sensor>
       </link>
 
