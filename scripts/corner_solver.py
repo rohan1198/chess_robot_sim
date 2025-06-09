@@ -50,7 +50,7 @@ class FixedChessCornerSolver:
         }
         
         # World setup - keeping your working values
-        self.robot_world_pos = np.array([0.75, 0.25, 0.375])
+        self.robot_world_pos = np.array([0.725, 0.25, 0.375])
         self.board_world_pos = np.array([0.75, 0.04, 0.405])
         self.board_size = 0.19
         
