@@ -100,23 +100,15 @@ class FixedChessCornerSolver:
         for name, corner_pos in robot_corners.items():
             targets = {}
             
-            # Primary target: 50mm above corner
-            hover_pos = corner_pos + np.array([0, 0, 0.05])
-            targets['primary'] = hover_pos
-            
-            # For front corners, add multiple alternatives since they're challenging
             if 'front' in name:
-                # Alternative 1: Lower hover height
-                targets['alt_lower'] = corner_pos + np.array([0, 0, 0.04])
-                
-                # Alternative 2: Slightly closer to robot
-                if 'left' in name:
-                    targets['alt_closer'] = corner_pos + np.array([0.01, 0.01, 0.04])
-                else:  # front_right
-                    targets['alt_closer'] = corner_pos + np.array([-0.01, 0.01, 0.04])
-                
-                # Alternative 3: Even lower
-                targets['alt_lowest'] = corner_pos + np.array([0, 0, 0.03])
+                # COLLISION AVOIDANCE: Higher hover heights for front corners
+                targets['primary'] = corner_pos + np.array([0, 0, 0.10])      # 100mm (was 50mm)
+                targets['alt_high'] = corner_pos + np.array([0, 0, 0.12])     # 120mm
+                targets['alt_pulled_back'] = corner_pos + np.array([0, 0.02, 0.10])  # Pull back from board
+                targets['alt_safe'] = corner_pos + np.array([0, 0.03, 0.08])  # Safe distance
+            else:
+                # Back corners: keep working heights
+                targets['primary'] = corner_pos + np.array([0, 0, 0.05])      # 50mm (working fine)
             
             self.target_positions[name] = targets
         
