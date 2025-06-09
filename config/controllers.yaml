@@ -33,34 +33,34 @@ arm_controller:
     action_monitor_rate: 20.0
     allow_partial_joints_goal: false
     allow_integration_in_goal_trajectories: true
-    allow_nonzero_velocity_at_trajectory_end: false
+    allow_nonzero_velocity_at_trajectory_end: true  # More permissive
     
-    # More permissive goal tolerance and longer timeouts
+    # RELAXED tolerances for chess corner movements
     constraints:
-      stopped_velocity_tolerance: 0.1   # Increased from 0.05
-      goal_time: 5.0                   # Increased from 2.0 - more time for large movements
+      stopped_velocity_tolerance: 0.2   # Increased from 0.1 - more permissive velocity stop
+      goal_time: 10.0                  # Increased from 5.0 - much more time for completion
       shoulder_rotation:
-        trajectory: 0.15  # Increased from 0.1 
-        goal: 0.08        # Increased from 0.05
+        trajectory: 0.25  # Increased from 0.15 - more permissive path following
+        goal: 0.15        # Increased from 0.08 - more permissive final position
       shoulder_pitch:
-        trajectory: 0.15  # Increased from 0.1 - this was the problematic joint
-        goal: 0.08        # Increased from 0.05
+        trajectory: 0.25  # Increased from 0.15 - this was causing front corner failures
+        goal: 0.15        # Increased from 0.08
       elbow:
-        trajectory: 0.15  # Increased from 0.1
-        goal: 0.08        # Increased from 0.05
+        trajectory: 0.25  # Increased from 0.15 - large movements need more tolerance
+        goal: 0.15        # Increased from 0.08
       wrist_pitch:
-        trajectory: 0.15  # Increased from 0.1
-        goal: 0.08        # Increased from 0.05
+        trajectory: 0.25  # Increased from 0.15
+        goal: 0.15        # Increased from 0.08
       wrist_roll:
-        trajectory: 0.15  # Increased from 0.1
-        goal: 0.08        # Increased from 0.05
+        trajectory: 0.25  # Increased from 0.15
+        goal: 0.15        # Increased from 0.08
 
 gripper_controller:
   ros__parameters:
     joint: gripper_joint
     action_monitor_rate: 20.0
-    goal_tolerance: 0.02      # Increased from 0.01
+    goal_tolerance: 0.05      # Increased from 0.02 - more permissive
     max_effort: 16.5
     allow_stalling: false
     stall_velocity_threshold: 0.001
-    stall_timeout: 2.0        # Increased from 1.0
+    stall_timeout: 3.0        # Increased from 2.0 - more time before stall detection
