@@ -42,7 +42,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "robot_x",
-            default_value="0.75",  # Centered with table/board center for optimal reach
+            default_value="0.725",  # Centered with table/board center for optimal reach
             description="X position of the robot base",
         )
     )

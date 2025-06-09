@@ -206,7 +206,7 @@
     <parent link="upper_arm"/>
     <child link="lower_arm"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1.74533" upper="1.5708" effort="${joint_effort}" velocity="${joint_velocity}"/>
+    <limit lower="-1.74533" upper="1.74533" effort="${joint_effort}" velocity="${joint_velocity}"/>
     <dynamics damping="0.6" friction="0.052"/>
   </joint>
 
