@@ -17,7 +17,7 @@ joint_limits:
     
   shoulder_pitch:
     has_velocity_limits: true
-    max_velocity: 3.0        # Increased from 2.0 - this was the problematic joint
+    max_velocity: 3.0        # Increased from 2.0
     has_acceleration_limits: true
     max_acceleration: 3.0    # Increased from 2.0
     has_position_limits: true
@@ -31,7 +31,7 @@ joint_limits:
     max_acceleration: 3.0    # Increased from 2.0
     has_position_limits: true
     min_position: -1.74533  # -100 degrees
-    max_position: 1.5708    # +90 degrees
+    max_position: 1.74533   # +100 degrees
     
   wrist_pitch:
     has_velocity_limits: true
