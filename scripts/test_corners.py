@@ -30,7 +30,7 @@ import json
 import numpy as np
 import math
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import List
 
 class SmoothTrajectoryTester(Node):
     """Final chess corner tester with optimized smooth trajectories."""
@@ -355,7 +355,7 @@ class SmoothTrajectoryTester(Node):
             error_desc = error_descriptions.get(result.error_code, f"UNKNOWN_ERROR_{result.error_code}")
             
             self.get_logger().error(f'❌ Movement failed: {error_desc} (code: {result.error_code})')
-            self.get_logger().error(f'💡 Suggestion: Check relaxed_controllers.yaml is loaded')
+            self.get_logger().error('💡 Suggestion: Check relaxed_controllers.yaml is loaded')
             return False
     
     def move_to_home(self) -> bool:
@@ -377,7 +377,7 @@ class SmoothTrajectoryTester(Node):
         self.get_logger().info(f'🎯 SMOOTH MOVEMENT TO {corner_name.upper()} CORNER')
         self.get_logger().info(f'   Method: {method}')
         self.get_logger().info(f'   Target: ({target_position[0]:.3f}, {target_position[1]:.3f}, {target_position[2]:.3f})')
-        self.get_logger().info(f'   Using relaxed tolerances and smooth trajectories')
+        self.get_logger().info('   Using relaxed tolerances and smooth trajectories')
         
         sequence_success = True
         
@@ -450,7 +450,7 @@ class SmoothTrajectoryTester(Node):
         # Final results
         success_rate = successful_corners / total_corners * 100 if total_corners > 0 else 0
         
-        self.get_logger().info(f'\n🏆 SMOOTH TRAJECTORY RESULTS:')
+        self.get_logger().info('\n🏆 SMOOTH TRAJECTORY RESULTS:')
         self.get_logger().info(f'   Successful: {successful_corners}/{total_corners} ({success_rate:.0f}%)')
         
         if success_rate >= 100:
@@ -474,7 +474,7 @@ class SmoothTrajectoryTester(Node):
             print("        🚀 Smooth Trajectory Chess Corner Tester")
             print("="*70)
             print(f"📁 Solution file: {self.solution_file_used}")
-            print(f"⚙️  Optimized: Smooth S-curve trajectories, relaxed tolerances")
+            print("⚙️  Optimized: Smooth S-curve trajectories, relaxed tolerances")
             print(f"📍 Available corners: {len(available_corners)}")
             
             for i, corner in enumerate(available_corners):
@@ -486,11 +486,11 @@ class SmoothTrajectoryTester(Node):
                 print(f"  {i+1}: {corner:<12s} ({method:<8s}) - {distance:.3f}m")
                 print(f"      joints: {[f'{math.degrees(j):5.1f}°' for j in joints]}")
             
-            print(f"\n🎯 Options:")
-            print(f"  a: Test ALL corners (smooth trajectories)")
-            print(f"  h: Move to HOME position (smooth)")
-            print(f"  1-{len(available_corners)}: Test specific corner (smooth)")
-            print(f"  q: Quit")
+            print("\n🎯 Options:")
+            print("  a: Test ALL corners (smooth trajectories)")
+            print("  h: Move to HOME position (smooth)")
+            print("  1-{len(available_corners)}: Test specific corner (smooth)")
+            print("  q: Quit")
             print("="*70)
             
             try:

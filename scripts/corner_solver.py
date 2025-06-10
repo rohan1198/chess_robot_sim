@@ -24,7 +24,7 @@ import pybullet_data
 import json
 import math
 from pathlib import Path
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional
 
 class FixedChessCornerSolver:
     """Improved chess corner movement solver with fixes for coordinate issues."""
@@ -42,10 +42,10 @@ class FixedChessCornerSolver:
         
         # FIXED: Joint limits now match joint_limits.yaml exactly
         self.joint_limits = {
-            'shoulder_rotation': (-1.91986, 1.91986),   # ±110°
+            'shoulder_rotation': (-1.91986, 1.91986),  # ±110°
             'shoulder_pitch': (-1.74533, 1.74533),     # ±100°
-            'elbow': (-1.74533, 1.74533),              # ±100° - FIXED!
-            'wrist_pitch': (-1.65806, 1.65806),        # ±95°
+            'elbow': (-1.74533, 1.74533),              # ±100°
+            'wrist_pitch': (-1.74533, 1.74533),        # ±100°
             'wrist_roll': (-2.79253, 2.79253),         # ±160°
         }
         
@@ -53,6 +53,7 @@ class FixedChessCornerSolver:
         self.robot_world_pos = np.array([0.725, 0.25, 0.375])
         self.board_world_pos = np.array([0.75, 0.04, 0.405])
         self.board_size = 0.19
+        self.finger_tip_offset = np.array([0.0, 0.0, -0.0189])
         
         # Results storage
         self.target_positions = {}
@@ -102,10 +103,10 @@ class FixedChessCornerSolver:
             
             if 'front' in name:
                 # COLLISION AVOIDANCE: Higher hover heights for front corners
-                targets['primary'] = corner_pos + np.array([0, 0, 0.10])      # 100mm (was 50mm)
-                targets['alt_high'] = corner_pos + np.array([0, 0, 0.12])     # 120mm
-                targets['alt_pulled_back'] = corner_pos + np.array([0, 0.02, 0.10])  # Pull back from board
-                targets['alt_safe'] = corner_pos + np.array([0, 0.03, 0.08])  # Safe distance
+                targets['primary'] = corner_pos + np.array([0, 0, 0.10]) + self.finger_tip_offset      # 100mm (was 50mm)
+                targets['alt_high'] = corner_pos + np.array([0, 0, 0.12]) + self.finger_tip_offset     # 120mm
+                targets['alt_pulled_back'] = corner_pos + np.array([0, 0.02, 0.10]) + self.finger_tip_offset  # Pull back from board
+                targets['alt_safe'] = corner_pos + np.array([0, 0.03, 0.08]) + self.finger_tip_offset  # Safe distance
             else:
                 # Back corners: keep working heights
                 targets['primary'] = corner_pos + np.array([0, 0, 0.05])      # 50mm (working fine)
@@ -176,7 +177,7 @@ class FixedChessCornerSolver:
         print("✅ Improved IK solver ready:")
         print(f"   End-effector: gripper_jaw (link {self.end_effector_link_idx})")
         print(f"   Arm joints: {[name for _, name in self.controllable_joints]}")
-        print(f"   Fixed joint limits: elbow range now ±100°")
+        print("   Fixed joint limits: elbow range now ±100°")
         
         # Clean up
         os.remove(temp_urdf_path)
@@ -293,7 +294,7 @@ class FixedChessCornerSolver:
                     print(f"   ✅ Success with strategy: {strategy['name']} (error: {error*1000:.1f}mm)")
                     return joint_solution
                 
-            except Exception as e:
+            except Exception:
                 continue
         
         return None
@@ -368,7 +369,7 @@ class FixedChessCornerSolver:
         
         success_rate = successful_corners / len(self.target_positions)
         
-        print(f"\n🏆 IMPROVED IK RESULTS:")
+        print("\n🏆 IMPROVED IK RESULTS:")
         print(f"   Successful corners: {successful_corners}/{len(self.target_positions)} ({success_rate*100:.0f}%)")
         
         return {
@@ -473,7 +474,7 @@ class FixedChessCornerSolver:
         else:
             print("🔧 GOOD PROGRESS! Further optimization may be needed.")
         
-        print(f"\n📍 CORNER-BY-CORNER RESULTS:")
+        print("\n📍 CORNER-BY-CORNER RESULTS:")
         for corner_name in ['front_left', 'front_right', 'back_left', 'back_right']:
             if corner_name in self.ik_solutions:
                 solution = self.ik_solutions[corner_name]
@@ -485,17 +486,17 @@ class FixedChessCornerSolver:
             else:
                 print(f"   {corner_name:12s}: ❌ still failed")
         
-        print(f"\n🔧 FIXES APPLIED:")
-        print(f"   ✅ Corrected elbow joint limits (now ±100°)")
-        print(f"   ✅ Multiple target positions per corner")
-        print(f"   ✅ Improved IK strategies")
-        print(f"   ✅ Better starting poses")
+        print("\n🔧 FIXES APPLIED:")
+        print("   ✅ Corrected elbow joint limits (now ±100°)")
+        print("   ✅ Multiple target positions per corner")
+        print("   ✅ Improved IK strategies")
+        print("   ✅ Better starting poses")
         
         if successful >= 3:
-            print(f"\n🚀 READY FOR PHASE 3:")
-            print(f"   ✅ Sufficient corners reachable for chess play")
-            print(f"   ✅ Solutions validated and saved")
-            print(f"   ✅ Ready for ROS2 trajectory execution")
+            print("\n🚀 READY FOR PHASE 3:")
+            print("   ✅ Sufficient corners reachable for chess play")
+            print("   ✅ Solutions validated and saved")
+            print("   ✅ Ready for ROS2 trajectory execution")
     
     # Helper methods (same as before)
     def _expand_xacro(self, xacro_path: str) -> str:
