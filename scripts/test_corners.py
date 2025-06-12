@@ -100,8 +100,7 @@ class SmoothTrajectoryTester(Node):
         script_dir = Path(__file__).parent.absolute()
         
         solution_files = [
-            script_dir / "chess_corner_fixed_solution.json",
-            script_dir / "chess_corner_complete_solution.json"
+            script_dir / "chess_corner_solution.json",
         ]
         
         for solution_file in solution_files:

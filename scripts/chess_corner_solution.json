@@ -1,0 +1,231 @@
+{
+  "metadata": {
+    "project": "Chess Robot Corner Movement - Improved Final Version",
+    "version": "5.0 Improved Final",
+    "timestamp": "2025-06-12T09:05:41",
+    "success_rate": 1.0,
+    "improvements": [
+      "Fixed coordinate system (removed URDF offset)",
+      "Added reachability constraints and workspace limits",
+      "Enhanced IK solver with more strategies",
+      "Automatic target adjustment for unreachable positions",
+      "Improved starting poses for difficult configurations",
+      "Comprehensive error handling and validation"
+    ]
+  },
+  "coordinate_analysis": {
+    "world_corners": {
+      "front_left": [
+        0.655,
+        0.135,
+        0.405
+      ],
+      "front_right": [
+        0.845,
+        0.135,
+        0.405
+      ],
+      "back_left": [
+        0.655,
+        -0.055,
+        0.405
+      ],
+      "back_right": [
+        0.845,
+        -0.055,
+        0.405
+      ]
+    },
+    "robot_corners": {
+      "front_left": [
+        -0.06999999999999995,
+        -0.11499999999999999,
+        0.030000000000000027
+      ],
+      "front_right": [
+        0.12,
+        -0.11499999999999999,
+        0.030000000000000027
+      ],
+      "back_left": [
+        -0.06999999999999995,
+        -0.305,
+        0.030000000000000027
+      ],
+      "back_right": [
+        0.12,
+        -0.305,
+        0.030000000000000027
+      ]
+    },
+    "board_size": 0.19,
+    "robot_position": [
+      0.725,
+      0.25,
+      0.375
+    ],
+    "board_center": [
+      0.75,
+      0.04,
+      0.405
+    ],
+    "workspace_constraints": {
+      "min_reach": 0.15,
+      "max_reach": 0.35
+    },
+    "coordinate_system": "gazebo_native_with_reachability"
+  },
+  "target_positions": {
+    "front_left": {
+      "primary": [
+        -0.06999999999999995,
+        -0.11499999999999999,
+        0.12890000000000001
+      ],
+      "higher": [
+        -0.06999999999999995,
+        -0.11499999999999999,
+        0.1489
+      ],
+      "pulled_back": [
+        -0.06999999999999995,
+        -0.09499999999999999,
+        0.12890000000000001
+      ]
+    },
+    "front_right": {
+      "primary": [
+        0.12,
+        -0.11499999999999999,
+        0.12890000000000001
+      ],
+      "higher": [
+        0.12,
+        -0.11499999999999999,
+        0.1489
+      ],
+      "pulled_back": [
+        0.12,
+        -0.09499999999999999,
+        0.12890000000000001
+      ]
+    },
+    "back_left": {
+      "primary": [
+        -0.06999999999999995,
+        -0.305,
+        0.12890000000000001
+      ],
+      "higher": [
+        -0.06999999999999995,
+        -0.305,
+        0.14390000000000003
+      ]
+    },
+    "back_right": {
+      "primary": [
+        0.11243821425296631,
+        -0.2857804612262894,
+        0.12077738181006134
+      ]
+    }
+  },
+  "ik_solutions": {
+    "front_left": {
+      "position": [
+        -0.06999999999999995,
+        -0.11499999999999999,
+        0.12890000000000001
+      ],
+      "joints": [
+        0.9326483392518214,
+        -0.8072792255776808,
+        1.2321744755082362,
+        0.8095682491614709,
+        0.162257721187602
+      ],
+      "method": "primary"
+    },
+    "front_right": {
+      "position": [
+        0.12,
+        -0.11499999999999999,
+        0.12890000000000001
+      ],
+      "joints": [
+        -0.6596219338512608,
+        -0.7549225451645364,
+        1.1943141707896219,
+        0.7680034220094056,
+        0.2921474619918787
+      ],
+      "method": "primary"
+    },
+    "back_left": {
+      "position": [
+        -0.06999999999999995,
+        -0.305,
+        0.12890000000000001
+      ],
+      "joints": [
+        0.3734730128138387,
+        0.4343893089209298,
+        0.17307147304331433,
+        0.07878167897153593,
+        -0.01571585872495715
+      ],
+      "method": "primary"
+    },
+    "back_right": {
+      "position": [
+        0.11243821425296631,
+        -0.2857804612262894,
+        0.12077738181006134
+      ],
+      "joints": [
+        -0.2654029022160174,
+        0.34145706927515357,
+        0.32063484529003494,
+        0.12397843601940663,
+        0.045505054992287075
+      ],
+      "method": "primary"
+    }
+  },
+  "joint_configuration": {
+    "joint_names": [
+      "shoulder_rotation",
+      "shoulder_pitch",
+      "elbow",
+      "wrist_pitch",
+      "wrist_roll"
+    ],
+    "joint_limits": {
+      "shoulder_rotation": [
+        -1.91986,
+        1.91986
+      ],
+      "shoulder_pitch": [
+        -1.74533,
+        1.74533
+      ],
+      "elbow": [
+        -1.74533,
+        1.74533
+      ],
+      "wrist_pitch": [
+        -1.74533,
+        1.74533
+      ],
+      "wrist_roll": [
+        -2.79253,
+        2.79253
+      ]
+    },
+    "end_effector": "gripper_jaw"
+  },
+  "workspace_constraints": {
+    "min_reach": 0.15,
+    "max_reach": 0.35
+  }
+}
