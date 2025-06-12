@@ -454,8 +454,7 @@
       </link>
     </model>
 
-    <!-- CHESS CORNER MARKERS -->
-    <!-- Front Left Corner Marker -->
+    <!-- Front Left Corner Marker - RED -->
     <model name="corner_marker_front_left">
       <pose>0.655 0.135 0.405 0 0 0</pose>
       <static>true</static>
@@ -463,20 +462,20 @@
         <visual name="visual">
           <geometry>
             <cylinder>
-              <radius>0.005</radius>
-              <length>0.15</length>
+              <radius>0.008</radius>
+              <length>0.25</length>
             </cylinder>
           </geometry>
           <material>
             <ambient>1.0 0.0 0.0 1</ambient>
             <diffuse>1.0 0.0 0.0 1</diffuse>
-            <specular>0.5 0.0 0.0 1</specular>
+            <specular>0.8 0.0 0.0 1</specular>
           </material>
         </visual>
       </link>
     </model>
 
-    <!-- Front Right Corner Marker -->
+    <!-- Front Right Corner Marker - GREEN -->
     <model name="corner_marker_front_right">
       <pose>0.845 0.135 0.405 0 0 0</pose>
       <static>true</static>
@@ -484,20 +483,20 @@
         <visual name="visual">
           <geometry>
             <cylinder>
-              <radius>0.005</radius>
-              <length>0.15</length>
+              <radius>0.008</radius>
+              <length>0.25</length>
             </cylinder>
           </geometry>
           <material>
             <ambient>0.0 1.0 0.0 1</ambient>
             <diffuse>0.0 1.0 0.0 1</diffuse>
-            <specular>0.0 0.5 0.0 1</specular>
+            <specular>0.0 0.8 0.0 1</specular>
           </material>
         </visual>
       </link>
     </model>
 
-    <!-- Back Left Corner Marker -->
+    <!-- Back Left Corner Marker - BLUE -->
     <model name="corner_marker_back_left">
       <pose>0.655 -0.055 0.405 0 0 0</pose>
       <static>true</static>
@@ -505,20 +504,20 @@
         <visual name="visual">
           <geometry>
             <cylinder>
-              <radius>0.005</radius>
-              <length>0.15</length>
+              <radius>0.008</radius>
+              <length>0.25</length>
             </cylinder>
           </geometry>
           <material>
             <ambient>0.0 0.0 1.0 1</ambient>
             <diffuse>0.0 0.0 1.0 1</diffuse>
-            <specular>0.0 0.0 0.5 1</specular>
+            <specular>0.0 0.0 0.8 1</specular>
           </material>
         </visual>
       </link>
     </model>
 
-    <!-- Back Right Corner Marker -->
+    <!-- Back Right Corner Marker - YELLOW -->
     <model name="corner_marker_back_right">
       <pose>0.845 -0.055 0.405 0 0 0</pose>
       <static>true</static>
@@ -526,20 +525,20 @@
         <visual name="visual">
           <geometry>
             <cylinder>
-              <radius>0.005</radius>
-              <length>0.15</length>
+              <radius>0.008</radius>
+              <length>0.25</length>
             </cylinder>
           </geometry>
           <material>
             <ambient>1.0 1.0 0.0 1</ambient>
             <diffuse>1.0 1.0 0.0 1</diffuse>
-            <specular>0.5 0.5 0.0 1</specular>
+            <specular>0.8 0.8 0.0 1</specular>
           </material>
         </visual>
       </link>
     </model>
 
-    <!-- Center marker for reference -->
+    <!-- Center marker for reference - MAGENTA -->
     <model name="board_center_marker">
       <pose>0.75 0.04 0.405 0 0 0</pose>
       <static>true</static>
@@ -547,14 +546,14 @@
         <visual name="visual">
           <geometry>
             <cylinder>
-              <radius>0.008</radius>
-              <length>0.20</length>
+              <radius>0.010</radius>
+              <length>0.30</length>
             </cylinder>
           </geometry>
           <material>
             <ambient>1.0 0.0 1.0 1</ambient>
             <diffuse>1.0 0.0 1.0 1</diffuse>
-            <specular>0.5 0.0 0.5 1</specular>
+            <specular>0.8 0.0 0.8 1</specular>
           </material>
         </visual>
       </link>
