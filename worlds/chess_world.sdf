@@ -456,7 +456,7 @@
 
     <!-- Front Left Corner Marker - RED -->
     <model name="corner_marker_front_left">
-      <pose>0.655 0.135 0.405 0 0 0</pose>
+      <pose>0.65 0.14 0.405 0 0 0</pose>
       <static>true</static>
       <link name="link">
         <visual name="visual">
@@ -477,7 +477,7 @@
 
     <!-- Front Right Corner Marker - GREEN -->
     <model name="corner_marker_front_right">
-      <pose>0.845 0.135 0.405 0 0 0</pose>
+      <pose>0.85 0.14 0.405 0 0 0</pose>
       <static>true</static>
       <link name="link">
         <visual name="visual">
@@ -498,7 +498,7 @@
 
     <!-- Back Left Corner Marker - BLUE -->
     <model name="corner_marker_back_left">
-      <pose>0.655 -0.055 0.405 0 0 0</pose>
+      <pose>0.65 -0.06 0.405 0 0 0</pose>
       <static>true</static>
       <link name="link">
         <visual name="visual">
@@ -519,7 +519,7 @@
 
     <!-- Back Right Corner Marker - YELLOW -->
     <model name="corner_marker_back_right">
-      <pose>0.845 -0.055 0.405 0 0 0</pose>
+      <pose>0.85 -0.06 0.405 0 0 0</pose>
       <static>true</static>
       <link name="link">
         <visual name="visual">
