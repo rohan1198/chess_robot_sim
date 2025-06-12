@@ -35,9 +35,9 @@ class ImprovedChessCornerSolver:
         }
         
         # World setup - using EXACT spawn position from launch file
-        self.robot_world_pos = np.array([0.725, 0.25, 0.375])  # Gazebo spawn position
+        self.robot_world_pos = np.array([0.7475, 0.275, 0.375])  # Gazebo spawn position
         self.board_world_pos = np.array([0.75, 0.04, 0.405])   # Board center from chess_world.sdf
-        self.board_size = 0.19
+        self.board_size = 0.20
         
         # Robot workspace constraints (from reach calculator)
         self.min_reach = 0.15   # Conservative minimum reach
