@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """
-Board Center IK Solution (FIXED)
-================================
+Ultra Final Board Center Fix
+============================
 
-Generate exact IK solution for board center position with corrected coordinates.
+FINAL fix based on visual confirmation:
+- Gripper tips extend ~50mm below gripper_jaw origin
+- Need 80mm hover height to get gripper tips 30mm above board
+- Keep perfect alignment from previous solution
 """
 
 import os
@@ -68,57 +71,66 @@ def setup_pybullet_robot(urdf_path):
     
     return physics_client, robot_id, controllable_joints, end_effector_link_idx
 
-def solve_board_center_ik():
-    """Solve IK for board center position with GRIPPER TIP compensation."""
+def solve_board_center_ik_ultra_final():
+    """ULTRA FINAL fix: 80mm hover height for proper gripper tip clearance."""
     
-    print("🎯 SOLVING BOARD CENTER IK (GRIPPER TIP CORRECTED)")
-    print("=" * 55)
+    print("🎯 ULTRA FINAL BOARD CENTER FIX")
+    print("=" * 35)
     
-    # Calculate target position based on actual world coordinates
+    # Calculate target position
     print("📍 COORDINATE ANALYSIS:")
     print("-" * 25)
     
-    # World coordinates from SDF files
     board_center_world = np.array([0.75, 0.0, 0.405])
-    robot_base_world = np.array([0.75, 0.275, 0.375])  # Corrected spawn height
+    robot_base_world = np.array([0.75, 0.275, 0.375])
     
-    # Calculate correct target in robot frame
     board_center_robot_frame = board_center_world - robot_base_world
     
     print(f"Board center (world): {board_center_world}")
     print(f"Robot base (world): {robot_base_world}")
     print(f"Board center (robot frame): {board_center_robot_frame}")
     
-    # Add hover height above board surface (recommended 80mm)
-    hover_height = 0.030
+    # ULTRA FINAL hover height: 80mm (accounts for gripper tip extension)
+    print(f"\n🔧 GRIPPER TIP ANALYSIS:")
+    print("-" * 25)
+    print("From visual inspection:")
+    print("- Gripper_jaw origin was 50mm above board")
+    print("- Gripper tips were touching board")
+    print("- Therefore: Gripper tips extend ~50mm below gripper_jaw origin")
+    print("- Target: Gripper tips 30mm above board")
+    print("- Required: Gripper_jaw origin at 30mm + 50mm = 80mm above board")
+    
+    hover_height = 0.080  # 80mm hover (was 50mm)
     target_for_gripper_jaw_origin = board_center_robot_frame + np.array([0.0, 0.0, hover_height])
     
-    print(f"Target for gripper_jaw origin: {target_for_gripper_jaw_origin}")
+    print(f"\nTarget with ULTRA FINAL hover height (80mm): {target_for_gripper_jaw_origin}")
     
-    # GRIPPER TIP COMPENSATION
-    print(f"\n🔧 GRIPPER TIP OFFSET COMPENSATION:")
+    # Keep the same gripper tip offset (worked perfectly for alignment)
+    print(f"\n🔧 GRIPPER TIP OFFSET (UNCHANGED):")
     print("-" * 35)
     
-    # From URDF analysis: gripper tip offset from gripper_jaw link origin
-    # gripper -> gripper_jaw joint: (0.0202, 0.0188, -0.0234)
-    # gripper_jaw visual offset: (0.0, 0.0, 0.0189)
-    # Total offset: (0.0202, 0.0188, -0.0045)
-    gripper_tip_offset = np.array([0.0202, 0.0188, -0.0045])
+    # Keep the final offset from previous attempt
+    original_offset = np.array([0.0202, 0.0188, -0.0045])
+    gripper_reach_extension = 0.010  # 10mm (this worked well)
+    ultra_final_offset = original_offset + np.array([0.0, gripper_reach_extension, 0.0])
     
-    print(f"Gripper tip offset from gripper_jaw origin: {gripper_tip_offset}")
-    print(f"Offset in mm: {gripper_tip_offset * 1000}")
+    print(f"Keeping successful offset: {ultra_final_offset}")
+    print(f"Offset (mm): {ultra_final_offset * 1000}")
+    print("(This gave us perfect X/Y alignment)")
     
-    # To put gripper TIP at board center, adjust target backward by offset
-    robot_target = target_for_gripper_jaw_origin + gripper_tip_offset
+    # Apply offset
+    robot_target = target_for_gripper_jaw_origin + ultra_final_offset
     
-    print(f"\nCORRECTED TARGET (for gripper tip): {robot_target}")
+    print(f"\n🎯 ULTRA FINAL IK TARGET:")
+    print(f"Target position: {robot_target}")
     print(f"Distance from robot base: {np.linalg.norm(robot_target):.3f}m")
     
-    correction_mm = (target_for_gripper_jaw_origin - robot_target) * 1000
-    print(f"Applied correction: {correction_mm} mm")
-    print(f"  - {abs(correction_mm[0]):.0f}mm backward (X)")
-    print(f"  - {abs(correction_mm[1]):.0f}mm toward robot (Y)")
-    print(f"  - {correction_mm[2]:.0f}mm adjustment (Z)")
+    print(f"\nComparison to previous attempts:")
+    previous_target = np.array([0.0202, -0.2462, 0.0755])
+    print(f"Previous target: {previous_target}")
+    print(f"ULTRA target:    {robot_target}")
+    print(f"Change (mm): {(robot_target - previous_target) * 1000}")
+    print(f"  - Height increase: {(robot_target[2] - previous_target[2]) * 1000:.0f}mm")
     
     # Setup PyBullet
     script_dir = Path(__file__).parent.absolute()
@@ -141,14 +153,12 @@ def solve_board_center_ik():
     lower_limits = [joint_limits[name][0] for name in joint_names]
     upper_limits = [joint_limits[name][1] for name in joint_names]
     
-    # Try IK with different starting positions, including the previous solution
+    # Try IK starting from final solution (which had perfect alignment)
+    final_solution = [-0.0014, 0.2672, 0.6543, 0.2497, 0.0649]  # From final fix
+    
     strategies = [
-        # Start with previous solution as initial guess
-        [0.0777, 0.1875, 0.5263, 0.1995, 0.0470],  # Previous solution
-        [0.0, 0.0, 0.0, 0.0, 0.0],                 # Home position
-        [0.1, -0.2, 0.5, 0.0, 0.0],                # Slightly forward
-        [0.0, -0.3, 0.8, -0.3, 0.0],               # More bent
-        [-0.1, -0.4, 0.6, -0.2, 0.0],              # Different approach
+        final_solution,  # Start with final solution
+        [0.0, 0.0, 0.0, 0.0, 0.0],  # Home position backup
     ]
     
     solution = None
@@ -157,7 +167,7 @@ def solve_board_center_ik():
     print("-" * 15)
     
     for i, start_pose in enumerate(strategies):
-        strategy_name = "Previous solution" if i == 0 else f"Strategy {i}"
+        strategy_name = "Final solution" if i == 0 else "Home position"
         print(f"\nTrying {strategy_name}: {[f'{math.degrees(a):.1f}°' for a in start_pose]}")
         
         # Set starting pose
@@ -209,215 +219,94 @@ def solve_board_center_ik():
     p.disconnect(physics_client)
     
     if solution is None:
-        print("\n❌ Could not find valid IK solution for board center")
+        print("\n❌ Could not find valid IK solution")
         return None
     
-    print(f"\n🎉 GRIPPER TIP CORRECTED IK SOLUTION:")
-    print("-" * 40)
+    print(f"\n🎉 ULTRA FINAL SOLUTION:")
+    print("-" * 25)
     for name, angle in zip(joint_names, solution):
         print(f"  {name}: {angle:.4f} rad ({math.degrees(angle):+6.1f}°)")
     
-    return solution, robot_target
+    print(f"\nComparison to final solution:")
+    final_joints = [-0.0014, 0.2672, 0.6543, 0.2497, 0.0649]
+    for i, (name, new_angle, final_angle) in enumerate(zip(joint_names, solution, final_joints)):
+        diff_deg = math.degrees(new_angle - final_angle)
+        print(f"  {name}: {diff_deg:+6.1f}° change")
+    
+    return solution, robot_target, ultra_final_offset
 
-def create_board_center_test_file(joint_solution, target_position):
-    """Create a test file for board center."""
+def create_ultra_final_test_file(joint_solution, target_position, gripper_offset):
+    """Create test file for ultra final fix."""
     
     script_dir = Path(__file__).parent.absolute()
-    test_file = script_dir / "board_center_solution.json"
+    test_file = script_dir / "board_center_solution_ultra_final.json"
     
     board_center_data = {
         "metadata": {
-            "description": "Board center test with GRIPPER TIP positioning (CORRECTED)",
-            "purpose": "Gripper TIP aligns with magenta center cylinder",
-            "expected_alignment": "Perfect gripper tip alignment",
+            "description": "Board center test with ULTRA FINAL gripper tip clearance",
+            "purpose": "Gripper TIP 30mm above magenta center cylinder - ULTRA FINAL",
+            "expected_alignment": "Perfect gripper tip positioning 30mm above board center",
             "tolerance": "5mm",
             "fixes_applied": [
-                "Corrected Y coordinate from -0.21 to -0.275 (65mm fix)",
-                "Updated robot spawn height to table surface",
-                "ADDED: Gripper tip offset compensation (20mm X, 19mm Y)",
-                "Verified coordinate frame transformations"
+                "ULTRA FINAL: Increased hover height to 80mm (accounts for 50mm gripper extension)",
+                "VISUAL: Based on direct observation of gripper touching board at 50mm hover",
+                "CALCULATION: 30mm target + 50mm gripper extension = 80mm hover required",
+                "KEPT: Perfect X/Y alignment and reach from previous solutions",
+                "RESULT: Gripper tips should be exactly 30mm above board center"
             ]
         },
         "board_center": {
             "position": target_position.tolist(),
             "joints": joint_solution,
-            "world_position": [0.75, 0.04, 0.485],
-            "description": "Board center + 80mm hover height + gripper tip compensation"
+            "gripper_tip_offset": gripper_offset.tolist(),
+            "world_position": [0.75, 0.0, 0.485],  # 80mm hover
+            "description": "Board center + 80mm hover height + perfect alignment",
+            "gripper_analysis": {
+                "gripper_jaw_height_above_board": "80mm",
+                "gripper_tip_extension_below_jaw": "50mm", 
+                "resulting_tip_height_above_board": "30mm"
+            }
         }
     }
     
     with open(test_file, 'w') as f:
         json.dump(board_center_data, f, indent=2)
     
-    print(f"\n💾 Board center solution saved to: {test_file.name}")
+    print(f"\n💾 ULTRA FINAL solution saved to: {test_file.name}")
     return test_file
-
-def create_test_script():
-    """Create a simple test script to move to board center."""
-    
-    script_dir = Path(__file__).parent.absolute()
-    test_script = script_dir / "test_board_center.py"
-    
-    test_code = '''#!/usr/bin/env python3
-"""
-Board Center Test Script (CORRECTED)
-====================================
-
-Simple script to move robot to board center and validate alignment.
-"""
-
-import rclpy
-from rclpy.node import Node
-from rclpy.action import ActionClient
-from control_msgs.action import FollowJointTrajectory
-from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
-from builtin_interfaces.msg import Duration
-import json
-import time
-from pathlib import Path
-
-class BoardCenterTester(Node):
-    """Test board center alignment."""
-    
-    def __init__(self):
-        super().__init__('board_center_tester')
-        
-        self.arm_action_client = ActionClient(
-            self, FollowJointTrajectory, '/arm_controller/follow_joint_trajectory'
-        )
-        
-        self.joint_names = [
-            'shoulder_rotation', 'shoulder_pitch', 'elbow', 'wrist_pitch', 'wrist_roll'
-        ]
-        
-        # Load board center solution
-        script_dir = Path(__file__).parent.absolute()
-        solution_file = script_dir / "board_center_solution.json"
-        
-        with open(solution_file, 'r') as f:
-            data = json.load(f)
-        
-        self.board_center_joints = data['board_center']['joints']
-        
-        self.get_logger().info('🎯 Board Center Tester initialized (GRIPPER TIP CORRECTED)!')
-        self.get_logger().info('   Expected: Gripper TIP aligns EXACTLY with MAGENTA center cylinder')
-    
-    def move_to_board_center(self):
-        """Move robot to board center."""
-        
-        self.get_logger().info('🎯 Moving to gripper tip corrected position...')
-        self.get_logger().info('   Y-axis: 65mm correction + gripper tip: 20mm back, 19mm in')
-        self.get_logger().info('   Expected: PERFECT gripper tip alignment with magenta cylinder')
-        
-        # Create trajectory
-        trajectory = JointTrajectory()
-        trajectory.joint_names = self.joint_names
-        
-        point = JointTrajectoryPoint()
-        point.positions = self.board_center_joints
-        point.velocities = [0.0] * len(self.joint_names)
-        point.time_from_start = Duration(sec=5, nanosec=0)
-        
-        trajectory.points = [point]
-        
-        # Send goal
-        goal_msg = FollowJointTrajectory.Goal()
-        goal_msg.trajectory = trajectory
-        
-        future = self.arm_action_client.send_goal_async(goal_msg)
-        rclpy.spin_until_future_complete(self, future, timeout_sec=10.0)
-        
-        if not future.done():
-            self.get_logger().error('❌ Goal send timeout')
-            return False
-        
-        goal_handle = future.result()
-        if not goal_handle.accepted:
-            self.get_logger().error('❌ Goal rejected')
-            return False
-        
-        self.get_logger().info('📈 Movement in progress...')
-        
-        result_future = goal_handle.get_result_async()
-        rclpy.spin_until_future_complete(self, result_future, timeout_sec=15.0)
-        
-        if result_future.done():
-            self.get_logger().info('✅ Movement completed!')
-            self.get_logger().info('👁️  Visual check: Is gripper TIP PERFECTLY aligned with magenta cylinder?')
-            self.get_logger().info('🎯 Should be EXACT alignment (Y + gripper tip corrections)')
-            return True
-        else:
-            self.get_logger().error('❌ Movement timeout')
-            return False
-
-def main(args=None):
-    rclpy.init(args=args)
-    
-    tester = BoardCenterTester()
-    
-    try:
-        # Wait for action server
-        tester.get_logger().info('Waiting for arm controller...')
-        if not tester.arm_action_client.wait_for_server(timeout_sec=10.0):
-            tester.get_logger().error('❌ Arm controller not available')
-            return
-        
-        # Move to board center
-        success = tester.move_to_board_center()
-        
-        if success:
-            tester.get_logger().info('\\n📏 Gripper tip correction applied!')
-            tester.get_logger().info('   Y-axis: -65mm, X-axis: -20mm, Y-offset: -19mm')
-            tester.get_logger().info('   Result: Gripper TIP should be exactly at board center')
-        
-    except KeyboardInterrupt:
-        tester.get_logger().info('🛑 Test stopped')
-    finally:
-        tester.destroy_node()
-        rclpy.shutdown()
-
-if __name__ == '__main__':
-    main()
-'''
-    
-    with open(test_script, 'w') as f:
-        f.write(test_code)
-    
-    # Make executable
-    test_script.chmod(0o755)
-    
-    print(f"📝 Test script updated: {test_script.name}")
-    return test_script
 
 def main():
     """Main function."""
     
     try:
-        # Solve IK for board center
-        result = solve_board_center_ik()
+        # Solve IK with ultra final adjustments
+        result = solve_board_center_ik_ultra_final()
         
         if result is None:
             print("❌ Could not solve board center IK")
             return
         
-        joint_solution, target_position = result
+        joint_solution, target_position, gripper_offset = result
         
         # Create test files
-        create_board_center_test_file(joint_solution, target_position)
-        create_test_script()
+        create_ultra_final_test_file(joint_solution, target_position, gripper_offset)
         
-        print("\n🚀 NEXT STEPS:")
+        print("\n🚀 ULTRA FINAL TEST:")
         print("=" * 20)
         print("1. Launch simulation:")
         print("   ros2 launch chess_robot_sim chess_gazebo.launch.py")
         print("")
-        print("2. Run gripper tip corrected test:")
-        print("   python3 test_board_center.py")
+        print("2. Test ULTRA FINAL positioning:")
+        print("   python3 test_board_center_ultra_final.py")
         print("")
-        print("3. Verify EXACT alignment - gripper tip should be dead center!")
-        print("   - No overshoot")
-        print("   - No side offset") 
-        print("   - Perfect positioning for chess piece picking")
+        print("3. Expected result:")
+        print("   ✓ Perfect X/Y alignment (maintained)")
+        print("   ✓ Gripper_jaw origin 80mm above board")
+        print("   ✓ Gripper tips 30mm above board center")
+        print("   ✓ PERFECT for chess piece operations!")
+        print("")
+        print("🧮 Math check:")
+        print("   Gripper_jaw at 80mm + Board at 0mm - Gripper_extension 50mm = Tips at 30mm ✅")
         
     except Exception as e:
         print(f"❌ Error: {e}")
