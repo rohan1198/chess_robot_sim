@@ -141,8 +141,8 @@ def suggest_optimal_setup():
 
 def main():
     # Current setup from your files
-    robot_x = 0.75   # From launch file
-    robot_y = 0.25   # From launch file  
+    robot_x = 0.7475
+    robot_y = 0.275
     robot_z = 0.375  # Table height
     
     table_center_x = 0.75
